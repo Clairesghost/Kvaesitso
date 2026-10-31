@@ -227,8 +227,11 @@ data class LauncherSettingsData internal constructor(
 
     val feedProviderPackage: String? = null,
 
-    val vpdLook: de.mm20.launcher2.preferences.ui.VpdLook = de.mm20.launcher2.preferences.ui.VpdLook.Auto
+    val vpdLook: de.mm20.launcher2.preferences.ui.VpdLook = de.mm20.launcher2.preferences.ui.VpdLook.Auto,
 
+    val vpdMotion: de.mm20.launcher2.preferences.ui.VpdMotion = de.mm20.launcher2.preferences.ui.VpdMotion.Full,
+
+    val vpdRingReturnsHome: Boolean = true,
 
     ) {
     constructor(
