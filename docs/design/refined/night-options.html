@@ -1,0 +1,47 @@
+<title>Night Look Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Oleo+Script+Swash+Caps:wght@700&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--pg:#f3efe8;--pgfg:#241f1b;--pgmute:#6d655c;--pgline:#d8d0c3;--pgcard:#fffdf9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}}
+:root[data-theme="dark"]{--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}
+body{background:var(--pg);color:var(--pgfg);font-family:"DM Sans",system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:26px;margin:0 0 6px}
+.lead{color:var(--pgmute);margin:0 0 16px;max-width:68ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.opt{background:var(--pgcard);border:1px solid var(--pgline);border-radius:12px;padding:10px;min-width:0}
+.opt h3{font-size:14px;margin:0 0 6px}
+.opt p{font-size:12.5px;color:var(--pgmute);margin:8px 0 0}
+.scene{border-radius:10px;overflow:hidden;position:relative}
+.scene svg{display:block;width:100%;height:auto}
+.card{margin:0 10px 10px;border-radius:5px;padding:7px 9px;font-family:"Libre Franklin",sans-serif;font-size:11px}
+.card b{font:700 15px "Oleo Script Swash Caps",cursive;display:block;margin-bottom:1px}
+.row{display:flex;justify-content:space-between;align-items:center;border-top:1px dotted;padding:4px 0 0;margin-top:5px}
+.btn{border-radius:9px;padding:1px 8px;font-size:10px}
+</style>
+<div class="wrap">
+<h1>Night look: other ways</h1>
+<p class="lead">Your notes: cream and brown cards are fine but not loved, and dimming the dial makes it look like low screen brightness. These four are different ideas rather than a dimmed day look. The first sample is how night looks now. Close-ups only; the phone page is unchanged.</p>
+<div class="grid" id="g"></div>
+</div>
+<script>
+var P=[
+{t:"Now (dimmed day)",bg:["#7a1620","#2a0509"],plate:"#3a0910",band:"#7a1a22",rim:"#9a9ca0",disc:"#cbbd9e",drim:"#7a1a22",dim:.4,card:["#2e211d","#1f1613"],ct:"#efe3c4",ca:"#ff9a8f",cb:"#050303",n:"Dial dimmed with a dark layer; cards dark brown."},
+{t:"A. Black lacquer edition",bg:["#2b2b2e","#0b0b0d"],plate:"#16090c",band:"#a01a24",rim:"#e3e5e8",disc:"#fbf3de",drim:"#a01a24",dim:0,card:["#1c1c1f","#111113"],ct:"#f1ece0",ca:"#ff6a5f",cb:"#000",n:"A black phone, like the black chrome edition. Dial stays bright and cream; the red shrinks to the centre and the accents. My pick."},
+{t:"B. Midnight blue edition",bg:["#24407a","#0c1a3a"],plate:"#0a1630",band:"#8d141d",rim:"#d9dde6",disc:"#fbf3de",drim:"#8d141d",dim:0,card:["#1a2a4f","#101c38"],ct:"#f1ece0",ca:"#ffb347",cb:"#050a18",n:"Navy lacquer with a cherry centre and amber accents. Another colour of the same telephone."},
+{t:"C. Same cherry, dark cards only",bg:["#b52632","#5d0b13"],plate:"#2a0509",band:"#8d141d",rim:"#d6d8da",disc:"#fbf3de",drim:"#8d141d",dim:0,card:["#262224","#171415"],ct:"#efe8d8",ca:"#ff8d80",cb:"#000",n:"The red stays almost as bright as day. Only the cards go charcoal, so it still feels like the same phone."},
+{t:"D. Soft day",bg:["#a62330","#4f0a11"],plate:"#2a0509",band:"#7a1a22",rim:"#c4c6c9",disc:"#eadfc0",drim:"#8d141d",dim:0,card:["#e6dcb8","#d3c79d"],ct:"#241a14",ca:"#8d141d",cb:"#141010",n:"Not inverted: day look with the whites softened and the red a little deeper. Gentlest change; cards stay tan."}
+];
+var g=document.getElementById("g");
+P.forEach(function(o,i){
+  var d=document.createElement("div");d.className="opt";
+  var svg='<svg viewBox="0 0 230 150"><defs><linearGradient id="bg'+i+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+o.bg[0]+'"/><stop offset="1" stop-color="'+o.bg[1]+'"/></linearGradient></defs><rect width="230" height="150" fill="url(#bg'+i+')"/>'+
+   '<circle cx="115" cy="150" r="118" fill="'+o.rim+'"/><circle cx="115" cy="150" r="116" fill="'+o.plate+'"/><circle cx="115" cy="150" r="52" fill="'+o.band+'" stroke="'+o.rim+'" stroke-width="1.6"/>';
+  [-62,-31,0,31,62].forEach(function(a){var r=84,x=115+r*Math.sin(a*Math.PI/180*1.15),y=150-r*Math.cos(a*Math.PI/180*1.15);svg+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="17" fill="'+o.disc+'" stroke="'+o.drim+'" stroke-width="2"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5.5" fill="'+o.drim+'"/>'});
+  if(o.dim)svg+='<circle cx="115" cy="150" r="118" fill="#0a0204" fill-opacity="'+o.dim+'"/>';
+  svg+='<circle cx="115" cy="150" r="30" fill="'+o.disc+'" stroke="'+o.rim+'" stroke-width="1.5"/><path d="M115 150V132M115 150l12 5" stroke="'+o.drim+'" stroke-width="2" stroke-linecap="round"/></svg>';
+  d.innerHTML='<h3>'+o.t+'</h3><div class="scene" style="background:linear-gradient('+o.bg[0]+','+o.bg[1]+')">'+svg+'<div class="card" style="background:linear-gradient('+o.card[0]+','+o.card[1]+');color:'+o.ct+';border:2px solid '+o.cb+';box-shadow:0 0 0 1.5px '+o.rim+'"><b style="color:'+o.ca+'">Alerts</b>Dentist · in 1 h 12 min<div class="row" style="border-color:'+o.ct+'55"><span>Messages 3 new</span><span class="btn" style="box-shadow:inset 0 0 0 1px '+o.ct+'">Open</span></div></div></div><p>'+o.n+'</p>';
+  g.appendChild(d);
+});
+</script>

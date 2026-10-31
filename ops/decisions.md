@@ -172,3 +172,70 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-123 (2026-10-31): Owner asked to keep a list of things to check on the phone. Started `ops/phone-checks.md` (Bluetooth tap first); it feeds the testlist when a build exists.
 
 - D-124 (2026-10-31): Owner comment on the clock's date window ("30"): remove it. Removed. Backup: `dial-mockup-cute-before-nodatewin.html`.
+
+- D-125 (2026-10-31): Owner comment on the battery coin: remove the status colour here, maybe find another place. Read as: the coloured ring (cherry, green when charging, red when low). Ring is now plain dark. Charging (green) and low (red) are still shown by the light in the camera button, which already did this. Asked the owner to say if they meant something else. Backup: `dial-mockup-cute-before-ringcolor.html`.
+
+- D-126 (2026-10-31): Owner answers to the design review. (1) Small tap targets: owner decides at practical testing, no change. (2) Search stays at the top: no change. (3) Screen-reader labels: owner asked what they are (explained). (4) Ring returns home 5 s after it stops (one timer, only while the page is visible, instant if Motion is Off, cancelled when touched). (5) Greyed Bluetooth icon about 10% more contrast. (6) Text fit: long event titles, times and task lines now end with an ellipsis instead of pushing the layout; large-font handling still being explored. (7) Owner: the real app shows only real user info, demo data stays in the mock-up. Weather animations stay, the weather display is wanted. Camera light removed (Today sheet does the job). Backup: `dial-mockup-cute-before-review1.html`.
+
+- D-127 (2026-10-31): Owner asked to explore (1) whether the phone is too red with red notification badges and (2) how to improve the dial and icons. Made `red-and-dial-options.html` (4 badge colours, 6 dial treatments). My picks: amber badge; raised discs. Phone page unchanged until the owner chooses.
+
+- D-128 (2026-10-31): Owner chose "1" (keep the red notification badge as it is) and "F" (raised discs with bigger icons). Applied to the dial: soft static shadow under each disc, fine inner light ring, icons about 25% larger. Backup: `dial-mockup-cute-before-dialF.html`.
+
+- D-129 (2026-10-31): Owner photo of a pay-phone dial (white petal-shaped ring housing the numbers). Made a separate mock-up `dial-mockup-cute-petal.html` (the main page is unchanged): ivory scalloped petal ring behind the 12 discs, discs get a cherry rim like finger holes, icons as they are. Owner to say whether to adopt it.
+
+- D-130 (2026-10-31): Owner comment on the petal mock-up: remove the cream petal ring; apps should not look so raised or sit over the red centre; grow the dial's inner white border outward (about 25% of the dial) so it forms a plain ring behind the apps. Done in `dial-mockup-cute-petal.html`: scalloped petals removed; a plain ivory ring with chrome edges runs from the centre band's border out to just inside the tick marks; discs lie flat (shadow removed) inside it. Backup: `dial-mockup-cute-petal-v1.html`.
+
+- D-131 (2026-10-31): Owner comment: reduce the cream ring to look like the scallops in the reference photo. The ring is now thinner (inner border out to about the middle of the discs) with 12 small rounded scallops, one per disc, edged in chrome; discs stay flat. Backup: `dial-mockup-cute-petal-v2.html`.
+
+- D-132 (2026-10-31): Owner comment: swap the proportions, so the cream inner ring is as narrow as the dark outer edge of the dial is now, and the dark band is wide. Done in the petal mock-up: the cream ring is now a thin ring (about 8 px) round the red centre; the dark plate is the wide band the app discs sit on. Backup: `dial-mockup-cute-petal-v3.html`.
+
+- D-133 (2026-10-31): Owner comment: make the very outer chrome border of the dial much thinner, like the thin black frame on the cards. Outer chrome rim in the petal mock-up went from 6 px to 2 px wide (r 150 to 146; plate stays 144). Backup: `dial-mockup-cute-petal-v4.html`.
+
+- D-134 (2026-10-31): Owner: "lets go with this" (the petal dial: thin cream ring round the red centre, discs on the dark band, 2 px outer chrome edge, flat discs). It is now the main page `dial-mockup-cute.html`. Next: menus. Backup of the old main page: `dial-mockup-cute-before-petal-adopt.html`.
+
+- D-135 (2026-10-31): Owner answers on menus: draw the app list first, as an A to Z list with a letter strip. Settings: a "Launcher settings" row at the top of the app list AND an entry in the top pull-down menu (pull-down not drawn yet). Built the app list: the bottom chevron opens a sheet (script title Apps, Find an app search, settings row, letters, icon discs, strip on the right). Apps without a drawn icon get a letter disc (as AF-11 says). Backup: `dial-mockup-cute-before-applist.html`.
+
+- D-136 (2026-10-31): Owner wants to restyle ANDROID'S OWN pull-down menu, not add another. api-scout (AF-24): that is NOT POSSIBLE for a launcher. Options given: keep Android's pull-down as is and style around it; add our own small tray as well; hide the bar and open Android's panel by our gesture. Waiting for the owner's pick. Tile wish list recorded: display settings / battery mode, flashlight, sound/vibrate/mute, auto-rotate, Wi-Fi, Bluetooth, location, battery saver, airplane.
+
+- D-137 (2026-10-31): Owner chose option 1 for the pull-down: keep Android's own pull-down as it is and style everything around it. No custom tray. Settings entry stays in the app list; a 'launcher settings' tile can be offered to Android's panel later (AF-24, needs the owner's confirm on the phone). Tile wish list stays Android's job. Next: the settings page.
+
+- D-138 (2026-10-31): Owner: all 5 settings groups. Built the settings page (opened from 'Launcher settings' at the top of the app list): Motion (Full/Minimal/Off, linked to the page's Motion control), Alerts (previews per app, notification access note), Dial (choose 12 apps row, ring returns home On/Off), Look (text size follows phone, night version marked Later), Go back to your old launcher (3 plain steps: Settings > Apps > Choose default apps > Home app > One UI Home; menu names to check on the phone). Backup: `dial-mockup-cute-before-settings.html`.
+
+- D-139 (2026-10-31): Owner: long-pressing the clock opens the Clock / alarm app (built, half a second hold, demo toast only). Tapping the clock: owner unsure ('a timer pop-up? idk'); options given, waiting for the pick. Backup: `dial-mockup-cute-before-clockpress.html`.
+
+- D-140 (2026-10-31): Owner chose the quick timer for a tap on the clock. Built a small tan pop-up with 1, 5, 10, 15 min and 'other'; a pick hands the timer to the phone's Clock app (no timer of our own, no battery cost). Hold still opens the Clock app (D-139). Backup: `dial-mockup-cute-before-timer.html`.
+
+- D-141 (2026-10-31): Owner chose the dial editor as a mini dial where you drag discs (drop one on another to swap; tap a disc to replace it from a list of the other apps), opened from the Settings row and by long-pressing a dial app. Built; dial updates live. Long-press menu (Move, Remove, shortcuts, uninstall) comes after. Backup: `dial-mockup-cute-before-editor.html`.
+
+- D-142 (2026-10-31): Owner comment: keep the darker back of the dial and its white tick marks still when the dial spins. The tick marks no longer turn with the ring; only the app discs move. Backup: `dial-mockup-cute-before-stillticks.html`.
+
+- D-143 (2026-10-31): Owner: long press (on a dial app, opening the dial editor) works fine. No separate long-press menu is drawn; app info and uninstall stay with Android's own long-press if wanted later. Next options offered: design-system.md (recommended), swipe to clear, night version, rain-in-20-min alert.
+
+- D-144 (2026-10-31): Owner: build the night version. Done as a Look setting (Auto / Day / Night; Auto follows the time of day for now, later the phone's dark mode): deep burgundy lacquer, dark placards with cream type and dimmed chrome bezels, dial dimmed by a see-through dark layer (cheap, no filter), weather colours lightened, all sheets, app list, settings and the timer pop-up in dark. Controls: page 'Look' row and the Settings 'Day or night look' row. Backup: `dial-mockup-cute-before-night.html`.
+
+- D-145 (2026-10-31): Owner on the night version: cream and brown contrast is fine but they do not like it, and dimming the dial looks like lower screen brightness. Made `night-options.html` with four different ideas (black lacquer edition = my pick, midnight blue, cherry with dark cards only, soft day). Phone page keeps the D-144 night until the owner picks.
+
+- D-146 (2026-10-31): Owner chose option A, the black lacquer edition, for the night look. Replaces D-144's dimmed night: black phone body, dial NOT dimmed (bright chrome, cream discs, cherry centre band, near-black plate), near-black cards with cream text and coral accents and bright chrome frames. Same Look control. Backup: `dial-mockup-cute-before-black.html`.
+
+- D-147 (2026-10-31): Owner comment: the top housing (search plate and status coins) is too bright in the black night look; dim it. At night it is now about 40% darker (static brightness filter, nothing animated). Backup: `dial-mockup-cute-before-dimtop.html`.
+
+- D-148 (2026-10-31): Owner comment: add a subtle background colour or shade to the calendar card and the two below it. Read as the night look (black cards on a black phone): each card now has a faint tint over near-black (calendar and tasks cherry, Alerts a warm amber so the three read as separate). Day look unchanged. Backup: `dial-mockup-cute-before-cardtint.html`.
+
+- D-149 (2026-10-31): Owner: the tint must cover all 3 cards (calendar, Alerts, Tasks) and not be red: subtle grey or cream. Night cards now all share one subtle cool-grey shade (lighter than the black phone). Cream not used at night; day cards are already cream. Backup: `dial-mockup-cute-before-greycards.html`.
+
+- D-150 (2026-10-31): Night look design review applied (reviewer agent, rendered in the browser): search plate and camera ring dimmed less (brightness .78 / .85; owner had asked for dimmer in D-147, so this is a compromise: tell the owner), placeholder brighter; app list alphabet strip empty letters readable; dial plate edge a touch lighter; centre band highlight capped so cherry stays saturated; moon colour brighter; cards get a glossy top sheen, same shade for all 3; settings small text lighter; ticked task boxes fade; sheets and pop-up get a chrome rim. Optional upgrades offered, not built. Backup: `dial-mockup-cute-before-review-night.html`.
+
+- D-151 (2026-10-31): Owner took night upgrades 2 and 3: a soft cream 'lamp' glow beside the dial's finger stop (night only, static, no animation) and a thin dotted underline under the script headings Alerts and Tasks (cherry by day, coral at night). Backup: `dial-mockup-cute-before-upgrades.html`.
+
+- D-152 (2026-10-31): Owner: remove the dotted underline under the script headings (Alerts, Tasks) again. Removed. The lamp glow stays. Backup: `dial-mockup-cute-before-undots.html`.
+
+- D-153 (2026-10-31): Owner answers: (1) draw first-run setup screens: yes. (2) Double-tap to lock: not needed (owner uses the power button or the screen timeout). (3) Weather: owner uses Samsung Weather 1.6.60.41 as a widget and asked if it can supply data; answer given: no, a launcher cannot read numbers out of another app's widget; we can host that widget as is (unstyled) or use a free weather service. Decision on source pending. (4) Name: 'Vintage Pocket Dial'. Launcher picture from a screenshot of the day look (crop to be agreed). (5) Lock screen: yes, design a matching lock screen picture (a launcher cannot replace Samsung's lock screen; we supply wallpaper art and matching colour settings).
+- D-154 (2026-10-31): Built the first-run setup screens in the mock-up (Welcome, Show your alerts, Weather optional, Make it your home), reached by a page button 'Show the first-run setup screens'. Backup: `dial-mockup-cute-before-firstrun.html`.
+
+- D-155 (2026-10-31): Lock screen previews drawn by the design helper (phone-stylist): `lockscreen-options.html`, 4 concepts x day/night. Helper recommends 1 (big dial close-up), second choice 3. Owner to pick. Launcher cannot change the lock screen layout or clock; we supply a wallpaper picture plus matching clock colour steps (menu names UNVERIFIED). Fonts: Google Fonts OFL, licence files still to add to the repo.
+
+- D-156 (2026-10-31): Owner: forget the lock screen (a launcher cannot change it). Dropped. Next: launcher icon. Made `icon-options.html` with 3 crops from the day look (A dial and clock = my pick, B clock only, C dial close-up).
+
+- D-157 (2026-10-31): Owner chose icon A (dial and clock, cherry square with round dial) for the launcher. Name: Vintage Pocket Dial. Weather source still pending.
+
+- D-158 (2026-10-31): Wrote `docs/design-system.md` from the approved mock-up and decisions D-72 to D-157 (day and night, fonts, motifs, layout, rules, what can and cannot be styled, screen inventory). Weather source and swipe-to-clear still open.

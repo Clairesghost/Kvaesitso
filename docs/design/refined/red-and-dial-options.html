@@ -1,0 +1,71 @@
+<title>Red and Dial Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--pg:#f3efe8;--pgfg:#241f1b;--pgmute:#6d655c;--pgline:#d8d0c3;--pgcard:#fffdf9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}}
+:root[data-theme="dark"]{--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}
+body{background:var(--pg);color:var(--pgfg);font-family:"DM Sans",system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:26px;margin:0 0 6px}h2{font-size:18px;margin:26px 0 4px}
+.lead{color:var(--pgmute);margin:0 0 14px;max-width:66ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.opt{background:var(--pgcard);border:1px solid var(--pgline);border-radius:12px;padding:10px;min-width:0}
+.opt h3{font-size:13px;margin:0 0 6px}
+.opt p{font-size:12.5px;color:var(--pgmute);margin:6px 0 0}
+svg{display:block;width:100%;height:auto;border-radius:8px}
+</style>
+<div class="wrap">
+<h1>Too much red? and the dial</h1>
+<p class="lead">Small close-ups of the dial. These are drawings only; the phone page is unchanged.</p>
+
+<h2>1. Notification badge colour</h2>
+<p class="lead">Each sample shows three app discs on the red plate; the middle one has 3 new messages.</p>
+<div class="grid" id="g1"></div>
+
+<h2>2. Dial look and icons</h2>
+<p class="lead">Same three discs, different treatments.</p>
+<div class="grid" id="g2"></div>
+</div>
+<script>
+var MSG='<path d="M-8-7h16a2 2 0 012 2v8a2 2 0 01-2 2h-9l-5 4v-4h-2a2 2 0 01-2-2v-8a2 2 0 012-2z" fill="#8d141d"/>';
+var CLK='<circle r="8" fill="none" stroke="#8d141d" stroke-width="2.6"/><path d="M0-4v4l3 2" fill="none" stroke="#8d141d" stroke-width="2.4" stroke-linecap="round"/>';
+var CAM='<rect x="-9" y="-6" width="18" height="13" rx="3" fill="none" stroke="#8d141d" stroke-width="2.6"/><circle cy="1" r="3.4" fill="#8d141d"/>';
+function strip(o){
+  var s='<svg viewBox="0 0 210 110"><defs><radialGradient id="p'+o.id+'" cx=".5" cy=".4" r=".8"><stop offset="0" stop-color="'+o.plate[0]+'"/><stop offset="1" stop-color="'+o.plate[1]+'"/></radialGradient>'+
+  '<radialGradient id="d'+o.id+'" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#fffdf6"/><stop offset="1" stop-color="#eadfc3"/></radialGradient></defs>'+
+  '<rect width="210" height="110" fill="url(#p'+o.id+')"/>';
+  if(o.ring)s+='<g fill="none" stroke="#fbeee0" stroke-opacity=".35" stroke-width="1"><circle cx="105" cy="150" r="104"/><circle cx="105" cy="150" r="76"/></g>';
+  if(o.nums)s+='<g font-family="DM Sans,sans-serif" font-size="7" fill="#fbeee0" fill-opacity=".6" text-anchor="middle"><text x="48" y="95">11</text><text x="105" y="102">12</text><text x="162" y="95">1</text></g>';
+  [[48,CLK],[105,MSG],[162,CAM]].forEach(function(d,i){
+    var x=d[0],y=i===1?52:56;
+    if(o.shadow)s+='<circle cx="'+x+'" cy="'+(y+3)+'" r="22" fill="#000" fill-opacity=".28"/>';
+    s+='<circle cx="'+x+'" cy="'+y+'" r="22" fill="url(#d'+o.id+')"/>';
+    if(o.inset)s+='<circle cx="'+x+'" cy="'+y+'" r="22" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="2"/><circle cx="'+x+'" cy="'+(y+1)+'" r="21" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1"/>';
+    else s+='<circle cx="'+x+'" cy="'+y+'" r="22" fill="none" stroke="#c9b890" stroke-width="1"/>';
+    s+='<g transform="translate('+x+' '+y+') scale('+(o.scale||1)+')">'+d[1]+'</g>';
+  });
+  s+='<g><circle cx="123" cy="32" r="8.5" fill="'+o.badge[0]+'" stroke="'+o.badge[2]+'" stroke-width="1.6"/><text x="123" y="36" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="11" fill="'+o.badge[1]+'">3</text></g></svg>';
+  return s;
+}
+function add(id,list){
+  var g=document.getElementById(id);
+  list.forEach(function(o,i){var d=document.createElement("div");d.className="opt";d.innerHTML='<h3>'+o.t+'</h3>'+strip(o)+'<p>'+o.n+'</p>';g.appendChild(d)})
+}
+var red=["#c52a35","#8d141d"],deep=["#a62530","#6e0f18"],base={id:"",plate:red,badge:["#d62b37","#fff","#fffaf0"],inset:false,shadow:false};
+function mk(id,o){var r={};for(var k in base)r[k]=base[k];for(var k in o)r[k]=o[k];r.id=id;return r}
+add("g1",[
+ mk("a",{t:"1. As now: red badge",n:"Red on red; works because of the white rim, but it is the same colour as the plate."}),
+ mk("b",{t:"2. Amber badge (my pick)",badge:["#ffb347","#3a0d12","#fffaf0"],n:"Warm gold with a dark number. Pops on the red, still vintage, red stays for the body."}),
+ mk("c",{t:"3. Ivory badge",badge:["#fffaf0","#8d141d","#c9b890"],n:"Quietest option; reads like a paper tag. Less urgent."}),
+ mk("d",{t:"4. Deeper cherry plate + red badge",plate:deep,n:"Keeps the red badge but the body is darker so the badge stands out."})
+]);
+add("g2",[
+ mk("e",{t:"A. As now: flat discs",n:"Clean and readable."}),
+ mk("f",{t:"B. Pressed-in discs",inset:true,n:"Fine inner edge, like a pressed button."}),
+ mk("g",{t:"C. Raised discs",shadow:true,inset:true,n:"Soft shadow under each disc so they sit on the plate. My pick."}),
+ mk("h",{t:"D. C plus faint rings",shadow:true,inset:true,ring:true,n:"Adds thin guide rings behind the discs."}),
+ mk("i",{t:"E. C plus numbers",shadow:true,inset:true,nums:true,n:"Small 1 to 12 numbers behind the discs like a real rotary dial. More decoration."}),
+ mk("j",{t:"F. C with bigger icons",shadow:true,inset:true,scale:1.25,n:"Icons fill more of the disc; easier to read at a glance."})
+]);
+</script>

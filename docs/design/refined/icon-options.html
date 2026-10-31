@@ -1,0 +1,43 @@
+<title>App Icon Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--pg:#f3efe8;--pgfg:#241f1b;--pgmute:#6d655c;--pgline:#d8d0c3;--pgcard:#fffdf9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}}
+:root[data-theme="dark"]{--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}
+body{background:var(--pg);color:var(--pgfg);font-family:"DM Sans",system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px;line-height:1.5}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:26px;margin:0 0 6px}
+.lead{color:var(--pgmute);margin:0 0 16px;max-width:66ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.opt{background:var(--pgcard);border:1px solid var(--pgline);border-radius:12px;padding:12px;min-width:0}
+.opt h3{font-size:14px;margin:0 0 8px}
+.opt p{font-size:12.5px;color:var(--pgmute);margin:8px 0 0}
+.sizes{display:flex;align-items:flex-end;gap:14px}
+.sizes figure{margin:0;text-align:center;font-size:11px;color:var(--pgmute)}
+.sizes svg{display:block;margin:0 auto 3px}
+.home{margin-top:10px;background:linear-gradient(#5a6c88,#2e3b52);border-radius:12px;padding:10px;display:flex;gap:12px;align-items:center;color:#fff;font-size:11px}
+.home div{text-align:center}
+</style>
+<div class="wrap">
+<h1>App icon for Vintage Pocket Dial</h1>
+<p class="lead">A whole-phone screenshot gets unreadable at icon size, so these crop the dial and clock from the day look. Each is shown big, at the size on your home screen, and tiny, next to a dull neighbour icon on a blue wallpaper, round-cropped as Android does.</p>
+<div class="grid" id="g"></div>
+</div>
+<script>
+var CH='<linearGradient id="ch" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdfdfb"/><stop offset=".5" stop-color="#b9bbbd"/><stop offset="1" stop-color="#e6e6e2"/></linearGradient>';
+function discs(n,R,r,rot){var s="";for(var i=0;i<n;i++){var a=(i*360/n+(rot||0))*Math.PI/180,x=54+R*Math.sin(a),y=54-R*Math.cos(a);s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="#fbf3de" stroke="#8d141d" stroke-width="1.4"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(r*.38).toFixed(1)+'" fill="#8d141d"/>'}return s}
+function clock(cx,cy,r){return'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#fbf3de" stroke="#d6d8da" stroke-width="2"/><g stroke="#4a1a1d" stroke-linecap="round"><path d="M'+cx+' '+(cy-r*.82)+'v'+(r*.14)+'M'+cx+' '+(cy+r*.68)+'v'+(r*.14)+'M'+(cx-r*.82)+' '+cy+'h'+(r*.14)+'M'+(cx+r*.68)+' '+cy+'h'+(r*.14)+'" stroke-width="2"/><path d="M'+cx+' '+cy+'V'+(cy-r*.5)+'" stroke-width="3"/><path d="M'+cx+' '+cy+'L'+(cx+r*.55)+' '+(cy+r*.12)+'" stroke-width="2"/></g><circle cx="'+cx+'" cy="'+cy+'" r="2.4" fill="#d62b37"/>'}
+var I=[
+ {t:"A. Dial and clock (my pick)",n:"The whole rotary dial: ring of discs round a cherry centre with the clock. Recognisable shape, reads at small size.",s:function(){return'<rect width="108" height="108" fill="#a01a24"/><circle cx="54" cy="54" r="50" fill="#2a0509" stroke="#d6d8da" stroke-width="2"/>'+discs(10,37,8.5,18)+'<circle cx="54" cy="54" r="25" fill="#c52a35" stroke="#d6d8da" stroke-width="1.6"/>'+clock(54,54,18)}},
+ {t:"B. Clock face only",n:"A big ivory clock on cherry lacquer. Simplest, boldest; loses the dial idea.",s:function(){return'<rect width="108" height="108" fill="#a01a24"/>'+clock(54,54,40)}},
+ {t:"C. Dial close-up, cropped",n:"The dial cropped tight so the discs are large, with the chrome finger stop at the corner. Most telephone-like.",s:function(){return'<rect width="108" height="108" fill="#a01a24"/><circle cx="54" cy="94" r="62" fill="#2a0509" stroke="#d6d8da" stroke-width="2.4"/>'+[-52,-26,0,26,52].map(function(a){var x=54+46*Math.sin(a*Math.PI/180*1.2),y=94-46*Math.cos(a*Math.PI/180*1.2);return'<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="13" fill="#fbf3de" stroke="#8d141d" stroke-width="2"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="5" fill="#8d141d"/>'}).join("")+'<rect x="82" y="64" width="9" height="22" rx="3" fill="#d6d8da" stroke="#8f9194" transform="rotate(35 86 75)"/>'}}
+];
+var g=document.getElementById("g");
+I.forEach(function(o,i){
+  function ic(sz,round){return'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 108 108"><defs><clipPath id="c'+i+sz+'"><'+(round?'circle cx="54" cy="54" r="54"':'rect width="108" height="108" rx="24"')+'/></clipPath></defs><g clip-path="url(#c'+i+sz+')">'+o.s()+'</g></svg>'}
+  var d=document.createElement("div");d.className="opt";
+  d.innerHTML='<h3>'+o.t+'</h3><div class="sizes"><figure>'+ic(96,0)+'big</figure><figure>'+ic(56,0)+'home screen</figure><figure>'+ic(36,0)+'tiny</figure></div><div class="home"><div>'+ic(48,1)+'Pocket Dial</div><div><svg width="48" height="48"><circle cx="24" cy="24" r="24" fill="#6f7f9a"/><path d="M12 24h24" stroke="#fff" stroke-width="3"/></svg>Another app</div></div><p>'+o.n+'</p>';
+  g.appendChild(d);
+});
+</script>
