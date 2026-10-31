@@ -41,4 +41,4 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
 | B0-pipeline | build | DONE: debug workflow ran green on claude/B1-foundation | main | |
 | B1-foundation | build | DONE (owner verified on phone 2026-10-31): installed, name and icon right, home screen is plain Kvaesitso as expected, lock screen unchanged. Build run 41215748144 green. | claude/B1-foundation | merged into main locally (not pushed) |
-| B2-home | build, stage 2 (dial 15% bigger, D-183) | READY TO PUSH (stage 2 committed locally on claude/B2-home-s2, not pushed, not compiled; 2026-10-31) | claude/B2-home-s2 (from claude/B2-home) | tasks/B2-home/brief.md |
+| B2-home | build, stage 3 (green charging ring fix, bug 1) | READY TO PUSH (stages 2 and 3 committed locally on claude/B2-home-s3, not pushed, not compiled; 2026-10-31) | claude/B2-home-s3 (from claude/B2-home-s2) | tasks/B2-home/brief.md |

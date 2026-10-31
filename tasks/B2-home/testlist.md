@@ -2,6 +2,14 @@
 
 How to get the build onto the phone: see `playbook/ci-and-signing.md`, "Install on the phone". After installing, press the Home button and choose Vintage Pocket Dial as the home app ("Always" if asked). Your Samsung home screen stays installed.
 
+## Stage 3: green ring when charging
+1. Where to be: the home screen. Do: plug in the charger and wait a few seconds.
+   You should see: a clear green ring (a little thicker than a pencil line) just outside the camera hole, on the silver ring.
+   Report: yes/no, and a screenshot.
+2. Do: unplug the charger.
+   You should NOT see: the green ring any more (it goes away within a few seconds).
+   Report: yes/no.
+
 ## Stage 2: dial 15% bigger
 1. Where to be: the home screen. Do: press the Home button.
    You should see: the dial about 15% bigger than before (the dark round plate is nearly as wide as the screen), with the clock and the 12 discs bigger too. The text under the clock is still readable.

@@ -31,6 +31,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.vpd.LocalVpdColors
 import de.mm20.launcher2.ui.vpd.VpdFonts
 
@@ -213,7 +214,7 @@ fun VpdCameraRing(
     val density = LocalDensity.current
     val d = with(density) { diameterPx.toDp() }
     val light = when {
-        charging -> Color(0xFF3DDC84)
+        charging -> Color(0xFF5AD17A)
         low -> Color(0xFFE53935)
         else -> null
     }
@@ -238,7 +239,10 @@ fun VpdCameraRing(
             )
             drawCircle(Color(0xFF9A9C9F), w * 0.495f, c, style = Stroke(w * 0.01f))
             if (light != null) {
-                drawCircle(light, w * 0.325f, c, style = Stroke(w * 0.035f))
+                // 3 dp band, 2 dp outside the hole edge so Samsung's black mask does not cover it
+                val band = 3.dp.toPx()
+                val radius = (w * 0.31f + 2.dp.toPx() + band / 2f).coerceAtMost(w / 2f - band / 2f)
+                drawCircle(light, radius, c, style = Stroke(band))
             }
         }
     }

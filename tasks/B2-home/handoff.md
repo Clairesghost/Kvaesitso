@@ -55,3 +55,20 @@ Owner phone results (stage 1 test):
 - Not yet reported: camera ring position, Bluetooth coin with headphones, charger light, the "should NOT happen" checks, restart check, battery number.
 
 NOT verified: not compiled, not run (no Java/Android SDK here). Not seen: that nothing is cut off at the edges, that the finger stop and the enamel plate sit right at the new size, that the discs on a small-height phone still fit (the stage may shrink to fit height), that touch zones line up with the drawing.
+
+## Stage 3 (green charging ring, bug 1)
+
+Branch: `claude/B2-home-s3` (made from `claude/B2-home-s2`; same push batch).
+
+Owner phone results (stage 1 test):
+- Camera ring sits around the real hole: yes.
+- Bluetooth coin changes with headphones: yes.
+- Double-tap and spin do not lock the screen or slide the page: yes.
+- Restart check: OK.
+- No green line when charging: BUG (see `bugs.md` #1).
+
+What changed:
+- `VpdCameraRing` (VpdHousing.kt): the light is now a 3 dp band starting 2 dp outside the hole edge (hole = 0.31 of the ring width), drawn on top of the chrome; sized in dp, not as a fraction. Charging colour is the mock-up green `#5AD17A` (was `#3DDC84`); low stays red.
+- `VpdStatus.battery`: also counts `EXTRA_PLUGGED != 0` as charging (Samsung can report NOT_CHARGING while plugged in).
+
+NOT verified: not compiled, not run. Not seen: whether the band is clear of Samsung's mask at 2 dp, or sits inside the ring edge on the phone; whether the charger really sets the plugged flag.

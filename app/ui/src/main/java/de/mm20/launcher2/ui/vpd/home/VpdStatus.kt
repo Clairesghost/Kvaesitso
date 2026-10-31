@@ -126,7 +126,9 @@ object VpdStatus {
             if (level < 0 || scale <= 0) return null
             val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
             val charging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                    status == BatteryManager.BATTERY_STATUS_FULL
+                    status == BatteryManager.BATTERY_STATUS_FULL ||
+                    // Samsung can report NOT_CHARGING while plugged in; a plug counts as charging
+                    intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0
             return VpdBattery(level * 100 / scale, charging)
         }
 
