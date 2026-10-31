@@ -94,6 +94,7 @@ internal fun VpdAppListSheet(
     motion: VpdMotion,
     gate: VpdMotionGate,
     onClose: () -> Unit,
+    onLaunched: () -> Unit,
     onOpenSettings: () -> Unit,
     onPutOnDial: (VpdApp) -> Unit,
 ) {
@@ -142,7 +143,7 @@ internal fun VpdAppListSheet(
         }
     }
 
-    fun launch(app: VpdApp) {
+    fun launchApp(app: VpdApp) {
         scope.launch {
             val animated = gate.animationsAllowed(motion)
             pressedKey = app.app.key
@@ -151,7 +152,7 @@ internal fun VpdAppListSheet(
             val options = ActivityOptionsCompat.makeBasic().toBundle()
             if (app.app.launch(context, options)) {
                 vm.reportLaunch(app.app)
-                onClose()
+                onLaunched()
             } else {
                 Log.e("launcher", "Could not launch an app from the list")
             }
@@ -239,7 +240,7 @@ internal fun VpdAppListSheet(
                                                 iconFor = vm::icon,
                                                 onPress = { pressedKey = app.app.key },
                                                 onCancel = { pressedKey = null },
-                                                onTap = { launch(app) },
+                                                onTap = { launchApp(app) },
                                                 onHold = { pressedKey = null; menuFor = app },
                                             )
                                             DropdownMenu(

@@ -218,7 +218,7 @@ fun VpdDial(
                     if (hit >= 0) {
                         var phase = 0
                         val held = withTimeoutOrNull(HOLD_MS) {
-                            while (true) {
+                            while (phase == 0) {
                                 val event = awaitPointerEvent()
                                 val ch = event.changes.firstOrNull { it.id == down.id }
                                 if (ch == null) { phase = 1; return@withTimeoutOrNull true }
@@ -229,6 +229,7 @@ fun VpdDial(
                                     return@withTimeoutOrNull true
                                 }
                             }
+                            true
                         }
                         if (held == null) {
                             pressed = -1

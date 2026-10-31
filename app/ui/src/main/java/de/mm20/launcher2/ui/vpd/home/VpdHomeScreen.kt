@@ -49,7 +49,20 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.vpd.LocalVpdColors
 import de.mm20.launcher2.ui.vpd.cards.VpdCards
+import de.mm20.launcher2.ui.vpd.apps.VpdAppListSheet
 import de.mm20.launcher2.ui.vpd.colors
+import de.mm20.launcher2.ui.vpd.editor.VpdDialEditorSheet
+import de.mm20.launcher2.ui.vpd.settings.VpdSettingsSheet
+import de.mm20.launcher2.ui.vpd.sheet.VpdPage
+import de.mm20.launcher2.ui.launcher.SharedLauncherActivity
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import kotlin.math.abs
 import kotlinx.coroutines.launch
 
 private const val PREFS = "vpd_home"
@@ -70,11 +83,19 @@ internal fun VpdHomeScreen(
     val density = LocalDensity.current
 
     val look by vm.look.collectAsStateWithLifecycle()
-    val colors = (look ?: VpdLook.Auto).colors(isSystemInDarkTheme())
+    val colour by vm.colour.collectAsStateWithLifecycle()
+    val colors = (look ?: VpdLook.Auto).colors(isSystemInDarkTheme(), colour)
     val motion by vm.motion.collectAsStateWithLifecycle()
     val returnsHome by vm.ringReturnsHome.collectAsStateWithLifecycle()
     val apps by vm.dialApps.collectAsStateWithLifecycle()
     val gate = remember { VpdMotionGate(context) }
+
+    // sheets over Home (app list, settings, dial editor): Back pops one, the Home button closes all (AF-7)
+    var pages by remember { mutableStateOf(listOf<VpdPage>()) }
+    val pagesNow by rememberUpdatedState(pages)
+    LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
+        if ((context as? SharedLauncherActivity)?.isNewIntent == true) pages = emptyList()
+    }
 
     // Bluetooth: asked once with a plain explanation (D-182); refused = grey, no nagging.
     var btGranted by remember { mutableStateOf(VpdStatus.hasBluetoothPermission(context)) }
@@ -106,6 +127,31 @@ internal fun VpdHomeScreen(
             val k = minOf(widthPx / STAGE_WIDTH, (heightPx - navBottomPx) / STAGE_HEIGHT)
             val st = VpdStage(k, density)
             val originX = with(density) { ((widthPx - STAGE_WIDTH * k) / 2f).toDp() }
+
+            // empty body: swipe up opens the app list (D-171); starts below the dial, never on it
+            Box(
+                Modifier.fillMaxSize().pointerInput(k) {
+                    awaitEachGesture {
+                        val down = awaitFirstDown(requireUnconsumed = true)
+                        if (down.position.y < 404f * k || pagesNow.isNotEmpty()) return@awaitEachGesture
+                        var opened = false
+                        while (true) {
+                            val e = awaitPointerEvent()
+                            val ch = e.changes.firstOrNull { it.id == down.id } ?: break
+                            if (ch.isConsumed || !ch.pressed) break
+                            val up = down.position.y - ch.position.y
+                            val side = abs(ch.position.x - down.position.x)
+                            if (opened || (up > viewConfiguration.touchSlop && up > side)) {
+                                ch.consume()
+                                if (!opened && up > 48.dp.toPx()) {
+                                    opened = true
+                                    pages = listOf(VpdPage.Apps)
+                                }
+                            }
+                        }
+                    }
+                },
+            )
 
             // housing
             VpdHousing(
@@ -145,6 +191,7 @@ internal fun VpdHomeScreen(
             VpdDial(
                 st = st,
                 apps = apps,
+                onDiscHold = { pages = listOf(VpdPage.Editor()) },
                 motion = motion ?: VpdMotion.Full,
                 ringReturnsHome = returnsHome,
                 gate = gate,
@@ -162,7 +209,7 @@ internal fun VpdHomeScreen(
                 modifier = Modifier
                     .offset(originX + st.dp(120f), st.dp(706f))
                     .size(st.dp(120f), st.dp(44f))
-                    .clickable { scope.launch { state.onSearchBarTap() } }
+                    .clickable { pages = listOf(VpdPage.Apps) }
                     .semantics { contentDescription = "All apps" },
             ) {
                 Canvas(Modifier.size(st.dp(120f), st.dp(44f))) {
@@ -176,6 +223,33 @@ internal fun VpdHomeScreen(
                         style = Stroke(3f * k, cap = StrokeCap.Round, join = StrokeJoin.Round),
                     )
                 }
+            }
+
+            // sheets: app list, settings, dial editor
+            val sheetHeight = with(density) { (heightPx - navBottomPx).toDp() } - st.dp(60f)
+            val page = pages.lastOrNull()
+            val motionNow = motion ?: VpdMotion.Full
+            fun pop() { pages = pages.dropLast(1) }
+            when (page) {
+                is VpdPage.Apps -> VpdAppListSheet(
+                    st = st, originX = originX, height = sheetHeight, motion = motionNow, gate = gate,
+                    onClose = ::pop,
+                    onLaunched = { pages = emptyList() },
+                    onOpenSettings = { pages = pages + VpdPage.Settings },
+                    onPutOnDial = { pages = pages + VpdPage.Editor(it.app) },
+                )
+                is VpdPage.Settings -> VpdSettingsSheet(
+                    st = st, originX = originX, height = sheetHeight, gate = gate,
+                    onClose = ::pop,
+                    onChooseDial = { pages = pages + VpdPage.Editor() },
+                )
+                is VpdPage.Editor -> VpdDialEditorSheet(
+                    st = st, originX = originX, height = sheetHeight, place = page.place,
+                    motion = motionNow, gate = gate,
+                    onPlaced = { pages = pages.dropLast(1) + VpdPage.Editor() },
+                    onClose = ::pop,
+                )
+                null -> Unit
             }
         }
 
