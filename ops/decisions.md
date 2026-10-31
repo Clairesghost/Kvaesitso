@@ -294,3 +294,8 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-187 (2026-11-01): Owner: the last row of the Tasks card is "Add a task…"; tap and type. It works once Google Tasks is connected (G1); in B3 the card shows a "Connect Google Tasks" row instead.
 - D-188 (2026-11-01): Owner: in B3 the Alerts card's "+N more ›" opens Android's own notification list; the Today sheet comes with the other sheets in B4.
 - D-189 (2026-11-01): Owner: the Calendar card shows events from all calendars on the phone (Google and Samsung); Android asks once for calendar access. Choosing calendars comes with Settings in B4.
+
+- D-190 (2026-11-01): Owner changed their mind on D-185: no Google connection for now. Tasks are kept inside the launcher, on the phone only. Google Tasks parked (facts saved in AF-33). The G1 stage is replaced by T1 (local tasks).
+- D-191 (2026-11-01): Owner: keep the fixed signing key (made by the guide in Documents\vpd-signing, AF-34) so updates install over the old app and saved tasks survive. Owner adds the GitHub secret DEBUG_KEYSTORE_BASE64.
+- D-192 (2026-11-01): Owner: a ticked task is crossed out at once (tap again to undo) and disappears the next time Home comes back.
+- D-193 (2026-11-01): Owner: the Tasks card shows the newest 2 tasks and "+N more" next to the title when there are more; the full task list comes with the sheets in B4.
