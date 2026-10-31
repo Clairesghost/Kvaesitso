@@ -93,6 +93,8 @@ internal fun VpdHomeScreen(
     // sheets over Home (app list, settings, dial editor): Back pops one, the Home button closes all (AF-7)
     var pages by remember { mutableStateOf(listOf<VpdPage>()) }
     val pagesNow by rememberUpdatedState(pages)
+    // usage ranking for the empty discs: once per resume, off the main thread, no timers (D-196, AF-15)
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshUsage() }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) {
         if ((context as? SharedLauncherActivity)?.isNewIntent == true) pages = emptyList()
     }

@@ -21,7 +21,7 @@ class VpdListSettings internal constructor(
         }
     }
 
-    /** 12 app keys in dial order, "" = empty disc. null = nothing saved yet (favourites are used, D-180). */
+    /** 12 app keys in dial order. "" = fill automatically from usage (D-196), "-" = blank on purpose. null = nothing saved yet. */
     val dialApps
         get() = launcherDataStore.data.map { it.vpdDialApps }.distinctUntilChanged()
 
