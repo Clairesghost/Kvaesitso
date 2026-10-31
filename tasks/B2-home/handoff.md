@@ -38,3 +38,20 @@ Sellable parts added ([M] rows): none.
 Lessons (0 to 3 lines, also in `ops/lessons-inbox.md`): see inbox.
 Next stage needs: B3 cards go under the dial in the plain cherry body (stage y 384 to 704); VpdStage and LocalVpdColors are provided by VpdHomeScreen.
 Branch and last commit: claude/B2-home (see `git log`).
+
+## Stage 2 (dial 15% bigger, D-183)
+
+Branch: `claude/B2-home-s2` (made from `claude/B2-home` because that branch is checked out in another worktree; merge it back or push it as it is).
+
+What changed:
+- Whole dial drawn uniformly 1.15 times bigger (plate, rims, ticks, finger stop, ivory ring, centre band, clock, enamel plate, 12 discs, touch zones). One factor: `DIAL_SCALE` in `VpdStage.kt`; `VpdDial` and `VpdClock` derive a second `VpdStage` (`ds`, k * 1.15) and use it for all sizes and for hit-testing (`hitDisc`, `angleOf`, clock zone, dial zone); the centre comes from the plain stage scale.
+- Dial box is still 360 units wide (so the parent cannot clamp it), now 350 high, top at stage y 52 (`DIAL_TOP`), centre at stage (180, 227), outer chrome rim radius 168 (inside the box, 7 units from the top edge). Disc ring radius 112 -> 128.8.
+- Housing, camera ring, chevron (706-750) untouched. Files: VpdStage, VpdDial, VpdClock, VpdHomeScreen.
+
+For B3: place the cards at Calendar 412-516, Alerts 524-602, Tasks 610-704 (Tasks is 2 rows). The dial's drawing ends at about y 395 (finger stop to about 410 at the bottom right). Nothing to build for it now.
+
+Owner phone results (stage 1 test):
+- Working: coins open the Internet, Bluetooth and Battery saver pages; dial spins, flick and the 5 s return work; holding the clock opens the alarm clock; search slot and chevron work; Day/Night switch works.
+- Not yet reported: camera ring position, Bluetooth coin with headphones, charger light, the "should NOT happen" checks, restart check, battery number.
+
+NOT verified: not compiled, not run (no Java/Android SDK here). Not seen: that nothing is cut off at the edges, that the finger stop and the enamel plate sit right at the new size, that the discs on a small-height phone still fit (the stage may shrink to fit height), that touch zones line up with the drawing.

@@ -2,6 +2,23 @@
 
 How to get the build onto the phone: see `playbook/ci-and-signing.md`, "Install on the phone". After installing, press the Home button and choose Vintage Pocket Dial as the home app ("Always" if asked). Your Samsung home screen stays installed.
 
+## Stage 2: dial 15% bigger
+1. Where to be: the home screen. Do: press the Home button.
+   You should see: the dial about 15% bigger than before (the dark round plate is nearly as wide as the screen), with the clock and the 12 discs bigger too. The text under the clock is still readable.
+   Report: yes/no, and a screenshot.
+2. Do: look at the edges of the dial and under the silver top plate.
+   You should NOT see: any part of the dial cut off at the left or right edge, or hidden under the silver housing at the top.
+3. Do: tap three different discs, one at a time (go back to Home between).
+   You should see: the app you touched opens each time, not its neighbour.
+4. Do: turn the dial with a finger, flick it, wait 5 seconds.
+   You should see: spinning, gliding and the return home work as before.
+5. Do: hold a finger on the clock for half a second.
+   You should see: the alarm clock opens. Report if the touch works over the whole clock face.
+
+## Not yet reported from the first test (do these too)
+Camera ring position (section A.1 / B.5), the Bluetooth coin with headphones (B.2), the charger light (B.3), the "should NOT happen" checks (D), the restart check (E) and the battery number after a day (F). Already confirmed OK: coins open their pages, spin, flick and 5 s return, clock hold, search slot, chevron, Day/Night.
+
+
 ## A. What Home looks like
 1. Where to be: the home screen, phone in light mode.
    Do: press the Home button.

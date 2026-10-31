@@ -7,3 +7,4 @@ Copy to `ops/lessons-inbox.md`. Threads add 0 to 3 lines each: only surprises. F
 - B1-foundation: Google Fonts ships Libre Franklin only as one variable file, not static weights; plan for variationSettings, not four files.
 - B2-home: no Python or Java in the workspace, so a code stage cannot be compiled before pushing; keep new code in new files and re-read imports, and expect the first cloud build to find a few errors.
 - B2-home: callbackFlow must end in awaitClose even on early-exit paths, or it crashes when collected.
+- B2-home s2: a branch can only be checked out in one worktree; a later stage thread has to branch off (…-s2) and the guide merges it back.
