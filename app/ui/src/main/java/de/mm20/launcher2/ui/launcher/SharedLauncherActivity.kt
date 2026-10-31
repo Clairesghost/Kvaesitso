@@ -67,6 +67,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.ScreenOffComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SecretComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
+import de.mm20.launcher2.ui.vpd.home.VpdHomeComponent
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -352,11 +353,7 @@ abstract class SharedLauncherActivity(
                                     val gestures = gestures!!
 
                                     val config = ScaffoldConfiguration(
-                                        homeComponent = if (widgetsOnHomeScreen == true) {
-                                            ClockAndWidgetsHomeComponent
-                                        } else {
-                                            ClockHomeComponent
-                                        },
+                                        homeComponent = VpdHomeComponent, // Vintage Pocket Dial (B2)
                                         searchComponent = searchComponent,
                                         swipeUp = getScaffoldGesture(
                                             gestures.swipeUpAction,
@@ -394,12 +391,12 @@ abstract class SharedLauncherActivity(
                                             Gesture.HomeButton,
                                         ),
                                         fixedSearchBar = fixedSearchBar,
-                                        searchBarStyle = searchBarStyle,
+                                        searchBarStyle = SearchBarStyle.Hidden, // VPD: our housing replaces the bar on Home
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,
                                         darkStatusBarIcons = lightStatus,
                                         darkNavBarIcons = lightNav,
                                         backgroundColor = backgroundColor,
-                                        showStatusBar = !hideStatus,
+                                        showStatusBar = false, // VPD: our housing replaces the status bar (AF-18)
                                         showNavBar = !hideNav,
                                         darkSearchBar = darkSearchBar,
                                         wallpaperBlurRadius = if (wallpaperBlur) wallpaperBlurRadius.dp else 0.dp,

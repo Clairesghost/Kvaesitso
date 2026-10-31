@@ -38,7 +38,7 @@ object VpdStatus {
         val cm = context.getSystemService(ConnectivityManager::class.java)
         if (cm == null) {
             trySend(VpdConnection.None)
-            close()
+            awaitClose { }
             return@callbackFlow
         }
         val callback = object : ConnectivityManager.NetworkCallback() {
@@ -85,7 +85,7 @@ object VpdStatus {
     fun bluetoothConnected(context: Context): Flow<Boolean> = callbackFlow {
         if (!hasBluetoothPermission(context)) {
             trySend(false)
-            close()
+            awaitClose { }
             return@callbackFlow
         }
         val adapter: BluetoothAdapter? =
