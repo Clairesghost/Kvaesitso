@@ -26,4 +26,13 @@ class VpdLookSettings internal constructor(
             it.copy(vpdLook = look)
         }
     }
+
+    val colour
+        get() = launcherDataStore.data.map { it.vpdColour }.distinctUntilChanged()
+
+    fun setColour(colour: VpdColour) {
+        launcherDataStore.update {
+            it.copy(vpdColour = colour)
+        }
+    }
 }

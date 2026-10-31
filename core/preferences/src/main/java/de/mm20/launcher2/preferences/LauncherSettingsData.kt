@@ -233,6 +233,16 @@ data class LauncherSettingsData internal constructor(
 
     val vpdRingReturnsHome: Boolean = true,
 
+    val vpdColour: de.mm20.launcher2.preferences.ui.VpdColour = de.mm20.launcher2.preferences.ui.VpdColour.Cherry,
+
+    val vpdAppCategories: Map<String, String> = emptyMap(),
+
+    val vpdDialApps: List<String>? = null,
+
+    val vpdHiddenAlertApps: Set<String> = emptySet(),
+
+    val vpdHiddenCalendars: Set<String> = emptySet(),
+
     ) {
     constructor(
         context: Context,
