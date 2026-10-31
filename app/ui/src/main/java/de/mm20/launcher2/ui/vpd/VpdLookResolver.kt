@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.vpd
 
+import de.mm20.launcher2.preferences.ui.VpdColour
 import de.mm20.launcher2.preferences.ui.VpdLook
 
 /** Auto follows the phone's dark mode for now. */
@@ -11,3 +12,6 @@ fun VpdLook.isNight(systemDark: Boolean): Boolean = when (this) {
 
 fun VpdLook.colors(systemDark: Boolean): VpdColors =
     if (isNight(systemDark)) VpdNightColors else VpdDayColors
+
+fun VpdLook.colors(systemDark: Boolean, colour: VpdColour): VpdColors =
+    vpdColors(isNight(systemDark), colour)
