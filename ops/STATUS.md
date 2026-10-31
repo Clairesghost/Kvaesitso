@@ -41,4 +41,4 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
 | B0-pipeline | build | DONE: debug workflow ran green on claude/B1-foundation | main | |
 | B1-foundation | build | DONE (owner verified on phone 2026-10-31): installed, name and icon right, home screen is plain Kvaesitso as expected, lock screen unchanged. Build run 41215748144 green. | claude/B1-foundation | merged into main locally (not pushed) |
-| B2-home | build | active (thread started 2026-10-31) | claude/B2-home | tasks/B2-home/brief.md |
+| B2-home | build | pushed 2026-10-31, GitHub build green (run 41221249219); waiting for owner phone check (tasks/B2-home/testlist.md on the branch) | claude/B2-home | tasks/B2-home/brief.md |
