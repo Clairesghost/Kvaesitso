@@ -281,3 +281,7 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-178 (2026-10-31): Owner approved the colour choices (Cherry, Mint, Midnight, Powder). No more colours for now.
 
 - D-179 (2026-10-31): Owner: the Look setting's Auto follows the phone's dark mode, not the time of day (the earlier "time of day" note was a test). Matches what B1 built; design-system.md updated.
+
+- D-180 (2026-10-31): Owner: until the dial editor exists (B4), the 12 dial apps are the launcher's favourites: pinned apps first, then most used.
+- D-181 (2026-10-31): Owner: in B2 the space under the dial is plain phone body (no empty card frames); cards come in B3.
+- D-182 (2026-10-31): Owner: OK for Android to ask once for the "Nearby devices" permission so the Bluetooth coin can show connected (dark) or not (grey). Read only the connected yes/no, never device names or details.
