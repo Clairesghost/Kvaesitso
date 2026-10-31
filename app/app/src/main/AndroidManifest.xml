@@ -39,7 +39,7 @@
         android:fullBackupContent="@xml/full_backup_rules"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:crossProfile="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/vpd_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:resizeableActivity="true"

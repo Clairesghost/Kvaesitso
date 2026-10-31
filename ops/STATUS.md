@@ -40,4 +40,4 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Then phone-stylist makes preview pictures in docs/design/ BEFORE any code; owner approves previews; then write docs/design-system.md.
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
 | B0-pipeline | build | DONE: debug workflow ran green on claude/B1-foundation | main | |
-| B1-foundation | build | pushed 2026-10-31, GitHub build green (run 41215748144, APK vintage-pocket-dial-debug-apk); waiting for owner phone check (tasks/B1-foundation/testlist.md on the branch) | claude/B1-foundation | not yet merged into main |
+| B1-foundation | build | DONE (owner verified on phone 2026-10-31): installed, name and icon right, home screen is plain Kvaesitso as expected, lock screen unchanged. Build run 41215748144 green. | claude/B1-foundation | merged into main locally (not pushed) |

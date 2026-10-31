@@ -225,7 +225,9 @@ data class LauncherSettingsData internal constructor(
      */
     val localeCurrencies: List<String> = emptyList(),
 
-    val feedProviderPackage: String? = null
+    val feedProviderPackage: String? = null,
+
+    val vpdLook: de.mm20.launcher2.preferences.ui.VpdLook = de.mm20.launcher2.preferences.ui.VpdLook.Auto
 
 
     ) {
