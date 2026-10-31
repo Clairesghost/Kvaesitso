@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Font specimen</title><style>
+@font-face{font-family:'Limelight';src:url(fonts/Limelight-Regular.ttf)}
+@font-face{font-family:'Lato';src:url(fonts/Lato-Regular.ttf);font-weight:400}
+@font-face{font-family:'Lato';src:url(fonts/Lato-Bold.ttf);font-weight:700}
+@font-face{font-family:'Josefin Sans';src:url(fonts/JosefinSans-VF.ttf);font-weight:100 700}
+@font-face{font-family:'Source Sans 3';src:url(fonts/SourceSans3-VF.ttf);font-weight:200 900}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#222;font-family:var(--bodyf),sans-serif}
+.phone{font-family:var(--bodyf),sans-serif;position:relative;width:360px;height:800px;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,var(--ground) 0%,var(--ground2) 100%);color:var(--text)}
+.phone:before{content:"";position:absolute;inset:8px;border:1.5px solid var(--brass);border-radius:30px;opacity:.55;pointer-events:none}
+.hole{position:absolute;left:174px;top:10px;width:12px;height:12px;border-radius:50%;background:#000;box-shadow:0 0 0 1.5px #1d1d1d}
+.status{position:absolute;top:9px;left:22px;right:22px;height:20px;display:flex;justify-content:space-between;align-items:center;font-family:var(--headf);font-weight:var(--hw);font-size:14px;color:var(--brasstext);letter-spacing:.5px}
+.status .mid{width:60px}
+.batt{display:flex;align-items:center;gap:5px;font-family:var(--bodyf);font-weight:700;font-size:12px;color:var(--text)}
+.abs{position:absolute}
+.h{font-family:var(--headf);font-weight:var(--hw);color:var(--brasstext);letter-spacing:1.2px;text-transform:uppercase}
+.frame{position:absolute;background:linear-gradient(180deg,var(--panel),var(--panel2));border:2px solid var(--brass);border-radius:16px;box-shadow:inset 0 0 0 3px var(--ground2),inset 0 0 0 4px var(--brassD),0 4px 10px rgba(0,0,0,.25)}
+.orn{position:absolute;width:9px;height:9px;background:var(--brassL);transform:rotate(45deg);border:1px solid var(--brassD)}
+.tile{width:62px;height:62px;border-radius:18px;border:2px solid var(--brass);background:linear-gradient(160deg,var(--panel),var(--panel2));display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2.5px var(--ground2),inset 0 0 0 3.5px var(--brassD)}
+.cell{position:absolute;width:86px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:var(--text)}
+.lbl{font-size:12px;line-height:1.1;text-align:center}
+.sw{position:absolute;width:104px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.sw .t{font-size:12px;letter-spacing:1px}
+.sw .s{font-size:10.5px;color:var(--muted);text-align:center;line-height:1.1;font-family:var(--bodyf)}
+.drawer{width:70px;height:62px;position:relative}
+body{background:#1a1a1a}</style></head><body><div style="display:flex;gap:24px;padding:24px;background:#1a1a1a;width:1300px;align-items:flex-start"><div style="--ground:#0B2A33;--ground2:#071C24;--panel:#123C48;--panel2:#0E2F3A;--text:#F2E8CF;--muted:#A8BDBB;--brass:#C9A24B;--brassL:#EBD08A;--brassD:#7E5F22;--chrome:#C9D5D8;--accent:#3FB8A6;--alert:#F0674F;--ink:#071C24;--brasstext:#E3C170;--headf:'Limelight';--bodyf:'Lato';--hw:400;background:var(--ground);color:var(--text);padding:26px;width:600px;border:2px solid var(--brass);border-radius:16px;font-family:var(--bodyf)">
+<div class="h" style="font-size:14px;color:var(--muted)">Font set A</div>
+<div class="h" style="font-size:34px;margin:10px 0 6px">Next event</div><div class="h" style="font-size:22px">Mon 12 &middot; Tasks &middot; Motion</div>
+<div class="h" style="font-size:16px;margin-top:6px">0123456789 ABCDEFGHIJKLM</div>
+<p style="font-size:17px;margin-top:18px;line-height:1.35">Body text: Team meeting with the placeholder crew, then a short walk. The quick brown fox jumps over the lazy dog 0123456789.</p>
+<p style="font-size:13px;margin-top:8px;color:var(--muted)">Small text: Full / Minimal / Off, follows phone auto-rotate</p>
+<hr style="border:0;border-top:1px solid var(--brassD);margin:16px 0 10px"><div style="font-size:14px"><b>Headings:</b> Limelight (art-deco display, Eben Sorkin)<br><b>Body:</b> Lato (Lukasz Dziedzic)<br><b>Licence:</b> both SIL Open Font License 1.1 (bundling allowed)</div></div><div style="--ground:#0B2A33;--ground2:#071C24;--panel:#123C48;--panel2:#0E2F3A;--text:#F2E8CF;--muted:#A8BDBB;--brass:#C9A24B;--brassL:#EBD08A;--brassD:#7E5F22;--chrome:#C9D5D8;--accent:#3FB8A6;--alert:#F0674F;--ink:#071C24;--brasstext:#E3C170;--headf:'Josefin Sans';--bodyf:'Source Sans 3';--hw:600;background:var(--ground);color:var(--text);padding:26px;width:600px;border:2px solid var(--brass);border-radius:16px;font-family:var(--bodyf)">
+<div class="h" style="font-size:14px;color:var(--muted)">Font set B</div>
+<div class="h" style="font-size:34px;margin:10px 0 6px">Next event</div><div class="h" style="font-size:22px">Mon 12 &middot; Tasks &middot; Motion</div>
+<div class="h" style="font-size:16px;margin-top:6px">0123456789 ABCDEFGHIJKLM</div>
+<p style="font-size:17px;margin-top:18px;line-height:1.35">Body text: Team meeting with the placeholder crew, then a short walk. The quick brown fox jumps over the lazy dog 0123456789.</p>
+<p style="font-size:13px;margin-top:8px;color:var(--muted)">Small text: Full / Minimal / Off, follows phone auto-rotate</p>
+<hr style="border:0;border-top:1px solid var(--brassD);margin:16px 0 10px"><div style="font-size:14px"><b>Headings:</b> Josefin Sans (geometric deco, Santiago Orozco)<br><b>Body:</b> Source Sans 3 (Adobe)<br><b>Licence:</b> both SIL Open Font License 1.1 (bundling allowed)</div></div></div></body></html>

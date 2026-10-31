@@ -1,0 +1,12 @@
+<!doctype html><meta charset=utf-8><body style="width:1660px;background:#17181b"><script src="lib.js"></script><script src="sheets.js"></script><script>
+const d_sun=`<path d="M-62 56L58 -50" stroke="${CORAL}" stroke-width="3.5" stroke-dasharray="4 9" stroke-linecap="round"/><path d="M50 -58l16 4l-10 12z" fill="${CORAL}"/>`;
+const d_rain=[[-54,-14],[-12,18],[32,-26],[58,20],[8,-2]].map(([x,y])=>`<path d="M${x} ${y+12}v26" stroke="${CORAL}" stroke-width="3.5" stroke-dasharray="3 7" stroke-linecap="round"/><path d="M${x-5} ${y+36}l5 8l5-8z" fill="${CORAL}"/>`).join('');
+const d_snow=[[-50,-70],[10,-76],[56,-60]].map(([x,y])=>`<path d="M${x} ${y}c10 14 -10 30 0 44c10 14 -8 24 0 38" fill="none" stroke="${CORAL}" stroke-width="3.5" stroke-dasharray="3 8" stroke-linecap="round"/>`).join('');
+const d_night=[[30,-62],[58,-30],[-8,-70]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="10" fill="none" stroke="${CORAL}" stroke-width="3"/>`).join('');
+mount(`<div style="padding:34px 30px;color:#f1ead6"><div style="font:600 46px CG,serif;letter-spacing:1px">Weather lens: four states, one small motion each</div><div style="font:400 20px Lato;color:#bfc7c4;margin:8px 0 22px;max-width:1580px">Left: the strip as it sits on Home. Right: the glass lens enlarged; coral dashes and rings mark the ONE motion and are not part of the design. Nothing moves in this picture. Placeholder temperatures and words.</div><div style="display:grid;gap:18px">`
++wRow('sun','a','Sunny','24°','Sunny',['Sunny','A soft glare band crosses the glass once','(about 8 seconds), then rests.','Colours: pale teal sky, cream sun.'],d_sun)
++wRow('rain','a','Rain','17°','Light rain',['Light rain','Five glass beads slide slowly down','the lens, one after another.','Painted city goes soft grey-teal.'],d_rain)
++wRow('snow','a','Snow','-2°','Light snow',['Light snow','About a dozen flakes drift down with','a small sideways sway, very slowly.','Ground turns cream-white.'],d_snow)
++wRow('night','b','Night','9°','Clear night',['Clear night','Three stars twinkle, one at a time.','Moon and lit windows stay still.','Used by the night scheme.'],d_night)
++`</div><div style="font:400 19px Lato;color:#aeb6b3;margin-top:18px;max-width:1580px">Every motion: only the lens (about 240 by 240 pixels on screen), at most 12 frames a second, under the Motion setting (Full / Minimal / Off), only while Home is on screen, the screen is on, Battery Saver is off and the battery is above 15% or charging. Tap on the strip opens the weather app (D-19).</div></div>`)
+</script>

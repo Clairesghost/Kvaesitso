@@ -1,0 +1,1294 @@
+<title>Steam Dial</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Crimson+Pro:wght@500;700;800&display=swap">
+<style>
+/* Page chrome is one dark warm look on purpose; the phone inside has its own switchable colour schemes. */
+:root{
+  --page:#1c1713;--panel:#28211a;--line:#43372b;--text:#f4ead8;--muted:#b9a995;--gold:#f2b94b;--teal:#2b6f6b;
+  --f-display:"Cinzel",Georgia,serif;--f-ui:"Crimson Pro",system-ui,sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--page);color:var(--text);font-family:var(--f-ui);font-size:15px;line-height:1.5;
+  padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 6px;text-wrap:balance}
+.lead{color:var(--muted);max-width:62ch;margin:0 0 22px}
+.wrap{display:flex;flex-wrap:wrap;gap:28px 36px;align-items:flex-start;max-width:1000px}
+#pw{position:relative;flex:0 0 auto;width:min(100%,360px);aspect-ratio:360/780;border-radius:34px;overflow:hidden;box-shadow:0 22px 50px #000a;background:#000}
+.panelcol{flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h2{font-family:var(--f-display);font-weight:700;font-size:18px;margin:0 0 10px;color:var(--gold)}
+.lbl{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stack{display:flex;flex-direction:column;gap:14px}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{flex:1;background:transparent;color:var(--text);border:0;padding:9px 6px;font:inherit;font-size:14px;cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--gold);color:#2a1d05;font-weight:800}
+button.act{background:var(--teal);color:var(--text);border:1px solid #1d4b48;border-radius:10px;padding:9px 13px;font:inherit;font-size:14px;cursor:pointer}
+button.act[aria-pressed=true]{background:var(--gold);color:#2a1d05;font-weight:800}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;margin:0;font-variant-numeric:tabular-nums;font-size:14px}
+dt{color:var(--muted)}dd{margin:0;text-align:right}
+#log{margin:0;padding:0;list-style:none;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px;min-height:5.6em}
+#log li:first-child{color:var(--text)}
+.notes{font-size:13px;color:var(--muted);margin:0;padding-left:18px}
+.notes li{margin-bottom:4px}
+.gest{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;margin:0}
+.gest dt{color:var(--gold);font-weight:700}
+
+#sMode2{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+#sMode2 button{flex:1;background:transparent;color:var(--text);border:0;padding:9px 6px;font:inherit;font-size:14px;cursor:pointer;border-right:1px solid var(--line)}
+#sMode2 button:last-child{border-right:0}
+#sMode2 button[aria-pressed=true]{background:var(--gold);color:#2a1d05;font-weight:800}
+.sw2{display:flex;gap:8px}
+.sw2 button{width:36px;height:36px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;padding:0;overflow:hidden;position:relative}
+.sw2 button[aria-pressed=true]{border-color:var(--gold)}
+.sw2 i{position:absolute;inset:0}
+
+/* ---------- the phone ---------- */
+#screen{position:absolute;left:0;top:0;width:360px;height:780px;transform-origin:0 0;overflow:hidden;font-family:var(--f-ui);color:var(--txt);background:var(--bg);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+/* steam looks: four seasons, each with a light (parchment) and a dark (leather, iron) look; b0..b5 are the enamel button colours */
+#screen[data-scheme=spring-light]{--bg:#e9efe0;--bg2:#d6e0c8;--well:#b9c9a8;--card:#f4f1e2;--card2:#e6e8d2;--line:#9a8450;--txt:#2f2a1c;--mut:#6b6246;--acc:#2f7f6a;--acc2:#b0552e;--face:#fbf4e0;--ink:#2f2a1c;--ontop:#ffffff;--b0:#3f8f7a;--b1:#b0552e;--b2:#c9962f;--b3:#35608a;--b4:#7a4a6f;--b5:#5b7a3a}
+#screen[data-scheme=spring-dark]{--bg:#1b2a25;--bg2:#25403a;--well:#121e1a;--card:#2a3f37;--card2:#35504a;--line:#8a7440;--txt:#efe9d2;--mut:#a9b8a2;--acc:#e0b255;--acc2:#5fc0a4;--face:#f2ead2;--ink:#1b2a25;--ontop:#231a06;--b0:#4fae96;--b1:#c8663c;--b2:#d7a43a;--b3:#4a79a8;--b4:#9a6a8e;--b5:#6f9a4a}
+#screen[data-scheme=summer-light]{--bg:#f4ead2;--bg2:#e8d6ae;--well:#d7bf8a;--card:#fbf4e2;--card2:#f0e2bf;--line:#a8782f;--txt:#35260f;--mut:#7a6234;--acc:#b8502a;--acc2:#2f7f95;--face:#fcf5e0;--ink:#35260f;--ontop:#ffffff;--b0:#b8502a;--b1:#2f7f95;--b2:#d09a2a;--b3:#4a6fa5;--b4:#8a4a6a;--b5:#5d7f3a}
+#screen[data-scheme=summer-dark]{--bg:#1a2a3a;--bg2:#243e55;--well:#101c28;--card:#28425a;--card2:#345470;--line:#b88a3e;--txt:#f2ecd8;--mut:#a8bccd;--acc:#f0b840;--acc2:#ee7d52;--face:#f4eed8;--ink:#1a2a3a;--ontop:#231a06;--b0:#d8703c;--b1:#3f95b0;--b2:#e0aa3a;--b3:#5a85c0;--b4:#a8607f;--b5:#6f9f4f}
+#screen[data-scheme=autumn-light]{--bg:#f1e2c8;--bg2:#e2cea6;--well:#cdb184;--card:#f9f0dc;--card2:#ecdcb8;--line:#94642c;--txt:#34210f;--mut:#77582f;--acc:#a8431f;--acc2:#2d7a72;--face:#fbf2db;--ink:#34210f;--ontop:#ffffff;--b0:#a8431f;--b1:#2d7a72;--b2:#c98a22;--b3:#7a3b2a;--b4:#6f4a7a;--b5:#58742f}
+#screen[data-scheme=autumn-dark]{--bg:#261a12;--bg2:#3a2819;--well:#170f09;--card:#402c1b;--card2:#503a25;--line:#a67c36;--txt:#f3e6c8;--mut:#bba584;--acc:#e6b04a;--acc2:#d9743f;--face:#f3e6c8;--ink:#261a12;--ontop:#231a06;--b0:#d1893a;--b1:#c25a3a;--b2:#4f9a8a;--b3:#a8742a;--b4:#8a6aa0;--b5:#7a9a4a}
+#screen[data-scheme=winter-light]{--bg:#e6eaec;--bg2:#d1d9de;--well:#b7c3cb;--card:#f4f6f7;--card2:#e1e7ea;--line:#8a8f94;--txt:#232b30;--mut:#5f6b73;--acc:#2f5f8f;--acc2:#a8473a;--face:#fafbfb;--ink:#232b30;--ontop:#ffffff;--b0:#2f5f8f;--b1:#a8473a;--b2:#4f8a8a;--b3:#6a6a9a;--b4:#5a7a4a;--b5:#b08a30}
+#screen[data-scheme=winter-dark]{--bg:#171c24;--bg2:#232b38;--well:#0d1117;--card:#26303f;--card2:#323e51;--line:#8d8366;--txt:#e8e6dc;--mut:#a2adba;--acc:#d8b45c;--acc2:#6fa8d8;--face:#ecebe0;--ink:#171c24;--ontop:#231a06;--b0:#5a8fd0;--b1:#d0645a;--b2:#4fb0a8;--b3:#9a86d0;--b4:#7ab06a;--b5:#d8a844}
+#screen{--ts:1}
+#screen .abs{position:absolute}
+.wall{position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 18%,var(--bg2),var(--bg) 70%);}
+.dots{position:absolute;inset:0;background-image:radial-gradient(var(--line) 1px,transparent 1.3px);background-size:18px 18px;opacity:.35;pointer-events:none}
+:where(button.u){background:none;border:0}
+.u{font:inherit;color:inherit;padding:0;cursor:pointer;text-align:inherit}
+
+.decor{position:absolute;inset:0;width:360px;height:780px;pointer-events:none}
+.pill{position:absolute;left:90px;top:7px;width:180px;height:28px;border-radius:14px;border:2px solid transparent;background:linear-gradient(#140c06,#140c06) padding-box,linear-gradient(135deg,#f0d18a,#9a7030 35%,#d8b062 60%,#6a4a1c) border-box;display:flex;align-items:center;justify-content:space-between;padding:0 12px;box-shadow:0 2px 5px #000a;cursor:pointer;z-index:4}
+.pill .grp{display:flex;align-items:center;gap:8px;width:54px}
+.pill .grp.l{justify-content:flex-start}.pill .grp.r{justify-content:flex-end}
+.pill svg{width:13px;height:13px;fill:none;stroke:#e6b04a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s}
+.pill svg.off{opacity:.3}
+.hole{width:14px;height:14px;border-radius:50%;flex:0 0 14px;background:radial-gradient(circle at 38% 32%,#3a4d6b 0,#0a0f18 45%,#000 70%);box-shadow:0 0 0 1.5px #3b2410,0 0 0 3px #d8b062,0 0 0 4px #3b2410}
+.top{position:absolute;left:44px;right:44px;top:40px;height:30px;background:var(--card);border:3px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:14px;letter-spacing:.14em}
+.gi{width:16px;height:16px;fill:var(--acc);flex:0 0 16px}
+.inst{position:absolute;top:122px;width:56px;height:56px;display:flex;align-items:center;justify-content:center}
+.lens{width:42px;height:42px;border-radius:50%;flex:0 0 42px;position:relative;box-shadow:inset 0 -3px 6px #0005,inset 0 3px 6px #fff6,0 0 0 1.5px #3b2410,0 0 0 4px #d8b062,0 0 0 5.500px #3b2410;cursor:pointer}
+.lens svg{width:100%;height:100%;display:block}
+.plate{position:absolute;top:50px;min-width:40px;padding:1px 6px;text-align:center;background:linear-gradient(180deg,#f0d18a,#a8742a);color:#2a1808;border:1.5px solid #3b2410;border-radius:4px;box-shadow:0 2px 3px #0006}
+.tmp,#batTxt{font-family:var(--f-display);font-weight:700;font-size:13px;line-height:1.3;color:#2a1808}
+.cond{font-size:10.5px}
+.gauge{width:50px;height:50px;display:block;filter:drop-shadow(0 0 0 #000)}
+.valve{position:absolute;top:416px;width:30px;height:30px;padding:0;background:none;border:0;cursor:pointer;z-index:3}
+.valve svg{width:30px;height:30px;overflow:visible}
+.valve .wheel{transition:transform .55s cubic-bezier(.3,1.5,.5,1)}
+@media (prefers-reduced-motion:reduce){.valve .wheel{transition:none}}
+.gauge line{transform-origin:12px 13px;transition:transform .7s cubic-bezier(.3,1.7,.5,1)}
+@media (prefers-reduced-motion:reduce){.gauge line{transition:none}}
+.srch{position:absolute;left:44px;right:44px;top:76px;height:30px;background:var(--card);border:3px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--mut);font-size:14px;font-weight:700}
+.srch svg{width:16px;height:16px;flex:0 0 16px}
+#dial{position:absolute;left:0;top:116px;width:360px;height:360px;pointer-events:none}
+#dialHit{position:absolute;left:28px;top:134px;width:304px;height:304px;border-radius:50%;touch-action:none;cursor:grab}
+
+.panel{position:absolute;left:16px;right:16px;top:450px;height:92px;border-radius:16px;background:var(--card);border:1.5px solid var(--line);overflow:hidden}
+.cal{display:flex;gap:12px;padding:9px 12px;align-items:stretch;text-align:left}
+.cdate{width:56px;flex:0 0 56px;border-radius:14px;background:var(--acc);color:var(--ontop);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.cdate small{font-size:10px;font-weight:800;letter-spacing:.1em}
+.cdate b{font-family:var(--f-display);font-size:28px;font-weight:700;margin:1px 0}
+.cev{min-width:0;flex:1;font-size:calc(12.5px*var(--ts))}
+.cev h3{font-family:var(--f-display);font-weight:700;font-size:calc(14px*var(--ts));margin:0 0 3px;color:var(--acc)}
+.cev ul,.fp ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px}
+.cev li{display:flex;align-items:center;gap:8px;height:calc(16px*var(--ts));white-space:nowrap}
+.cev li b{color:var(--acc);font-weight:800;min-width:38px;font-variant-numeric:tabular-nums}
+.cev li span{overflow:hidden;text-overflow:ellipsis}
+.fp{position:absolute;inset:0;padding:8px 14px 6px;display:none;font-size:calc(12px*var(--ts))}
+.fp.on{display:flex}
+.fp li{display:flex;align-items:center;gap:8px;height:calc(14px*var(--ts));white-space:nowrap}
+.fp li button{display:flex;align-items:center;gap:8px;width:100%;height:100%}
+.fp ul{width:100%}
+.chk{width:11px;height:11px;border:1.5px solid var(--acc);border-radius:3px;flex:0 0 11px;display:inline-block}
+.done .chk{background:var(--acc)}
+.done span{text-decoration:line-through;opacity:.6}
+.pdots{position:absolute;right:14px;top:-5px;display:flex;gap:5px;background:var(--acc);padding:3px 7px;border-radius:6px}
+.pdots i{width:5px;height:5px;border-radius:50%;background:var(--ontop);opacity:.4}
+.pdots i.on{opacity:1}
+.pbadge{margin-left:auto;background:var(--acc2);color:#fff;border-radius:9px;min-width:18px;height:17px;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;padding:0 4px}
+.fc{position:absolute;left:16px;right:16px;top:556px;height:60px;border-radius:16px;background:var(--card2);border:1.5px solid var(--line);touch-action:pan-y}
+.fc .t{position:absolute;left:12px;top:-8px;background:var(--acc);color:var(--ontop);font-size:9px;font-weight:800;letter-spacing:.1em;border-radius:6px;padding:1px 7px;border:0;cursor:pointer;z-index:2;min-height:0}
+.fc .fp.fcast{padding:4px 6px 6px;align-items:stretch}
+.fc .d{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:10.5px;font-weight:800;line-height:1.1}
+.fc .d svg{width:26px;height:22px}
+.fc .d small{font-weight:700;color:var(--mut);font-size:10.5px}
+.ntf{position:absolute;left:16px;right:16px;top:626px;height:58px;background:var(--card2);touch-action:pan-y}
+.ntf .t{position:absolute;left:12px;top:-8px;background:var(--acc);color:var(--ontop);font-size:9px;font-weight:800;letter-spacing:.1em;border-radius:6px;padding:1px 7px;z-index:2}
+.ntf ul{list-style:none;margin:0;padding:8px 10px 4px;display:flex;flex-direction:column;gap:1px}
+.ntf li{display:flex;align-items:center;gap:6px;height:15px;font-size:calc(11.5px*var(--ts));white-space:nowrap;cursor:pointer}
+.ntf li b{font-weight:800;min-width:54px}
+.ntf li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--mut)}
+.ntf li em{font-style:normal;color:var(--acc);font-weight:700;font-size:10.5px}
+.ntf li .x{width:24px;height:15px;padding:0;background:none;border:0;color:var(--mut);font-size:11px;cursor:pointer}
+.ntf svg.ni{width:15px;height:15px;flex:0 0 15px;overflow:visible}
+.tray{position:absolute;left:16px;right:16px;top:698px;height:74px;background:var(--card);display:flex;justify-content:space-around;align-items:center;padding-top:4px}
+.tray .t{position:absolute;left:14px;top:-8px;background:var(--acc);color:var(--ontop);font-size:9px;font-weight:800;letter-spacing:.12em;border-radius:6px;padding:1px 9px}
+.pin{width:64px;height:62px;display:flex;flex-direction:column;align-items:center;gap:0;font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--txt);position:relative}
+.pin svg{width:42px;height:42px;overflow:visible}
+.pin.lp svg{transform:scale(.92)}
+.handle{position:absolute;left:135px;width:90px;top:684px;height:28px;display:flex;align-items:center;justify-content:center;z-index:3}
+.handle i{display:block;width:70px;height:20px;border-radius:10px;background:var(--card);border:2px solid #a8742a;position:relative}
+.handle i::before{content:"";position:absolute;left:50%;top:6px;width:7px;height:7px;border-left:2.5px solid var(--acc);border-top:2.5px solid var(--acc);transform:translateX(-50%) rotate(45deg);border-radius:2px}
+.homebar{display:none}
+
+.ov{position:absolute;inset:0;background:var(--bg);display:flex;flex-direction:column}
+.ov[hidden]{display:none!important}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-top:3px solid var(--acc);border-radius:24px 24px 0 0;padding:6px 14px 14px;overflow-y:auto;transform:translateY(103%);visibility:hidden;transition:transform .28s ease,visibility 0s .28s;box-shadow:0 -10px 30px #0006;z-index:30}
+.sheet.open{transform:translateY(0);visibility:visible;transition:transform .28s ease,visibility 0s}
+.sheet.drawer{height:84%}
+.sheet.set{height:84%;z-index:45}
+.qp{position:absolute;left:0;right:0;top:0;background:var(--bg);border-bottom:3px solid var(--acc);border-radius:0 0 24px 24px;padding:16px 14px 14px;transform:translateY(-104%);visibility:hidden;transition:transform .28s ease,visibility 0s .28s;box-shadow:0 10px 30px #0006;z-index:42}
+.qp.open{transform:translateY(0);visibility:visible;transition:transform .28s ease,visibility 0s}
+@media (prefers-reduced-motion:reduce){.sheet,.sheet.open,.qp,.qp.open{transition:none}}
+.sheet h3,.qp h3{font-family:var(--f-display);font-weight:700;font-size:19px;margin:2px 0 10px;color:var(--acc);text-align:center}
+.grab{display:block;margin:0 auto 4px;width:60px;height:22px;background:none;border:0;position:relative;cursor:pointer}
+.grab::after{content:"";position:absolute;left:0;right:0;top:9px;height:5px;border-radius:3px;background:var(--line)}
+.field{width:100%;box-sizing:border-box;background:var(--card);color:var(--txt);border:1.5px solid var(--line);border-radius:18px;padding:9px 14px;font:inherit;font-size:15px;margin-bottom:10px}
+.lab2{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--mut);margin:8px 0 5px;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:6px 11px;font-size:12px;font-weight:700;color:var(--txt);cursor:pointer;min-height:32px}
+.chip svg{width:16px;height:16px}
+.chip[aria-pressed=true]{border-color:var(--acc);background:var(--card2)}
+.fold{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:8px 10px;margin-bottom:8px}
+.fold b{font-family:var(--f-display);font-size:13px;color:var(--acc)}
+.az{display:flex;position:sticky;top:-6px;z-index:2;background:var(--bg);padding:6px 0;margin:6px 0;border-bottom:1.5px solid var(--line);touch-action:none}
+.az span{flex:1 1 0;min-width:0;text-align:center;font-size:10.5px;font-weight:800;color:var(--acc);height:30px;line-height:30px;border-radius:5px}
+.az span.off{opacity:.3}
+.az span.cur{background:var(--acc);color:var(--ontop)}
+.sec h4{margin:6px 0 4px;font-family:var(--f-display);font-size:14px;color:var(--acc)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.appb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;padding:5px 2px;border-radius:12px;min-width:0;color:var(--txt);cursor:pointer}
+.appb svg{width:42px;height:42px;overflow:visible}
+.appb span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:68px;border-radius:16px;background:var(--card);border:1.5px solid var(--line);font-size:10.5px;font-weight:800;color:var(--txt);cursor:pointer;text-align:center;padding:2px}
+.tile svg{width:22px;height:22px;stroke:var(--acc);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tile small{font-size:9px;color:var(--mut);font-weight:700}
+.tile[aria-pressed=true]{background:var(--acc);color:var(--ontop);border-color:var(--acc)}
+.tile[aria-pressed=true] svg{stroke:var(--ontop)}
+.tile[aria-pressed=true] small{color:var(--ontop)}
+.rowset{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:9px 12px;margin-bottom:7px;font-size:13px;font-weight:700;min-height:44px}
+.rowset small{display:block;color:var(--mut);font-weight:600;font-size:11px}
+.sw{width:46px;height:26px;border-radius:13px;background:var(--line);position:relative;border:0;cursor:pointer;flex:0 0 46px}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:var(--txt);transition:left .15s}
+.sw[aria-pressed=true]{background:var(--acc)}
+.sw[aria-pressed=true]::after{left:23px;background:var(--ontop)}
+.sg{display:flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.sg button{background:none;border:0;color:var(--txt);font:inherit;font-size:12px;font-weight:700;padding:6px 10px;cursor:pointer;min-height:32px}
+.sg button[aria-pressed=true]{background:var(--acc);color:var(--ontop)}
+.sw2{display:flex;gap:8px}
+.sw2 button{width:36px;height:36px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;padding:0;overflow:hidden;position:relative}
+.sw2 button[aria-pressed=true]{border-color:var(--acc)}
+.sw2 i{position:absolute;inset:0}
+.srcho{position:absolute;inset:0;padding:48px 14px 14px;display:flex;flex-direction:column;z-index:40;background:var(--bg)}
+.srcho[hidden]{display:none!important}
+.sb{display:flex;gap:8px}
+.sb input{flex:1;min-width:0}
+.sb .chip{margin-bottom:10px}
+#qres{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+#qres button.r{width:100%;display:flex;align-items:center;gap:10px;background:var(--card);color:var(--txt);border:1.5px solid var(--line);border-radius:14px;padding:8px 12px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-align:left;min-height:46px}
+#qres button.r small{display:block;font-size:11px;color:var(--mut);font-weight:600}
+#qres svg.g{width:30px;height:30px;flex:0 0 30px;overflow:visible}
+#qres .hd{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--mut);margin:6px 0 0;text-transform:uppercase}
+.calc{background:var(--acc);color:var(--ontop);border-radius:14px;padding:10px 14px;font-size:18px;font-weight:800}
+.calc small{display:block;font-size:11px;font-weight:700;opacity:.8}
+.opened{position:absolute;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
+.opened[hidden]{display:none!important}
+.opened svg{width:96px;height:96px;overflow:visible}
+.opened h3{font-family:var(--f-display);font-size:26px;margin:0}
+.opened p{margin:0;color:var(--mut);font-size:13px;max-width:26ch}
+.menu{position:absolute;z-index:60;min-width:190px;background:var(--card);border:1.5px solid var(--acc);border-radius:16px;padding:6px;box-shadow:0 12px 30px #0008}
+.menu[hidden]{display:none!important}
+.menu .mt{display:flex;align-items:center;gap:8px;padding:4px 8px 6px;font-family:var(--f-display);font-weight:700;font-size:14px;color:var(--acc)}
+.menu .mt svg{width:24px;height:24px;overflow:visible}
+.menu button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--txt);font:inherit;font-size:13.5px;font-weight:700;padding:9px 10px;border-radius:10px;cursor:pointer;min-height:40px}
+.menu button:hover{background:var(--card2)}
+.menu hr{border:0;border-top:1.5px solid var(--line);margin:4px 2px}
+.scrim{position:absolute;inset:0;z-index:55;background:#0003}
+.scrim[hidden]{display:none!important}
+.toast{position:absolute;left:24px;right:24px;bottom:84px;z-index:70;background:var(--txt);color:var(--bg);border-radius:14px;padding:9px 14px;font-size:12.5px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+/* riveted brass corners on the panels */
+:is(.top,.srch,.panel,.fc,.tray,.ntf){--rv:radial-gradient(circle,#f5dfa0 0 1.3px,#7a4f1c 1.9px,transparent 2.5px);background-image:var(--rv),var(--rv),var(--rv),var(--rv);background-repeat:no-repeat;background-size:6px 6px;background-position:5px 5px,calc(100% - 5px) 5px,5px calc(100% - 5px),calc(100% - 5px) calc(100% - 5px);border:3px solid transparent;border-image:linear-gradient(135deg,#f0d18a,#9a7030 35%,#d8b062 60%,#6a4a1c) 1;border-radius:0;box-shadow:0 3px 6px #0007,inset 0 0 0 1.5px #2a1808}
+.top,.srch{border-image:linear-gradient(135deg,#f0d18a,#9a7030 35%,#d8b062 60%,#6a4a1c) 1;border-color:transparent}
+.top{box-shadow:0 3px 6px #0007,inset 0 0 0 1.5px #2a1808}
+/* steam from a little valve: only while gates allow (Motion Full, nothing else animating much); 12 steps a second at most */
+.steam{position:absolute;left:337px;top:358px;width:30px;height:70px;pointer-events:none}
+.steam .pf{fill:var(--txt);opacity:0;transform-box:fill-box;transform-origin:center}
+#screen.steamOn .steam .pf{animation:puff 3s steps(36) infinite}
+#screen.steamOn .steam .pf:nth-of-type(2){animation-delay:-1s}
+#screen.steamOn .steam .pf:nth-of-type(3){animation-delay:-2s}
+@keyframes puff{0%{transform:translate(0,0) scale(.4);opacity:0}15%{opacity:.5}100%{transform:translate(5px,-48px) scale(1.6);opacity:0}}
+.tapring{fill:none;stroke:#fff;stroke-dasharray:3 3;opacity:.9}
+.showtaps .pin{outline:1.5px dashed var(--acc);outline-offset:-1px;border-radius:14px}
+</style>
+
+<h1>Steam Dial</h1>
+<p class="lead">Pocket Dial in a steampunk coat: copper and brass, riveted panels, a pressure gauge for the battery, little gears that turn when you turn the ring, a valve puffing steam and a ticking second hand. Same features as Pocket Dial: spin the ring, tap an app, press and hold for shortcuts, pull up for all apps, pull down for quick settings, hold empty space for settings. Try Motion Off, Battery saver and the battery demo to see the idle effects rest. It is a picture that moves, not the real launcher.</p>
+
+<div class="wrap">
+  <div id="pw">
+  <div id="screen" data-scheme="autumn-dark">
+    <div class="wall"></div><div class="dots"></div>
+
+    <!-- background machinery: pipes down both edges, gears are added by script -->
+    <svg id="decor" class="decor" viewBox="0 0 360 780" aria-hidden="true">
+      <g fill="none" stroke-linecap="square" stroke-linejoin="round">
+        <path d="M30 150 H9 V690" stroke="#2a1808" stroke-width="10"/><path d="M30 150 H9 V690" stroke="#a8742a" stroke-width="7"/><path d="M30 148 H7.500 V690" stroke="#f5dfa0" stroke-width="1.600" opacity=".75"/>
+        <path d="M330 150 H351 V690" stroke="#2a1808" stroke-width="10"/><path d="M330 150 H351 V690" stroke="#a8742a" stroke-width="7"/><path d="M330 148 H352.500 V690" stroke="#f5dfa0" stroke-width="1.600" opacity=".75"/>
+      </g>
+      <g id="flanges"></g>
+    </svg>
+
+    <!-- status pill at the top centre, built round the camera hole: Wi-Fi and Bluetooth on the left, signal and alarm/quiet on the right -->
+    <button class="pill" id="pill" type="button" aria-label="Status pill round the camera. Wi-Fi, Bluetooth, signal, quiet mode. Tap for quick settings">
+      <span class="grp l">
+        <svg id="pWifi" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0M6 12.500a9.500 9.500 0 0 1 12 0M9 16a5 5 0 0 1 6 0M12 19.500h.01"/></svg>
+        <svg id="pBt" viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></svg>
+      </span>
+      <span class="hole" aria-hidden="true"></span>
+      <span class="grp r">
+        <svg id="pSig" viewBox="0 0 24 24"><path d="M4 20v-3M9 20v-6M14 20v-9M19 20V5"/></svg>
+        <svg id="pBell" viewBox="0 0 24 24"><path d="M18 15V10a6 6 0 0 0-12 0v5l-2 3h16zM10 21h4"/><path id="pSlash" d="M4 4l16 16" display="none"/></svg>
+      </span>
+    </button>
+
+    <button class="top u" id="top" type="button" aria-label="Quick settings. Tap to pull down">
+      <svg class="gi" viewBox="-10 -10 20 20" aria-hidden="true"></svg><span id="dateTxt">TUE 28 OCT</span><svg class="gi" viewBox="-10 -10 20 20" aria-hidden="true"></svg>
+    </button>
+
+    <!-- instruments in the top corners, each set in a toothed wheel that meshes the dial -->
+    <div class="inst" style="left:16px">
+      <span class="lens" id="lens" role="button" tabindex="0" aria-label="Weather. Tap to cycle the demo weather"></span>
+      <span class="plate" style="left:-6px"><span class="tmp" id="tmp">9°</span><span class="cond" id="cond" hidden>Clear night</span></span>
+    </div>
+    <div class="inst" style="left:288px">
+      <svg id="batI" class="gauge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#f3e6c8" stroke="#a87a30" stroke-width="1.600"/><path d="M4.640 8.750 A8.500 8.500 0 0 1 6.310 6.680" fill="none" stroke="#c0392b" stroke-width="1.800"/><path d="M4.640 8.750 A8.500 8.500 0 0 1 19.360 8.750" fill="none" stroke="#7a3c1a" stroke-width=".6" stroke-dasharray=".9 1.800"/><text x="12" y="20" text-anchor="middle" font-size="3.400" font-family="Cinzel, serif" fill="#6a4a1c">PSI</text><line id="needle" x1="12" y1="13" x2="12" y2="5.500" stroke="#a8431f" stroke-width="1.300" stroke-linecap="round"/><circle cx="12" cy="13" r="1.600" fill="#6a4a1c"/></svg>
+      <span class="plate" style="right:-6px"><span id="batTxt">78%</span></span>
+    </div>
+
+    <!-- valve wheels on the pipes: left = light or dark, right = motion -->
+    <button class="valve" id="valveL" type="button" style="left:-4px" aria-label="Valve wheel: switch light or dark look"><svg viewBox="-13 -13 26 26"><g class="wheel"></g></svg></button>
+    <button class="valve" id="valveR" type="button" style="left:338px" aria-label="Valve wheel: motion Full, Gentle or Off"><svg viewBox="-13 -13 26 26"><g class="wheel"></g></svg></button>
+
+    <button class="srch u" id="srchBtn" type="button" aria-label="Open search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.500 15.500L21 21"/></svg>
+      <span>Search, calculate, convert…</span>
+    </button>
+
+    <svg id="dial" viewBox="0 120 360 360" role="img" aria-label="Ring of app buttons around a clock">
+      <defs id="defs">
+        <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ecd08a"/><stop offset=".35" stop-color="#9a7030"/><stop offset=".6" stop-color="#d8b062"/><stop offset="1" stop-color="#6a4a1c"/></linearGradient>
+        <linearGradient id="bezel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1c8"/><stop offset=".35" stop-color="#b8893a"/><stop offset=".55" stop-color="#f5dfa0"/><stop offset="1" stop-color="#6f4f1c"/></linearGradient>
+        <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0b088"/><stop offset=".4" stop-color="#b0602f"/><stop offset=".7" stop-color="#e0905c"/><stop offset="1" stop-color="#7a3c1a"/></linearGradient>
+        <radialGradient id="wellshade" cx=".5" cy=".5" r=".5"><stop offset=".8" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".4"/></radialGradient>
+        <radialGradient id="glass" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></radialGradient>
+        <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      </defs>
+
+      <circle cx="180" cy="290" r="152" fill="url(#chrome)"/>
+      <circle cx="180" cy="290" r="146" fill="url(#brass)"/>
+      <circle cx="180" cy="290" r="139" style="fill:var(--well)"/>
+      <g id="wellart" fill="none" stroke="#fff" stroke-width=".5" opacity=".08"></g>
+      <circle cx="180" cy="290" r="139" fill="url(#wellshade)"/>
+      <circle cx="180" cy="290" r="139" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="2"/>
+      <circle cx="180" cy="290" r="149" fill="none" stroke="#3d4849" stroke-width="3" stroke-dasharray="1.200 2.400" opacity=".6"/>
+      <path d="M52 232 A140 140 0 0 1 150 156" fill="none" stroke="#fff" stroke-width="1.400" stroke-linecap="round" opacity=".3"/>
+      <circle cx="180" cy="290" r="86.500" fill="url(#chrome)"/>
+      <circle cx="180" cy="290" r="84" style="fill:var(--bg2)"/>
+      <circle cx="180" cy="290" r="84" fill="none" stroke="#000" stroke-width="3" opacity=".25"/>
+      <g id="sparks"></g>
+
+      <g id="discs"></g>
+
+      <!-- engraved name plate and cast finger stop at the top of the dial -->
+      <rect x="124" y="117" width="112" height="20" rx="10" fill="url(#brass)" stroke="#6b5120" stroke-width="1"/>
+      <rect x="127" y="120" width="106" height="14" rx="7" fill="#12292b"/>
+      <text id="whoLabel" x="180" y="130.500" text-anchor="middle" font-family="Cinzel, serif" font-weight="700" font-size="10" letter-spacing="1" fill="#f6e7b4"> </text>
+      <path d="M154 153 Q180 139 206 153 L202 164 Q180 153 158 164 Z" fill="#000" opacity=".4" transform="translate(1.500 3)"/>
+      <path d="M154 150 Q180 136 206 150 L202 161 Q180 150 158 161 Z" fill="url(#chrome)" stroke="#3a4748" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M158 148.500 Q180 135.500 202 148.500" fill="none" stroke="#fff" stroke-width="1.300" stroke-linecap="round" opacity=".8"/>
+      <g stroke="#2a3435" stroke-width=".8"><circle cx="161" cy="154" r="3" fill="#aab4b5"/><circle cx="199" cy="154" r="3" fill="#aab4b5"/></g>
+
+      <!-- clock: its own piece in the middle -->
+      <circle cx="182" cy="294" r="68" fill="#000" opacity=".35"/>
+      <circle cx="180" cy="290" r="67" fill="url(#chrome)"/>
+      <circle cx="180" cy="290" r="64" fill="#12292b"/>
+      <g transform="translate(180 290) scale(.75) translate(-180 -290)">
+        <circle cx="180" cy="290" r="82" fill="url(#brass)"/>
+        <circle cx="180" cy="290" r="78" style="fill:var(--face)"/>
+        <g id="burst" style="stroke:var(--mut)" stroke-width=".35" opacity=".35"></g>
+        <circle cx="180" cy="290" r="66" fill="none" style="stroke:var(--mut)" stroke-width=".6" opacity=".4"/>
+        <g font-family="Cinzel, serif" font-size="16" font-weight="700" style="fill:var(--ink)" text-anchor="middle">
+          <text x="180" y="242">XII</text><text x="224" y="296">III</text><text x="180" y="350">VI</text><text x="136" y="296">IX</text>
+        </g>
+        <g id="ticks" style="stroke:var(--ink)" stroke-width="1.4"></g>
+        <g id="hands" stroke-linecap="round" style="stroke:var(--ink)">
+          <line id="hSec" x1="180" y1="300" x2="180" y2="230" stroke-width="1" style="stroke:var(--acc2)" display="none"/>
+          <line id="hMin" x1="180" y1="290" x2="180" y2="236" stroke-width="2.600"/>
+          <line id="hHour" x1="180" y1="290" x2="180" y2="256" stroke-width="3.800"/>
+          <circle cx="180" cy="290" r="4.500" style="fill:var(--acc)" stroke="none"/>
+        </g>
+        <!-- cute: two little cheeks -->
+        <circle cx="156" cy="312" r="5" style="fill:var(--acc2)" opacity=".28"/><circle cx="204" cy="312" r="5" style="fill:var(--acc2)" opacity=".28"/>
+        <circle cx="180" cy="290" r="78" fill="url(#glass)"/>
+      </g>
+      <rect x="153" y="340" width="54" height="19" rx="9.500" fill="#12292b" stroke="#e0bf6e" stroke-width="1.200"/>
+      <text id="digi" x="180" y="353.500" text-anchor="middle" font-family="Crimson Pro, sans-serif" font-size="12.500" font-weight="800" fill="#fbf3dd">9:41</text>
+
+      <!-- now playing: small text scrolling round the dial -->
+      <path id="npPath" d="M180 216 A74 74 0 1 1 180 364 A74 74 0 1 1 180 216" fill="none"/>
+      <g id="npRing" display="none"><text id="npText" font-family="Cinzel, serif" font-weight="700" font-size="8" letter-spacing="1.200" style="fill:var(--acc)"><textPath id="npTP" href="#npPath"> </textPath></text></g>
+    </svg>
+    <div id="dialHit" role="group" aria-label="Spinning app ring. Drag to spin, tap an app to open, press and hold for shortcuts"></div>
+
+    <!-- calendar: its own widget, always visible -->
+    <button class="panel cal u" id="calW" type="button" aria-label="Calendar. Opens the calendar app">
+      <span class="cdate"><small id="calDow">TUE</small><b id="calDay">28</b><small id="calMon">OCT</small></span>
+      <span class="cev"><h3>Today</h3><ul>
+        <li><b>10:30</b><span>Example meeting</span></li><li><b>13:00</b><span>Example errand</span></li><li><b>17:45</b><span>Example reminder</span></li></ul></span>
+    </button>
+
+    <!-- band: forecast, tasks, alerts (swipe or tap the label) -->
+    <div class="fc" id="fc">
+      <button class="t" id="fcTab" type="button" aria-label="Next widget: forecast, tasks, alerts">NEXT DAYS</button>
+      <div class="pdots" id="fcDots"><i class="on"></i><i></i><i></i></div>
+      <div class="fp fcast on" id="fp0" role="button" tabindex="0" aria-label="Forecast. Opens the weather app">
+        <span class="d">WED<span id="f0"></span><small>12° / 6°</small></span>
+        <span class="d">THU<span id="f1"></span><small>10° / 5°</small></span>
+        <span class="d">FRI<span id="f2"></span><small>8° / 3°</small></span>
+        <span class="d">SAT<span id="f3"></span><small>11° / 4°</small></span>
+      </div>
+      <div class="fp" id="fp1"><ul id="taskList"></ul></div>
+      <div class="fp" id="fp2"><ul id="alertList"></ul></div>
+    </div>
+
+    <!-- notices: what the pull-down shade would show, as app, short line, time; counts only, no message text -->
+    <div class="ntf" id="ntf" aria-label="Notifications"><span class="t">NOTICES</span><ul id="ntfList"></ul></div>
+
+    <div class="tray" id="tray"><span class="t">FAVOURITES</span></div>
+
+    <button class="handle u" id="handle" type="button" aria-label="Pull up all apps and folders"><i></i></button>
+    <div class="homebar"></div>
+    <svg class="steam" viewBox="0 0 30 70" aria-hidden="true">
+      <circle class="pf" cx="15" cy="56" r="5"/><circle class="pf" cx="15" cy="56" r="5"/><circle class="pf" cx="15" cy="56" r="5"/>
+      <rect x="9" y="58" width="12" height="9" rx="2" fill="url(#brass)" stroke="#3b2410" stroke-width=".8"/>
+      <rect x="6" y="65" width="18" height="4" rx="1.500" fill="url(#chrome)" stroke="#3b2410" stroke-width=".8"/>
+      <circle cx="15" cy="62" r="1.600" fill="#3b2410"/>
+    </svg>
+
+    <!-- pull-up: all apps -->
+    <div class="sheet drawer" id="drawer" aria-hidden="true">
+      <button class="grab" id="drawerClose" type="button" aria-label="Close all apps"></button>
+      <h3>All apps</h3>
+      <input class="field" id="dq" type="search" placeholder="Find an app" aria-label="Find an app" autocomplete="off">
+      <div id="drawerBody"></div>
+    </div>
+
+    <!-- pull-down: quick settings -->
+    <div class="qp" id="qp" aria-hidden="true">
+      <h3>Quick settings</h3>
+      <div class="tiles" id="tiles"></div>
+      <p style="font-size:11px;color:var(--mut);margin:10px 2px 8px;line-height:1.35" id="qpNote"></p>
+      <div class="row" style="gap:8px;display:flex"><button class="chip" id="qpSet" type="button">Launcher settings</button><button class="chip" id="qpClose" type="button">Close</button></div>
+    </div>
+
+    <!-- settings -->
+    <div class="sheet set" id="setSheet" aria-hidden="true">
+      <button class="grab" id="setClose" type="button" aria-label="Close settings"></button>
+      <h3>Launcher settings</h3>
+      <div class="lab2">Season</div>
+      <div class="sw2" id="schemeRow"></div>
+      <div class="lab2">Light or dark</div>
+      <div class="sg" id="sMode"><button type="button" data-d="light">Light</button><button type="button" data-d="dark">Dark</button><button type="button" data-d="auto">Follow phone</button></div>
+      <div class="lab2">Favourites</div>
+      <div class="rowset"><div>Tray apps<small id="favSmall"></small></div><button class="chip" id="favEdit" type="button">Change</button></div>
+      <div id="favBox" hidden></div>
+      <div class="lab2">Look and feel</div>
+      <div class="rowset"><div>Motion<small>How much the dial moves</small></div><div class="sg" id="sMotion"><button type="button" data-m="full">Full</button><button type="button" data-m="min">Gentle</button><button type="button" data-m="off">Off</button></div></div>
+      <div class="rowset"><div>Clock<small>Digital time</small></div><div class="sg" id="sFmt"><button type="button" data-f="12">12 hour</button><button type="button" data-f="24">24 hour</button></div></div>
+      <div class="rowset"><div>Text size<small>Panel and lists</small></div><div class="sg" id="sTs"><button type="button" data-t="1">Normal</button><button type="button" data-t="1.15">Large</button></div></div>
+      <div class="rowset"><div>Click sound<small>Plays as the ring turns</small></div><button class="sw" id="sSnd" type="button" aria-pressed="false" aria-label="Click sound"></button></div>
+      <div class="rowset"><div>Notification badges<small>Counts on app buttons</small></div><button class="sw" id="sBad" type="button" aria-pressed="true" aria-label="Notification badges"></button></div>
+      <div class="rowset"><div>Show tap areas<small>Dashed 48 dp circles</small></div><button class="sw" id="sTap" type="button" aria-pressed="false" aria-label="Show tap areas"></button></div>
+      <div class="lab2">More</div>
+      <div id="moreRows"></div>
+    </div>
+
+    <!-- search -->
+    <div class="srcho" id="srcho" hidden>
+      <div class="sb"><input class="field" id="q" type="search" placeholder="Search apps, contacts, events… or try 12*3, 5 km to mi" autocomplete="off" aria-label="Search"><button class="chip" id="qclose" type="button">Close</button></div>
+      <ul id="qres"></ul>
+    </div>
+
+    <div class="opened" id="opened" hidden>
+      <svg id="openedSvg" viewBox="-30 -30 60 60"></svg>
+      <h3 id="openedName"></h3>
+      <p>This is where the app would open. In the real launcher it also adds one to its launch count.</p>
+      <button class="chip" id="back" type="button">Back to the dial</button>
+    </div>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <div class="menu" id="menu" hidden></div>
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+  </div>
+
+  <div class="panelcol">
+    <section class="card">
+      <h2>Try it</h2>
+      <div class="stack">
+        <div>
+          <label class="lbl" for="fric">Friction: how fast the ring slows after a flick</label>
+          <input id="fric" type="range" min="0" max="100" value="45">
+          <div class="ends"><span>Slippery</span><span>Grippy</span></div>
+        </div>
+        <div>
+          <span class="lbl">Season (also in the phone's settings)</span>
+          <div class="sw2" id="schemeRow2"></div>
+          <div class="sg" id="sMode2" style="margin-top:8px"><button type="button" data-d="light">Light</button><button type="button" data-d="dark">Dark</button><button type="button" data-d="auto">Follow phone</button></div>
+        </div>
+        <div class="row">
+          <button class="act" id="spin" type="button">Spin it once</button>
+          <button class="act" id="music" type="button" aria-pressed="false">Music demo: off</button>
+          <button class="act" id="notif" type="button" aria-pressed="true">Notifications: on</button>
+          <button class="act" id="batd" type="button">Battery demo: 78%</button>
+          <button class="act" id="openset" type="button">Open settings</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Gestures</h2>
+      <dl class="gest">
+        <dt>Drag ring</dt><dd style="text-align:left">Spin; flick to coast, it stops on a notch</dd>
+        <dt>Tap app</dt><dd style="text-align:left">Open it</dd>
+        <dt>Press and hold</dt><dd style="text-align:left">Shortcuts menu (on any app button)</dd>
+        <dt>Swipe up / handle</dt><dd style="text-align:left">All apps, A to Z, drag the letters to scrub</dd>
+        <dt>Pull down / tap top</dt><dd style="text-align:left">Quick settings</dd>
+        <dt>Hold empty space</dt><dd style="text-align:left">Launcher settings</dd>
+        <dt>Swipe the band</dt><dd style="text-align:left">Forecast, tasks, alerts (or tap its label)</dd>
+        <dt>Tap calendar</dt><dd style="text-align:left">Opens your calendar app</dd>
+        <dt>Tap clock ring</dt><dd style="text-align:left">Pause music; double-tap for next track</dd>
+        <dt>Double-tap screen</dt><dd style="text-align:left">Nothing (on purpose, D-55)</dd>
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>Live readout</h2>
+      <dl>
+        <dt>Speed</dt><dd id="rSpeed">0.0 apps per second</dd>
+        <dt>Notches passed</dt><dd id="rTicks">0</dd>
+        <dt>Motion in effect</dt><dd id="rMotion">Full</dd>
+        <dt>Idle effects running</dt><dd id="rAmb">0</dd>
+        <dt>Screen drawing</dt><dd id="rDraw">idle, nothing running</dd>
+      </dl>
+    </section>
+
+    <section class="card">
+      <h2>What you did</h2>
+      <ul id="log"><li>Nothing yet. Drag the ring.</li></ul>
+    </section>
+
+    <section class="card">
+      <h2>What this does not prove</h2>
+      <ul class="notes">
+        <li>It is a web page, not your phone. The ring, quick settings and menus are new code and need a phone test first.</li>
+        <li>Torch and sound mode really can be switched by a launcher. Wi-Fi, Bluetooth, Battery saver and brightness only open Android's own page (facts AF-8, AF-21). Rotation needs one permission.</li>
+        <li>App buttons take their colours from the season and light/dark look you pick. Apps that are not on the ring would get an automatic matching look.</li>
+        <li>The status pill sits where this phone's front camera hole is. Where exactly the hole is differs by phone, so the first real build must measure it on yours (fact AF-3) before the pill is lined up. The icons mirror quick-settings state here; reading real Wi-Fi and Bluetooth state on the phone is unchecked.</li>
+        <li>"Follow phone" here follows your computer's light or dark setting, as a stand-in for the phone's.</li>
+        <li>Notifications, music, weather, calendar and tasks are made-up demo data. The real ones need your permission and your yes on weather source and cost first.</li>
+        <li>Whether a drag on the ring clashes with the launcher's own swipes is still unchecked. Battery use is not measured.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  var GLY={
+    Web:"M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18",
+    Music:"M9 18V6l10-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0M19 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0",
+    Maps:"M12 21s-6-6.200-6-11a6 6 0 0 1 12 0c0 4.800-6 11-6 11M12 7.500a2.500 2.500 0 1 0 0 5a2.500 2.500 0 0 0 0-5",
+    Mail:"M3 6h18v12H3zM3 7l9 7l9-7",
+    Notes:"M6 3h12v18H6zM9 8h6M9 12h6M9 16h4",
+    Photos:"M3 5h18v14H3zM3 16l5-5l4 4l3-3l6 6M15 9.500a1.200 1.200 0 1 0 0 .01",
+    Calendar:"M4 5h16v15H4zM4 10h16M8 3v4M16 3v4",
+    Calc:"M6 3h12v18H6zM8.500 6h7v3h-7zM9 13h1M12 13h1M15 13h1M9 17h1M12 17h1M15 17h1",
+    Settings:"M12 8.500a3.500 3.500 0 1 0 0 7a3.500 3.500 0 0 0 0-7M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2",
+    Files:"M3 6h7l2 2h9v11H3z",
+    Contacts:"M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8M4 21c0-4.500 3.500-7 8-7s8 2.500 8 7",
+    Books:"M4 5h7a2 2 0 0 1 1 1v14a2 2 0 0 0-1-1H4zM20 5h-7a2 2 0 0 0-1 1v14a2 2 0 0 1 1-1h7z",
+    Clock:"M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M12 7v5l3 2",
+    Weather:"M7 18a4 4 0 0 1-.5-8a6 6 0 0 1 11.500 1.500A3.300 3.300 0 0 1 17.500 18z",
+    Video:"M3 6h13v12H3zM16 10l5-3v10l-5-3",
+    Wallet:"M3 7h17v13H3zM3 7l3-3h11v3M15 13.500h3",
+    Health:"M12 20s-8-5-8-11a4.500 4.500 0 0 1 8-2.500A4.500 4.500 0 0 1 20 9c0 6-8 11-8 11",
+    Fitness:"M2 12h4l3-7l5 14l3-7h5",
+    Transit:"M6 4h12v12H6zM6 11h12M8 20l2-4M16 20l-2-4",
+    Shop:"M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2",
+    Games:"M6 8h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5 2l-2-2H9l-2 2a3 3 0 0 1-5-2v-3a4 4 0 0 1 4-4M8 11v3M6.500 12.500h3",
+    Podcasts:"M9 3h6v10a3 3 0 0 1-6 0zM5 11a7 7 0 0 0 14 0M12 18v3",
+    Radio:"M3 9h18v11H3zM7 9l10-5M8 14.500a2.500 2.500 0 1 0 0 .01M14 13h4M14 16h4",
+    Tools:"M14 6a4 4 0 0 0-5 5L3 17l4 4l6-6a4 4 0 0 0 5-5l-3 3l-2-2z",
+    Phone:"M6 3l3 1l1 4l-2 1.500a11 11 0 0 0 6.500 6.500L16 14l4 1l1 3l-2 3C10 21 3 14 3 5z",
+    Messages:"M4 5h16v11H9l-5 4z",
+    Camera:"M3 8h4l2-3h6l2 3h4v11H3zM12 10.500a3.500 3.500 0 1 0 0 7a3.500 3.500 0 0 0 0-7"
+  };
+  var CIDX={Phone:1,Messages:3,Camera:5};
+  // twelve apps on the ring (eleven in view at once, one waiting in the gap at the bottom); everything else lives in the pull-up app list
+  var BELT=["Mail","Maps","Music","Photos","Calendar","Notes","Clock","Calc","Settings","Files","Contacts","Web"];
+  var OTHERS=["Books","Weather","Video","Wallet","Health","Fitness","Transit","Shop","Games","Podcasts","Radio","Tools"];
+  var PINS=["Phone","Messages","Camera","Web"];
+  var ALLN=BELT.concat(OTHERS,["Phone","Messages","Camera"]).sort();
+  var SHORT={Mail:["Write a new email","Search mail"],Messages:["New message","Open last chat"],Phone:["Dial a number","Recent calls"],Camera:["Take a selfie","Record a video"],Maps:["Navigate home","Search nearby"],Music:["Shuffle all","Open the last playlist"],Calendar:["New event","Go to today"],Notes:["New note","New checklist"],Web:["New tab","Private tab"],Clock:["Set an alarm","Start a timer"],Photos:["Latest photo","Search photos"],Calc:["Open calculator"]};
+  var CX=180,CY=290,RING=112,R_DISC=19,SLOT=30,THETA0=270,N=12;
+  var COUNTS={Mail:3,Notes:1,Messages:12,Calendar:2};
+
+  function $(i){return document.getElementById(i);}
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+  function ci(name){var i=BELT.indexOf(name);if(i>-1)return i%6;if(CIDX[name]!==undefined)return CIDX[name];var j=OTHERS.indexOf(name);return j>-1?(j+3)%6:0;}
+
+  // six dome gradients that follow the colour scheme (--b0 to --b5 change with season and light/dark)
+  var defs=$("defs");
+  for(var gi=0;gi<6;gi++){
+    var dg=el("radialGradient",{id:"dome_"+gi,cx:".36",cy:".28",r:".9"},defs);
+    el("stop",{offset:"0",style:"stop-color:color-mix(in srgb,var(--b"+gi+") 62%,white)"},dg);
+    el("stop",{offset:".42",style:"stop-color:var(--b"+gi+")"},dg);
+    el("stop",{offset:"1",style:"stop-color:color-mix(in srgb,var(--b"+gi+") 62%,black)"},dg);
+  }
+
+  // an enamel-pin app button: chrome rim, coloured dome, cream glyph, gloss
+  function disc(parent,name,r){
+    var g=el("g",{},parent);
+    el("ellipse",{cx:1.2,cy:r*0.18+2,rx:r+3,ry:r+3,fill:"#000",opacity:.3},g);
+    el("circle",{r:r+3.2,fill:"url(#bezel)"},g);
+    for(var rv=0;rv<8;rv++){var ra=rv*Math.PI/4+.2;el("circle",{cx:(Math.cos(ra)*(r+1.9)).toFixed(2),cy:(Math.sin(ra)*(r+1.9)).toFixed(2),r:.75,fill:"#3b2410"},g);}
+    el("circle",{r:r+0.4,fill:"url(#dome_"+ci(name)+")"},g);
+    el("circle",{r:r-1.6,fill:"none",stroke:"#fff","stroke-opacity":.28,"stroke-width":1},g);
+    g.shade=el("circle",{r:r+3.2,fill:"#000",opacity:0},g);
+    g.rim=el("circle",{r:r+1.6,fill:"none",stroke:"#000","stroke-width":3.5,opacity:0},g);
+    g.hi=el("g",{},g);
+    var a=r+2.2;
+    el("path",{d:"M"+(-a*0.8)+" "+(-a*0.55)+" A"+a+" "+a+" 0 0 1 "+(a*0.35)+" "+(-a*0.94),fill:"none",stroke:"#fff","stroke-width":1.3,"stroke-linecap":"round",opacity:.6},g.hi);
+    el("ellipse",{cx:-r*0.28,cy:-r*0.42,rx:r*0.5,ry:r*0.26,fill:"url(#gloss)",transform:"rotate(-24 "+(-r*0.28)+" "+(-r*0.42)+")"},g.hi);
+    var s=r/12*0.62;
+    var gl=el("g",{transform:"scale("+s+") translate(-12 -12)",fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},g);
+    var d0=GLY[name];
+    el("path",{d:d0,stroke:"#000","stroke-width":3.4,opacity:.3,transform:"translate(.6 1)"},gl);
+    el("path",{d:d0,stroke:"#fffaf0","stroke-width":2.2},gl);
+    return g;
+  }
+  function badge(parent,name,dx,dy,list){
+    var n=COUNTS[name];if(!n)return;
+    // a notification is a small brass gear stuck on the app button; it appears only on apps that have one and turns with the ring
+    var g=el("g",{transform:"translate("+dx+" "+dy+")"},parent);
+    var txt=n>9?"9+":String(n);
+    g.spin=el("g",{},g);
+    el("path",{d:gearPath(10.500,8,.78),fill:"url(#brass)",stroke:"#2a1808","stroke-width":.9,"stroke-linejoin":"round"},g.spin);
+    el("circle",{r:6.300,fill:"#a8301a",stroke:"#2a1808","stroke-width":.9},g);
+    var t=el("text",{y:txt.length>1?2.6:3.2,"text-anchor":"middle","font-family":"Crimson Pro, sans-serif","font-size":txt.length>1?7.5:9,"font-weight":800,fill:"#ffe9b0"},g);
+    t.textContent=txt;
+    (list[name]=list[name]||[]).push(g);
+  }
+  function iconSvg(name,size){ // small standalone svg string target
+    var s=el("svg",{viewBox:"-28 -28 56 56"});
+    disc(s,name,19);
+    return s;
+  }
+
+  // decoration
+  var burst=$("burst");
+  for(var bi=0;bi<90;bi++){var ba=bi*4*Math.PI/180;el("line",{x1:CX+Math.sin(ba)*8,y1:CY-Math.cos(ba)*8,x2:CX+Math.sin(ba)*77,y2:CY-Math.cos(ba)*77},burst);}
+  var ticks=$("ticks");
+  for(var ti2=0;ti2<60;ti2++){if(ti2%5===0)continue;var ta=ti2*6*Math.PI/180;el("line",{x1:CX+Math.sin(ta)*71,y1:CY-Math.cos(ta)*71,x2:CX+Math.sin(ta)*74,y2:CY-Math.cos(ta)*74,"stroke-width":.8},ticks);}
+  var wellart=$("wellart");for(var wr=92;wr<=136;wr+=6){el("circle",{cx:CX,cy:CY,r:wr},wellart);}
+  // small brass gears in the open band round the clock: they turn only when YOU turn the ring (no idle motion)
+  function gearPath(R,teeth,depth){
+    var r0=R*(depth||0.74),n=teeth*4,d="";
+    for(var gi2=0;gi2<n;gi2++){
+      var rad=(gi2%4===1||gi2%4===2)?R:r0,a=gi2/n*2*Math.PI;
+      d+=(gi2?"L":"M")+(Math.cos(a)*rad).toFixed(2)+" "+(Math.sin(a)*rad).toFixed(2);
+    }
+    return d+"Z";
+  }
+  var gearsG=$("sparks"),GEARS=[];
+  [].forEach(function(p){ // the five small band gears were removed on request
+    var a=(p[0]-90)*Math.PI/180,x=CX+Math.cos(a)*p[1],y=CY+Math.sin(a)*p[1];
+    var g=el("g",{},gearsG);
+    el("path",{d:gearPath(p[2],p[3]),fill:"url(#brass)",stroke:"#3b2410","stroke-width":.7,"stroke-linejoin":"round"},g);
+    el("circle",{r:p[2]*0.32,style:"fill:var(--well)",stroke:"#3b2410","stroke-width":.6},g);
+    GEARS.push({g:g,x:x,y:y,dir:p[4],k:p[3]});
+  });
+  // notifications for ring apps: a small brass gear in the inner ring, level with the app that has one; it follows its app round and turns with the ring
+  var INNER={};
+  ["Mail","Notes","Calendar","Messages","Phone","Photos"].forEach(function(name){
+    if(BELT.indexOf(name)<0)return;
+    var g=el("g",{display:"none"},gearsG);
+    var spin=el("g",{},g);
+    el("path",{d:gearPath(9.500,8,.78),fill:"url(#brass)",stroke:"#2a1808","stroke-width":.9,"stroke-linejoin":"round"},spin);
+    el("circle",{r:5.600,fill:"#a8301a",stroke:"#2a1808","stroke-width":.8},g);
+    var tx=el("text",{y:2.800,"text-anchor":"middle","font-family":"Crimson Pro, sans-serif","font-size":8,"font-weight":800,fill:"#ffe9b0"},g);
+    INNER[name]={g:g,spin:spin,tx:tx,on:false};
+  });
+  function refreshInner(){
+    for(var nm in INNER){var n=COUNTS[nm]||0,o=INNER[nm];o.on=n>0&&badgesOn&&!dnd;o.tx.textContent=n>9?"9+":String(n);o.tx.setAttribute("font-size",n>9?6.500:8);}
+  }
+
+  // ---- the big machinery: a toothed rim round the whole dial, gears set behind the two corner instruments (they mesh the rim),
+  // and a gear train along the bottom. All of it turns ONLY when you turn the ring: no idle motion, no battery cost at rest.
+  var cogG=el("g",{},dialSvg0());
+  function dialSvg0(){return document.getElementById("dial");}
+  dialSvg0().insertBefore(cogG,dialSvg0().querySelector("circle"));
+  el("path",{d:gearPath(164,30,.9),transform:"translate(180 290)",fill:"url(#brass)",stroke:"#2a1808","stroke-width":1,"stroke-linejoin":"round"},cogG);
+  var BIG=[]; // {g,x,y,mul}: mul = turns per turn of the ring's angle (negative = the other way)
+  function bigGear(parent,cx,cy,R,teeth,spokes,mul,depth){
+    var g=el("g",{},parent);
+    el("path",{d:gearPath(R,teeth,depth||.8),fill:"url(#brass)",stroke:"#2a1808","stroke-width":1,"stroke-linejoin":"round"},g);
+    el("circle",{r:R*0.66,fill:"none",stroke:"#2a1808","stroke-width":.8,opacity:.7},g);
+    for(var sp=0;sp<spokes;sp++){var sa=sp/spokes*Math.PI*2;el("path",{d:"M0 0 L"+(Math.cos(sa)*R*0.7).toFixed(1)+" "+(Math.sin(sa)*R*0.7).toFixed(1),stroke:"#2a1808","stroke-width":R*0.13,"stroke-linecap":"round",opacity:.85},g);}
+    el("circle",{r:R*0.22,fill:"url(#chrome)",stroke:"#2a1808","stroke-width":.9},g);
+    el("circle",{r:R*0.08,fill:"#2a1808"},g);
+    var o={g:g,x:cx,y:cy,mul:mul};BIG.push(o);return o;
+  }
+  var decorG=$("decor");
+  // corner gears (centres match the instruments) mesh the dial rim; 30 teeth on the rim, 12 on these
+  // corner gears sit BEHIND the weather lens and the battery gauge and mesh with the toothed dial rim: turn the ring and they turn the other way, 2.5 times as fast (12 teeth against 30)
+  bigGear(decorG,44,150,43,12,0,2.5,.8);
+  bigGear(decorG,316,150,43,12,0,2.5,.8);
+  // bottom train: three pairs of meshing gears, sat behind the handle
+  bigGear(decorG,46,752,44,14,6,-1.1);
+  bigGear(decorG,114,768,30,9,5,1.7);
+  bigGear(decorG,316,750,50,16,7,0.95);
+  bigGear(decorG,242,770,29,9,5,-1.7);
+  // flanges and bolts on the pipes, and gear icons in the banner
+  (function(){
+    var fg=$("flanges");
+    [[3,250],[3,380],[3,470],[3,566],[3,648]].forEach(function(p){
+      [p[0],357-p[0]-12].forEach(function(x){
+        el("rect",{x:x,y:p[1],width:12,height:8,rx:1.5,fill:"url(#brass)",stroke:"#2a1808","stroke-width":.9},fg);
+        el("circle",{cx:x+2.6,cy:p[1]+4,r:1,fill:"#2a1808"},fg);el("circle",{cx:x+9.4,cy:p[1]+4,r:1,fill:"#2a1808"},fg);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".gi"),function(s){el("path",{d:gearPath(8,8,.7)},s);el("circle",{r:2.2,fill:"var(--card)"},s);});
+    ["valveL","valveR"].forEach(function(id){
+      var w=$(id).querySelector(".wheel");
+      el("circle",{r:11,fill:"none",stroke:"#2a1808","stroke-width":4.4},w);
+      el("circle",{r:11,fill:"none",stroke:"#d8b062","stroke-width":2.6},w);
+      for(var k2=0;k2<4;k2++){var a2=k2*Math.PI/2;el("path",{d:"M0 0 L"+(Math.cos(a2)*10).toFixed(1)+" "+(Math.sin(a2)*10).toFixed(1),stroke:"#2a1808","stroke-width":3.4,"stroke-linecap":"round"},w);el("path",{d:"M0 0 L"+(Math.cos(a2)*10).toFixed(1)+" "+(Math.sin(a2)*10).toFixed(1),stroke:"#d8b062","stroke-width":1.6,"stroke-linecap":"round"},w);}
+      el("circle",{r:3,fill:"url(#brass)",stroke:"#2a1808","stroke-width":.8},w);
+    });
+  })();
+
+  // belt discs
+  var discsG=$("discs"),BADGES={},TAPS=[];
+  var nodes=BELT.map(function(name){
+    var wrap=el("g",{},discsG);
+    var inner=disc(wrap,name,R_DISC);
+    TAPS.push(el("circle",{r:24,class:"tapring","stroke-width":1,display:"none"},wrap));
+    return {name:name,wrap:wrap,shade:inner.shade,rim:inner.rim,hi:inner.hi,x:0,y:0,vis:0};
+  });
+
+  // favourites tray
+  var tray=$("tray");
+  function buildTray(){
+    Array.prototype.slice.call(tray.querySelectorAll(".pin")).forEach(function(n){tray.removeChild(n);});
+    PINS.forEach(function(name){
+      var b=document.createElement("button");b.type="button";b.className="pin u";b.setAttribute("aria-label",name);
+      var s=el("svg",{viewBox:"-28 -28 56 56"});
+      disc(s,name,19);badge(s,name,17,-17,BADGES);
+      TAPS.push(el("circle",{r:24,class:"tapring","stroke-width":1,display:tapsOn?"inline":"none"},s));
+      b.appendChild(s);
+      var sp=document.createElement("span");sp.textContent=name;b.appendChild(sp);
+      b.addEventListener("click",function(){openApp(name);});
+      attachLP(b,name);
+      tray.appendChild(b);
+    });
+    var fs=$("favSmall");if(fs)fs.textContent=PINS.join(", ");
+  }
+
+  // ---------- state ----------
+  var scr=$("screen"),pw=$("pw"),hit=$("dialHit"),dialSvg=$("dial"),whoEl=$("whoLabel");
+  var pos=0,v=0,dragging=false,snapping=false,running=false,last=0;
+  var lastNotch=0,ticksN=0,frames=0,fpsT=0,fps=0;
+  var motion="full",fricVal=45,sound=false,audio=null,badgesOn=true,tapsOn=false,fmt24=false,hoverName=false;
+  var samples=[],downPt=null,downT=0,downMoved=0,lastAng=0,pressed=null,pointerId=null,lpT=null,lpFired=false;
+  var battery=78,charging=false,saver=false,dnd=false,schemeSet="auto",modeSet="auto",recents=[];
+  try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)motion="min";}catch(err){console.warn("launcher mock: no media query",err);}
+
+  function effMotion(){ // the battery and motion checklist: gate the effects
+    if(saver)return "off";
+    if(battery<=15&&!charging)return "off";
+    return motion;
+  }
+  function gateReason(){
+    if(saver)return "Off (Battery saver is on)";
+    if(battery<=15&&!charging)return "Off (battery 15% or less)";
+    return {full:"Full",min:"Gentle",off:"Off"}[motion];
+  }
+
+  function fit(){var w=pw.clientWidth;if(!w)return;scr.style.transform="scale("+(w/360)+")";}
+  [pw,scr].forEach(function(n){n.addEventListener("scroll",function(){n.scrollTop=0;n.scrollLeft=0;});}); // never let focus or scrolling push the phone out of its frame
+  window.addEventListener("resize",fit);window.addEventListener("load",fit);fit();try{new ResizeObserver(fit).observe(pw);}catch(err){console.warn("launcher mock: no ResizeObserver",err);}try{if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);}catch(err){console.warn("launcher mock: no fonts.ready",err);}
+
+  function wrapDeg(d){while(d>180)d-=360;while(d<-180)d+=360;return d;}
+  function svgPt(e){var r=dialSvg.getBoundingClientRect();return {x:(e.clientX-r.left)*360/r.width,y:120+(e.clientY-r.top)*360/r.height};}
+  function angleOf(p){return Math.atan2(p.y-CY,p.x-CX)*180/Math.PI;}
+  function kfric(){var base=0.9+fricVal/100*4.6;return effMotion()==="min"?base*2.6:base;}
+  function scrPt(e){var r=scr.getBoundingClientRect(),s=r.width/360;return {x:(e.clientX-r.left)/s,y:(e.clientY-r.top)/s};}
+
+  function render(){
+    for(var i=0;i<N;i++){
+      var n=nodes[i];
+      var u=((i-pos)%N+N)%N;if(u>N/2)u-=N;
+      var op=1; // all twelve apps always show: no fade, no gap at the bottom
+      var ang=(THETA0+u*SLOT)*Math.PI/180;
+      n.x=CX+Math.cos(ang)*RING;n.y=CY+Math.sin(ang)*RING;n.vis=op;
+      var dep=Math.max(0,1-Math.abs(u)*1.6);
+      n.shade.setAttribute("opacity",(0.4*dep).toFixed(2));
+      n.rim.setAttribute("opacity",(0.8*dep).toFixed(2));
+      n.hi.setAttribute("opacity",(1-0.75*dep).toFixed(2));
+      var sc=((pressed===i)?0.92:1)*(1-0.09*dep);
+      n.wrap.setAttribute("transform","translate("+n.x.toFixed(1)+" "+n.y.toFixed(1)+") scale("+sc+")");
+      n.wrap.setAttribute("opacity",op.toFixed(2));
+      n.wrap.style.display=op<=0?"none":"";
+      var ig=INNER[n.name];
+      if(ig){
+        if(op>0&&ig.on){ig.g.setAttribute("display","inline");ig.g.setAttribute("transform","translate("+(CX+Math.cos(ang)*75.5).toFixed(1)+" "+(CY+Math.sin(ang)*75.5).toFixed(1)+")");ig.spin.setAttribute("transform","rotate("+(pos*SLOT*1.4).toFixed(1)+")");}
+        else ig.g.setAttribute("display","none");
+      }
+    }
+    var bAng=pos*SLOT;
+    cogG.setAttribute("transform","rotate("+(-bAng).toFixed(1)+" 180 290)");
+    for(var bk=0;bk<BIG.length;bk++){var bo=BIG[bk];bo.g.setAttribute("transform","translate("+bo.x+" "+bo.y+") rotate("+(bo.mul*bAng).toFixed(1)+")");}
+    for(var bn in BADGES){for(var bi2=0;bi2<BADGES[bn].length;bi2++){var bg=BADGES[bn][bi2];if(bg.spin)bg.spin.setAttribute("transform","rotate("+(bAng*1.4).toFixed(1)+")");}}
+    for(var gj=0;gj<GEARS.length;gj++){var gr=GEARS[gj];gr.g.setAttribute("transform","translate("+gr.x.toFixed(1)+" "+gr.y.toFixed(1)+") rotate("+(gr.dir*pos*SLOT*1.3).toFixed(1)+")");}
+    if(!hoverName){var sel=((Math.round(pos)%N)+N)%N;whoEl.textContent=BELT[sel].toUpperCase();}
+    $("rSpeed").textContent=Math.abs(v).toFixed(1)+" apps per second";
+    $("rTicks").textContent=ticksN;
+  }
+  function click(){
+    if(!sound)return;
+    try{
+      if(!audio)audio=new (window.AudioContext||window.webkitAudioContext)();
+      var o=audio.createOscillator(),g=audio.createGain(),t=audio.currentTime;
+      o.type="square";o.frequency.value=1900;g.gain.setValueAtTime(.04,t);g.gain.exponentialRampToValueAtTime(.0001,t+.018);
+      o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.02);
+    }catch(err){console.warn("launcher mock: no sound",err);}
+  }
+  function notch(){var nn=Math.round(pos);if(nn!==lastNotch){ticksN+=Math.abs(nn-lastNotch);lastNotch=nn;if(effMotion()!=="off")click();}}
+  function setDraw(on){$("rDraw").textContent=on?("drawing, "+(fps||60)+" frames a second"):"idle, nothing running";}
+  function start(){if(!running){running=true;last=performance.now();fpsT=last;frames=0;requestAnimationFrame(loop);}}
+  function loop(t){
+    if(document.hidden){running=false;return;}
+    var dt=Math.min((t-last)/1000,.05);last=t;
+    frames++;if(t-fpsT>=500){fps=Math.round(frames*1000/(t-fpsT));frames=0;fpsT=t;setDraw(true);}
+    if(!dragging){
+      if(!snapping&&Math.abs(v)>1.2&&effMotion()!=="off"){pos+=v*dt;v*=Math.exp(-kfric()*dt);}
+      else{snapping=true;v=0;var tg=Math.round(pos);pos+=(tg-pos)*(1-Math.exp(-16*dt));if(Math.abs(tg-pos)<.003){pos=tg;render();notch();running=false;snapping=false;setDraw(false);return;}}
+    }
+    notch();render();requestAnimationFrame(loop);
+  }
+
+  // ---------- the ring: pointer handling ----------
+  function hitDisc(p){
+    var best=null,bd=1e9;
+    for(var i=0;i<N;i++){var n=nodes[i];if(n.vis<.5)continue;var d=Math.hypot(p.x-n.x,p.y-n.y);if(d<24&&d<bd){bd=d;best=i;}}
+    return best;
+  }
+  hit.addEventListener("pointerdown",function(e){
+    var p=svgPt(e);var d=Math.hypot(p.x-CX,p.y-CY);
+    if(d<80||d>152)return;
+    if(audio&&audio.state==="suspended")audio.resume();
+    dragging=true;snapping=false;v=0;pointerId=e.pointerId;hoverName=false;lpFired=false;
+    try{hit.setPointerCapture(e.pointerId);}catch(err){console.warn("launcher mock: capture failed",err);}
+    downPt=p;downT=performance.now();downMoved=0;lastAng=angleOf(p);
+    samples=[{t:downT,pos:pos}];
+    var h=hitDisc(p);pressed=h;
+    if(h!==null){var sp=scrPt(e);lpT=setTimeout(function(){lpT=null;if(downMoved<10&&dragging){lpFired=true;pressed=null;showMenu(BELT[h],{x:Math.min(Math.max(sp.x,100),260),y:Math.min(Math.max(sp.y,140),330)});}},450);}
+    start();render();
+  });
+  hit.addEventListener("pointermove",function(e){
+    if(dragging&&e.pointerId===pointerId){
+      var p=svgPt(e);var a=angleOf(p);var d=wrapDeg(a-lastAng);lastAng=a;
+      if(lpFired)return;
+      pos-=d/SLOT;
+      downMoved=Math.max(downMoved,Math.hypot(p.x-downPt.x,p.y-downPt.y));
+      if(downMoved>10){pressed=null;if(lpT){clearTimeout(lpT);lpT=null;}}
+      var now=performance.now();samples.push({t:now,pos:pos});
+      while(samples.length>2&&now-samples[0].t>110)samples.shift();
+    }else if(!dragging){
+      var q=svgPt(e),dd=Math.hypot(q.x-CX,q.y-CY);
+      var h=(dd>=80&&dd<=152)?hitDisc(q):null;
+      hoverName=h!==null;
+      if(h!==null)whoEl.textContent=BELT[h].toUpperCase();else render();
+    }
+  });
+  function endDrag(e){
+    if(!dragging||e.pointerId!==pointerId)return;
+    dragging=false;if(lpT){clearTimeout(lpT);lpT=null;}
+    if(lpFired){lpFired=false;pressed=null;start();return;}
+    var now=performance.now(),p=svgPt(e);
+    var wasTap=downMoved<10&&now-downT<350;
+    if(wasTap){var h=hitDisc(p);pressed=null;if(h!==null){snapping=true;openApp(BELT[h]);}}
+    else{
+      var s0=samples[0],s1=samples[samples.length-1];
+      var dtm=(s1.t-s0.t)/1000;
+      v=dtm>.01?(s1.pos-s0.pos)/dtm:0;
+      v=Math.max(-14,Math.min(14,v));
+      if(now-s1.t>90)v=0;
+      if(effMotion()==="off")v=0;
+      logIt(Math.abs(v)>1.2?"Flicked the ring: "+Math.abs(v).toFixed(1)+" apps per second, then it coasts and stops on a notch.":"Moved the ring and let go: it settles on the nearest notch.");
+    }
+    pressed=null;start();
+  }
+  hit.addEventListener("pointerup",endDrag);
+  hit.addEventListener("pointercancel",endDrag);
+  hit.addEventListener("pointerleave",function(){if(!dragging){hoverName=false;render();}});
+  // taps on the clock's ring of text: pause music; double-tap = next track
+  var lastClockTap=0;
+  hit.addEventListener("click",function(e){
+    var p=svgPt(e),d=Math.hypot(p.x-CX,p.y-CY);
+    if(d<66||d>=80||!playing)return;
+    var now=performance.now();
+    if(now-lastClockTap<320){ti=(ti+1)%TRACKS.length;paused=false;npRefresh();logIt("Next track: "+TRACKS[ti][0]+".");lastClockTap=0;}
+    else{lastClockTap=now;setTimeout(function(){if(lastClockTap===now){paused=!paused;lastClockTap=0;logIt(paused?"Music paused.":"Music playing.");}},330);}
+  });
+
+  // ---------- press and hold on any app button ----------
+  function attachLP(node,name){
+    var t=null,fired=false,sx=0,sy=0;
+    node.addEventListener("pointerdown",function(e){fired=false;sx=e.clientX;sy=e.clientY;node.classList.add("lp");t=setTimeout(function(){fired=true;t=null;var r=node.getBoundingClientRect(),sr=scr.getBoundingClientRect(),s=sr.width/360;showMenu(name,{x:(r.left+r.width/2-sr.left)/s,y:(r.top-sr.top)/s});},450);});
+    node.addEventListener("pointermove",function(e){if(t&&Math.hypot(e.clientX-sx,e.clientY-sy)>10){clearTimeout(t);t=null;}});
+    ["pointerup","pointercancel","pointerleave"].forEach(function(ev){node.addEventListener(ev,function(){node.classList.remove("lp");if(t){clearTimeout(t);t=null;}});});
+    node.addEventListener("click",function(e){if(fired){fired=false;e.stopImmediatePropagation();e.preventDefault();}},true);
+    node.addEventListener("contextmenu",function(e){e.preventDefault();});
+  }
+  var menu=$("menu"),scrim=$("scrim"),toastEl=$("toast"),toastT=null;
+  function toast(s){toastEl.textContent=s;toastEl.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove("on");},2400);}
+  function closeMenu(){menu.hidden=true;scrim.hidden=true;}
+  function showMenu(name,pt){
+    menu.innerHTML="";
+    var mt=document.createElement("div");mt.className="mt";
+    var s=el("svg",{viewBox:"-28 -28 56 56"});disc(s,name,19);mt.appendChild(s);
+    var tx=document.createElement("span");tx.textContent=name;mt.appendChild(tx);menu.appendChild(mt);
+    function item(label,msg){var b=document.createElement("button");b.type="button";b.textContent=label;b.addEventListener("click",function(){closeMenu();toast(msg);logIt(msg);});menu.appendChild(b);}
+    (SHORT[name]||[]).forEach(function(sc){item(sc,"Would run the app shortcut: "+sc+".");});
+    if(SHORT[name])menu.appendChild(document.createElement("hr"));
+    item("App info","Would open Android's App info page for "+name+".");
+    item(PINS.indexOf(name)>-1?"Remove from favourites":"Add to favourites",PINS.indexOf(name)>-1?name+" would leave the favourites tray.":name+" would join the favourites tray.");
+    item("Hide this app","Would hide "+name+" from the ring and the list (find it under Hidden apps).");
+    menu.hidden=false;scrim.hidden=false;
+    var w=menu.offsetWidth||200,h=menu.offsetHeight||200;
+    menu.style.left=Math.max(10,Math.min(360-w-10,pt.x-w/2))+"px";
+    menu.style.top=Math.max(10,Math.min(780-h-10,pt.y-h-6<10?pt.y+30:pt.y-h-6))+"px";
+    logIt("Pressed and held "+name+": shortcuts menu. On the phone this also gives a small buzz.");
+  }
+  scrim.addEventListener("click",closeMenu);
+
+  // ---------- opening an app ----------
+  var opened=$("opened");
+  function openApp(name){
+    $("openedSvg").innerHTML="";disc($("openedSvg"),name,19);
+    $("openedSvg").setAttribute("viewBox","-26 -26 52 52");
+    $("openedName").textContent=name;
+    if(BADGES[name]){BADGES[name].forEach(function(b){b.style.display="none";});}
+    COUNTS[name]=0;renderAlerts();
+    recents=[name].concat(recents.filter(function(r){return r!==name;})).slice(0,5);
+    opened.hidden=false;
+    logIt("Tapped "+name+": it opens. Launch count +1 for "+name+".");
+    $("back").focus({preventScroll:true});
+  }
+  $("back").addEventListener("click",function(){opened.hidden=true;});
+
+  // ---------- search ----------
+  var srcho=$("srcho"),qIn=$("q"),qRes=$("qres");
+  var CONTACTS=["Alex Example","Sam Example","Jordan Example"],EVENTS=["Example meeting · today 10:30","Example errand · today 13:00","Example reminder · today 17:45"];
+  function fmt(x){return String(Math.round(x*1000)/1000);}
+  function calc(src){
+    var s=src.replace(/\s+/g,""),i=0;
+    function num(){var m=/^\d*\.?\d+/.exec(s.slice(i));if(!m)return null;i+=m[0].length;return parseFloat(m[0]);}
+    function factor(){if(s[i]==="-"){i++;var f=factor();return f===null?null:-f;}if(s[i]==="("){i++;var e=expr();if(s[i]!==")")return null;i++;return e;}return num();}
+    function term(){var a=factor();while(a!==null&&(s[i]==="*"||s[i]==="/")){var o=s[i++],b=factor();if(b===null)return null;a=o==="*"?a*b:a/b;}return a;}
+    function expr(){var a=term();while(a!==null&&(s[i]==="+"||s[i]==="-")){var o=s[i++],b=term();if(b===null)return null;a=o==="+"?a+b:a-b;}return a;}
+    var r=expr();return i===s.length?r:null;
+  }
+  function quick(s){
+    if(!s)return null;
+    var m=s.match(/^([\d.]+)\s*(km|mi|kg|lb|c|f)\s*(?:to|in)\s*(km|mi|kg|lb|c|f)$/i);
+    if(m){var x=parseFloat(m[1]),a=m[2].toLowerCase(),b=m[3].toLowerCase(),r=null;
+      if(a==="km"&&b==="mi")r=x*0.621371;else if(a==="mi"&&b==="km")r=x/0.621371;else if(a==="kg"&&b==="lb")r=x*2.20462;else if(a==="lb"&&b==="kg")r=x/2.20462;else if(a==="c"&&b==="f")r=x*9/5+32;else if(a==="f"&&b==="c")r=(x-32)*5/9;
+      if(r!==null)return {main:fmt(x)+" "+a+" = "+fmt(r)+" "+b,sub:"Unit converter"};}
+    if(/^[\d+\-*/().\s%]+$/.test(s)&&/[+\-*/%]/.test(s)&&/\d/.test(s)){var val=calc(s.replace(/%/g,"/100"));if(val!==null&&isFinite(val))return {main:"= "+fmt(val),sub:"Calculator"};}
+    return null;
+  }
+  function row(parent,title,sub,onClick,appName){
+    var li=document.createElement("li"),b=document.createElement("button");b.type="button";b.className="r";
+    if(appName){var s=el("svg",{viewBox:"-26 -26 52 52",class:"g"});disc(s,appName,19);b.appendChild(s);}
+    var d=document.createElement("div");d.textContent=title;if(sub){var sm=document.createElement("small");sm.textContent=sub;d.appendChild(sm);}
+    b.appendChild(d);b.addEventListener("click",onClick);li.appendChild(b);parent.appendChild(li);
+  }
+  function head(t){var li=document.createElement("li");li.className="hd";li.textContent=t;qRes.appendChild(li);}
+  function renderRes(){
+    var raw=qIn.value.trim(),t=raw.toLowerCase();qRes.innerHTML="";
+    var q=quick(raw);
+    if(q){var lc=document.createElement("li");lc.className="calc";lc.innerHTML=q.main+"<small>"+q.sub+"</small>";qRes.appendChild(lc);}
+    if(!t){
+      if(recents.length){head("Recent");recents.forEach(function(n){row(qRes,n,"Opened recently",function(){closeSearch();openApp(n);},n);});}
+      head("Try typing");
+      ["12*3","5 km to mi","alex","meeting"].forEach(function(x){row(qRes,x,"Tap to try",function(){qIn.value=x;renderRes();});});
+      return;
+    }
+    var apps=ALLN.filter(function(n){return n.toLowerCase().indexOf(t)>-1;}).slice(0,4);
+    if(apps.length){head("Apps");apps.forEach(function(n){row(qRes,n,"",function(){closeSearch();openApp(n);},n);});}
+    var cs=CONTACTS.filter(function(n){return n.toLowerCase().indexOf(t)>-1;}).slice(0,2);
+    if(cs.length){head("Contacts");cs.forEach(function(n){row(qRes,n,"Call or message (example contact)",function(){closeSearch();toast("Would open "+n+" in Contacts.");},"Contacts");});}
+    var es=EVENTS.filter(function(n){return n.toLowerCase().indexOf(t)>-1;}).slice(0,2);
+    if(es.length){head("Calendar");es.forEach(function(n){row(qRes,n,"Opens Calendar",function(){closeSearch();toast("Would open this event in Calendar.");},"Calendar");});}
+    head("Web");row(qRes,'Search the web for "'+raw+'"',"Opens your browser",function(){closeSearch();toast("Would open a web search (not wired in this mock-up).");},"Web");
+  }
+  function openSearch(){closeAll();srcho.hidden=false;qIn.value="";renderRes();logIt("Opened search: apps, contacts, events, calculator, converter and the web.");qIn.focus({preventScroll:true});}
+  function closeSearch(){srcho.hidden=true;}
+  $("srchBtn").addEventListener("click",openSearch);
+  qIn.addEventListener("input",renderRes);
+  $("qclose").addEventListener("click",closeSearch);
+
+  // ---------- sheets ----------
+  var drawer=$("drawer"),qp=$("qp"),setSheet=$("setSheet");
+  function closeAll(){[drawer,qp,setSheet].forEach(function(s){s.classList.remove("open");s.setAttribute("aria-hidden","true");});closeMenu();}
+  function openSheet(s,msg){closeAll();s.classList.add("open");s.setAttribute("aria-hidden","false");if(msg)logIt(msg);}
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeSearch();opened.hidden=true;closeAll();}});
+
+  // drawer: recents, folders (tags), A to Z
+  var FOLDERS={Social:["Messages","Mail","Contacts","Podcasts"],Tools:["Calc","Files","Tools","Clock"],Media:["Music","Photos","Video","Radio"]};
+  function appBtn(name){
+    var b=document.createElement("button");b.type="button";b.className="appb u";
+    var s=el("svg",{viewBox:"-26 -26 52 52"});disc(s,name,19);badge(s,name,16,-16,BADGES);b.appendChild(s);
+    var sp=document.createElement("span");sp.textContent=name;b.appendChild(sp);
+    b.addEventListener("click",function(){closeAll();openApp(name);});attachLP(b,name);return b;
+  }
+  function buildDrawer(filter){
+    var body=$("drawerBody");body.innerHTML="";
+    var f=(filter||"").toLowerCase();
+    if(!f){
+      if(recents.length){var l1=document.createElement("div");l1.className="lab2";l1.textContent="Recent";body.appendChild(l1);var g1=document.createElement("div");g1.className="grid4";recents.slice(0,4).forEach(function(n){g1.appendChild(appBtn(n));});body.appendChild(g1);}
+      var l2=document.createElement("div");l2.className="lab2";l2.textContent="Folders";body.appendChild(l2);
+      Object.keys(FOLDERS).forEach(function(k){var d=document.createElement("div");d.className="fold";d.innerHTML="<b>"+k+"</b>";var c=document.createElement("div");c.className="grid4";FOLDERS[k].forEach(function(n){c.appendChild(appBtn(n));});d.appendChild(c);body.appendChild(d);});
+      var hid=document.createElement("button");hid.type="button";hid.className="chip";hid.textContent="Hidden apps (1)";hid.addEventListener("click",function(){toast("Would show the apps you hid, behind a long-press or a PIN.");});body.appendChild(hid);
+    }
+    var l3=document.createElement("div");l3.className="lab2";l3.textContent="All apps";body.appendChild(l3);
+    var az=document.createElement("div");az.className="az";body.appendChild(az);
+    var spans={};"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(c){var s=document.createElement("span");s.textContent=c;s.className="off";az.appendChild(s);spans[c]=s;});
+    var cur="",grid=null,any=false;
+    ALLN.filter(function(n){return !f||n.toLowerCase().indexOf(f)>-1;}).forEach(function(n){
+      var L=n.charAt(0).toUpperCase();
+      if(L!==cur){cur=L;var sec=document.createElement("div");sec.className="sec";sec.id="sec-"+L;var h=document.createElement("h4");h.textContent=L;sec.appendChild(h);grid=document.createElement("div");grid.className="grid4";sec.appendChild(grid);body.appendChild(sec);spans[L].className="";}
+      grid.appendChild(appBtn(n));any=true;
+    });
+    if(!any){var e=document.createElement("p");e.style.color="var(--mut)";e.textContent="No app called that. Try the search bar to look further.";body.appendChild(e);}
+    // drag a finger along the letters to scrub
+    function scrub(e){
+      var r=az.getBoundingClientRect();var i=Math.max(0,Math.min(25,Math.floor((e.clientX-r.left)/r.width*26)));
+      var L="ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(i);
+      Object.keys(spans).forEach(function(k){spans[k].classList.toggle("cur",k===L&&spans[k].className.indexOf("off")<0);});
+      var s=$("sec-"+L);if(s){var kz=pw.clientWidth/360||1;drawer.scrollTop+=(s.getBoundingClientRect().top-drawer.getBoundingClientRect().top)/kz-46;}
+    }
+    az.addEventListener("pointerdown",function(e){try{az.setPointerCapture(e.pointerId);}catch(err){console.warn("launcher mock: az capture",err);}scrub(e);az._on=true;});
+    az.addEventListener("pointermove",function(e){if(az._on)scrub(e);});
+    az.addEventListener("pointerup",function(){az._on=false;Object.keys(spans).forEach(function(k){spans[k].classList.remove("cur");});});
+  }
+  $("dq").addEventListener("input",function(){buildDrawer(this.value);});
+  function openDrawer(){$("dq").value="";buildDrawer("");openSheet(drawer,"Pulled up all apps: recent, folders, A to Z. Drag across the letters to scrub.");}
+  $("handle").addEventListener("click",openDrawer);
+  $("drawerClose").addEventListener("click",closeAll);
+  var hY=null;$("handle").addEventListener("pointerdown",function(e){hY=e.clientY;});$("handle").addEventListener("pointerup",function(e){if(hY!==null&&hY-e.clientY>24)openDrawer();hY=null;});
+
+  // quick settings (pull-down)
+  var TILE=[
+    {id:"torch",name:"Torch",ic:"M9 2h6l-1 6h-4zM10 8v3l-2 2v8h8v-8l-2-2V8",st:"switches right here",on:false},
+    {id:"ring",name:"Sound",ic:"M5 9v6h4l5 4V5L9 9zM17 9a4 4 0 0 1 0 6",st:"sound or vibrate",on:true},
+    {id:"wifi",name:"Wi-Fi",ic:"M3 9a14 14 0 0 1 18 0M6 12.500a9.500 9.500 0 0 1 12 0M9 16a5 5 0 0 1 6 0M12 19.500h.01",st:"opens Android panel",on:true,open:true},
+    {id:"bt",name:"Bluetooth",ic:"M7 7l10 10-5 4V3l5 4L7 17",st:"opens Android page",on:true,open:true},
+    {id:"rot",name:"Rotation",ic:"M4 12a8 8 0 0 1 14-5l2-2v6h-6l2.500-2.500A5 5 0 0 0 7 12M20 12a8 8 0 0 1-14 5l-2 2v-6h6l-2.500 2.500A5 5 0 0 0 17 12",st:"needs one permission",on:true},
+    {id:"saver",name:"Saver",ic:"M7 5h10v16H7zM10 3h4v2h-4zM12 9v6M9 12h6",st:"opens Android page",on:false,open:true},
+    {id:"dnd",name:"Quiet",ic:"M18 15V10a6 6 0 0 0-12 0v5l-2 3h16zM10 21h4M4 4l16 16",st:"hides badges here",on:false},
+    {id:"dark",name:"Dark",ic:"M20 14.500A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500",st:"light or dark look",on:false}
+  ];
+  function buildTiles(){
+    var host=$("tiles");host.innerHTML="";
+    TILE.forEach(function(t){
+      var b=document.createElement("button");b.type="button";b.className="tile";b.setAttribute("aria-pressed",t.on&&!t.open?"true":"false");
+      var isOn=t.id==="saver"?saver:t.id==="dnd"?dnd:t.id==="dark"?effMode()==="dark":t.on;
+      if(!t.open||t.id==="saver")b.setAttribute("aria-pressed",isOn?"true":"false");
+      b.innerHTML='<svg viewBox="0 0 24 24"><path d="'+t.ic+'"/></svg><span>'+t.name+'</span><small>'+(t.id==="ring"?(t.on?"Sound":"Vibrate"):t.st)+'</small>';
+      b.addEventListener("click",function(){
+        if(t.id==="saver"){saver=!saver;toast(saver?"Battery saver on: the dial stops moving by itself.":"Battery saver off.");updateMotionUI();}
+        else if(t.id==="dnd"){dnd=!dnd;toast(dnd?"Quiet on: badges and alerts are hidden in the launcher.":"Quiet off.");applyBadges();}
+        else if(t.id==="dark"){setMode(effMode()==="dark"?"light":"dark");toast(effMode()==="dark"?"Dark look on.":"Light look on.");}
+        else if(t.open){toast("Would open Android's own page for "+t.name+" (a launcher cannot flip it, AF-8/AF-21).");}
+        else{t.on=!t.on;toast(t.id==="torch"?(t.on?"Torch on.":"Torch off."):t.id==="ring"?(t.on?"Sound on.":"Vibrate only."):(t.on?"Rotation follows the phone.":"Rotation locked."));}
+        buildTiles();
+      });
+      host.appendChild(b);
+    });
+    updatePill();
+    $("qpNote").textContent="Battery "+battery+"%"+(charging?" and charging":"")+". Pull down from the top plate, or tap it. Tiles marked 'opens' jump to Android's own page.";
+  }
+  $("top").addEventListener("click",function(e){if(e.target.closest("#lens"))return;buildTiles();openSheet(qp,"Opened quick settings.");});
+  // the status pill round the camera hole: icons mirror the quick-settings state; tap it (or the date banner) for the pull-down
+  function updatePill(){
+    function tOn(id){for(var i=0;i<TILE.length;i++){if(TILE[i].id===id)return TILE[i].on;}return false;}
+    $("pWifi").classList.toggle("off",!tOn("wifi"));$("pBt").classList.toggle("off",!tOn("bt"));
+    $("pBell").classList.toggle("off",!dnd);$("pSlash").setAttribute("display",dnd?"inline":"none");
+  }
+  $("pill").addEventListener("click",function(){buildTiles();openSheet(qp,"Tapped the status pill: quick settings.");});
+  $("qpClose").addEventListener("click",closeAll);
+  $("qpSet").addEventListener("click",function(){openSettings();});
+  var tY=null;$("top").addEventListener("pointerdown",function(e){tY=e.clientY;});$("top").addEventListener("pointerup",function(e){if(tY!==null&&e.clientY-tY>30){buildTiles();openSheet(qp,"Pulled down quick settings.");}tY=null;});
+
+  // settings
+  // four seasons, each with a light and a dark look; "By date" picks the season from the calendar, "Follow phone" picks light or dark from the phone
+  var SEASONS=[["spring","Spring","#eaf5e4","#14261b","#d9547f"],["summer","Summer","#fff3d6","#0c2b3a","#ef7a1a"],["autumn","Autumn","#f6e8d2","#0f2c30","#d4532f"],["winter","Winter","#e9f1f7","#1b2236","#2f6fc9"],["auto","By date"]];
+  function effSeason(){if(schemeSet!=="auto")return schemeSet;var m=new Date().getMonth();return m>=2&&m<=4?"spring":m>=5&&m<=7?"summer":m>=8&&m<=10?"autumn":"winter";}
+  function effMode(){if(modeSet!=="auto")return modeSet;try{return window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}catch(err){console.warn("launcher mock: no media query",err);return "light";}}
+  function buildSchemeRows(){
+    ["schemeRow","schemeRow2"].forEach(function(id){
+      var host=$(id);host.innerHTML="";
+      SEASONS.forEach(function(s){
+        var b=document.createElement("button");b.type="button";b.setAttribute("aria-label",s[1]+(s[0]==="auto"?" (the season follows the date)":""));b.title=s[1];
+        b.setAttribute("aria-pressed",schemeSet===s[0]?"true":"false");
+        var i=document.createElement("i");i.style.background=s[0]==="auto"?"linear-gradient(135deg,#d9547f 25%,#ef7a1a 25% 50%,#d4532f 50% 75%,#2f6fc9 75%)":"linear-gradient(135deg,"+s[2]+" 34%,"+s[3]+" 34% 67%,"+s[4]+" 67%)";b.appendChild(i);
+        b.addEventListener("click",function(){setScheme(s[0]);});host.appendChild(b);
+      });
+    });
+    segSet("sMode","data-d",modeSet);segSet("sMode2","data-d",modeSet);
+  }
+  function applyScheme(){scr.setAttribute("data-scheme",effSeason()+"-"+effMode());}
+  function saveLook(){try{localStorage.setItem("pocketSeason",schemeSet);localStorage.setItem("pocketMode",modeSet);}catch(err){console.warn("launcher mock: no storage",err);}}
+  function setScheme(s){schemeSet=s;applyScheme();buildSchemeRows();saveLook();logIt("Season: "+SEASONS.filter(function(x){return x[0]===s;})[0][1]+" ("+effMode()+" look).");}
+  function setMode(m){modeSet=m;applyScheme();buildSchemeRows();saveLook();logIt("Look: "+(m==="auto"?"follows the phone ("+effMode()+" now)":m)+".");}
+  ["sMode","sMode2"].forEach(function(id){$(id).addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setMode(b.getAttribute("data-d"));});});
+  try{
+    var sv=localStorage.getItem("pocketSeason"),mv=localStorage.getItem("pocketMode");
+    if(sv&&SEASONS.some(function(x){return x[0]===sv;}))schemeSet=sv;
+    if(mv==="light"||mv==="dark"||mv==="auto")modeSet=mv;
+  }catch(err){console.warn("launcher mock: no storage",err);}
+  // favourites: choose the four tray apps
+  $("favEdit").addEventListener("click",function(){
+    var box=$("favBox");
+    if(!box.hidden){box.hidden=true;return;}
+    box.innerHTML="";
+    PINS.forEach(function(cur,i){
+      var sel=document.createElement("select");sel.className="field";sel.setAttribute("aria-label","Favourite "+(i+1));
+      ALLN.forEach(function(n){var o=document.createElement("option");o.value=n;o.textContent=n;if(n===cur)o.selected=true;sel.appendChild(o);});
+      sel.addEventListener("change",function(){PINS[i]=sel.value;buildTray();logIt("Favourite "+(i+1)+" is now "+sel.value+".");});
+      box.appendChild(sel);
+    });
+    box.hidden=false;
+  });
+  function openSettings(){syncSettings();openSheet(setSheet,"Opened launcher settings.");}
+  $("setClose").addEventListener("click",closeAll);
+  $("openset").addEventListener("click",openSettings);
+  function segSet(id,attr,val){Array.prototype.forEach.call($(id).children,function(b){b.setAttribute("aria-pressed",b.getAttribute(attr)===String(val)?"true":"false");});}
+  function syncSettings(){
+    segSet("sMotion","data-m",motion);segSet("sFmt","data-f",fmt24?"24":"12");
+    segSet("sTs","data-t",scr.style.getPropertyValue("--ts")||"1");
+    $("sSnd").setAttribute("aria-pressed",sound);$("sBad").setAttribute("aria-pressed",badgesOn);$("sTap").setAttribute("aria-pressed",tapsOn);
+  }
+  $("sMotion").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;motion=b.getAttribute("data-m");syncSettings();updateMotionUI();logIt("Motion set to "+b.textContent+(motion==="off"?": the ring follows your finger and snaps, no coasting.":motion==="min"?": coasting is short.":": full coasting."));});
+  $("sFmt").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;fmt24=b.getAttribute("data-f")==="24";syncSettings();tick();});
+  $("sTs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;scr.style.setProperty("--ts",b.getAttribute("data-t"));syncSettings();logIt("Text size: "+b.textContent+".");});
+  $("sSnd").addEventListener("click",function(){sound=!sound;if(sound){try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();}catch(err){console.warn("launcher mock: no audio",err);}}syncSettings();});
+  $("sBad").addEventListener("click",function(){badgesOn=!badgesOn;applyBadges();syncSettings();});
+  $("sTap").addEventListener("click",function(){tapsOn=!tapsOn;TAPS.forEach(function(c){c.setAttribute("display",tapsOn?"inline":"none");});scr.classList.toggle("showtaps",tapsOn);syncSettings();logIt(tapsOn?"Dashed circles show the 48 dp tap areas.":"Tap areas hidden.");});
+  var MORE=[["Choose the 12 ring apps","Pick and reorder what sits on the dial"],["Hidden apps","Lock them behind a long-press or PIN"],["Gestures","Swipes and holds, in plain words"],["Widgets","Choose the panel pages and the band"],["Wallpaper and icons","Icon style for apps not on the ring"],["Backup and restore","Save your setup to a file and bring it back"],["About and licence","Open source (GPL-3.0), version, credits"]];
+  MORE.forEach(function(m){var d=document.createElement("button");d.type="button";d.className="rowset u";d.style.width="100%";d.innerHTML="<div>"+m[0]+"<small>"+m[1]+"</small></div><span aria-hidden='true'>›</span>";d.addEventListener("click",function(){toast("In the real launcher this opens its own screen.");});$("moreRows").appendChild(d);});
+  // press and hold on empty space opens settings
+  var hold=null,hx0=0,hy0=0;
+  scr.addEventListener("pointerdown",function(e){
+    if(e.target!==scr&&!e.target.classList.contains("wall")&&!e.target.classList.contains("dots"))return;
+    hx0=e.clientX;hy0=e.clientY;hold=setTimeout(function(){hold=null;openSettings();},600);
+  });
+  scr.addEventListener("pointermove",function(e){if(hold&&Math.hypot(e.clientX-hx0,e.clientY-hy0)>10){clearTimeout(hold);hold=null;}});
+  ["pointerup","pointercancel"].forEach(function(ev){scr.addEventListener(ev,function(){if(hold){clearTimeout(hold);hold=null;}});});
+  var upY=null;scr.addEventListener("pointerdown",function(e){if(e.target.classList.contains("wall")||e.target.classList.contains("dots"))upY=e.clientY;});
+  scr.addEventListener("pointerup",function(e){if(upY!==null&&upY-e.clientY>50)openDrawer();else if(upY!==null&&e.clientY-upY>50){buildTiles();openSheet(qp,"Swiped down on empty space: quick settings.");}upY=null;});
+
+  // ---------- top plate: weather, battery, date ----------
+  var WX=[
+    {t:"9°",c:"Clear night",svg:'<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#14335a"/><path d="M26 9a11 11 0 1 0 5 20A9 9 0 0 1 26 9z" fill="#ffe9a8"/><circle cx="12" cy="11" r="1.200" fill="#fff"/><circle cx="31" cy="12" r="1" fill="#fff"/><circle cx="9" cy="24" r=".9" fill="#fff"/></svg>'},
+    {t:"17°",c:"Sunny",svg:'<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#69c0ef"/><circle cx="20" cy="20" r="8" fill="#ffd45a"/><g stroke="#ffd45a" stroke-width="2.200" stroke-linecap="round"><path d="M20 5v4M20 31v4M5 20h4M31 20h4M9.500 9.500l2.800 2.800M27.700 27.700l2.800 2.800M30.500 9.500l-2.800 2.800M12.300 27.700l-2.800 2.800"/></g><circle cx="17.500" cy="19" r="1" fill="#6b4a00"/><circle cx="22.500" cy="19" r="1" fill="#6b4a00"/><path d="M17.500 22.500q2.500 2 5 0" fill="none" stroke="#6b4a00" stroke-width="1" stroke-linecap="round"/></svg>'},
+    {t:"12°",c:"Cloudy",svg:'<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#9db4c8"/><path d="M12 28a6 6 0 0 1-.5-12a8.500 8.500 0 0 1 16.500 2A5 5 0 0 1 28 28z" fill="#fff"/><circle cx="16" cy="23" r="1" fill="#6c7f91"/><circle cx="22" cy="23" r="1" fill="#6c7f91"/></svg>'},
+    {t:"8°",c:"Light rain",svg:'<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#5f7f9e"/><path d="M12 24a5.500 5.500 0 0 1-.5-11a8 8 0 0 1 15.500 2A4.500 4.500 0 0 1 27 24z" fill="#e8eef4"/><g stroke="#8fd0ff" stroke-width="2" stroke-linecap="round"><path d="M13 28l-1.500 4M20 28l-1.500 4M27 28l-1.500 4"/></g></svg>'}
+  ];
+  var wxI=0;
+  function setWx(i){wxI=i%WX.length;$("lens").innerHTML=WX[wxI].svg;$("lens").style.overflow="hidden";$("tmp").textContent=WX[wxI].t;$("cond").textContent=WX[wxI].c;}
+  $("lens").addEventListener("click",function(e){e.stopPropagation();setWx(wxI+1);logIt("Weather lens (demo): "+WX[wxI].c+". The real one follows the weather and opens your weather app.");});
+  $("lens").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setWx(wxI+1);}});
+  setWx(0);
+  var FCI=['<svg viewBox="0 0 26 22"><circle cx="13" cy="11" r="5" fill="#ffd45a"/><g stroke="#ffd45a" stroke-width="1.600" stroke-linecap="round"><path d="M13 1v2.500M13 18.500V21M2 11h2.500M21.500 11H24"/></g></svg>',
+           '<svg viewBox="0 0 26 22"><path d="M7 17a4 4 0 0 1-.3-8a6 6 0 0 1 11.600 1.400A3.300 3.300 0 0 1 18 17z" fill="#b9c9d8"/></svg>',
+           '<svg viewBox="0 0 26 22"><path d="M7 13a4 4 0 0 1-.3-8a6 6 0 0 1 11.600 1.400A3.300 3.300 0 0 1 18 13z" fill="#b9c9d8"/><g stroke="#4fb7e8" stroke-width="1.800" stroke-linecap="round"><path d="M8 16l-1 3M13 16l-1 3M18 16l-1 3"/></g></svg>',
+           '<svg viewBox="0 0 26 22"><circle cx="9" cy="8" r="4" fill="#ffd45a"/><path d="M9 18a4 4 0 0 1-.3-8a6 6 0 0 1 11.600 1.400A3.300 3.300 0 0 1 20 18z" fill="#dfe8f0"/></svg>'];
+  FCI.forEach(function(s,i){$("f"+i).innerHTML=s;});
+  function setBattery(){
+    $("needle").style.transform="rotate("+(-60+120*battery/100).toFixed(1)+"deg)";
+    $("batTxt").textContent=battery+"%"+(charging?" ⚡":"");
+    updateMotionUI();
+  }
+  var BD=[[78,false],[40,false],[14,false],[14,true]];var bdI=0;
+  $("batd").addEventListener("click",function(){
+    bdI=(bdI+1)%BD.length;battery=BD[bdI][0];charging=BD[bdI][1];
+    this.textContent="Battery demo: "+battery+"%"+(charging?" charging":"");
+    setBattery();
+    logIt(battery<=15&&!charging?"Battery 15% or less: the dial stops coasting and the music text stops, to save power.":charging?"Charging: motion is allowed again.":"Battery "+battery+"%: all normal.");
+  });
+  function updateMotionUI(){$("rMotion").textContent=gateReason();ambient();}
+
+  // ---------- panel pages ----------
+  var TASKS=[["Example task one",false],["Example task two",false],["Example task done",true]];
+  function renderTasks(){
+    var ul=$("taskList");ul.innerHTML="";
+    TASKS.forEach(function(t,i){var li=document.createElement("li");li.className=t[1]?"done":"";var b=document.createElement("button");b.type="button";b.className="u";b.setAttribute("aria-pressed",t[1]);b.innerHTML='<i class="chk"></i><span>'+t[0]+'</span>';b.addEventListener("click",function(ev){ev.stopPropagation();TASKS[i][1]=!TASKS[i][1];renderTasks();logIt((TASKS[i][1]?"Ticked off: ":"Back on the list: ")+TASKS[i][0]+".");});li.appendChild(b);ul.appendChild(li);});
+  }
+  // the notices section: like the pull-down shade, one row per app with a short line and how long ago. Counts only, never message text (owner's privacy rule); the x clears an app's notices.
+  var NTXT={Messages:["new messages","2m"],Mail:["new emails","14m"],Calendar:["event alerts","1h"],Notes:["reminders","3h"]};
+  function renderNtf(){
+    var ul=$("ntfList");ul.innerHTML="";
+    var names=["Messages","Mail","Calendar","Notes"].filter(function(n){return COUNTS[n]>0;});
+    var total=0;names.forEach(function(n){total+=COUNTS[n];});
+    $("ntf").querySelector(".t").textContent="NOTICES"+(names.length&&!dnd&&badgesOn?" · "+total:"");
+    if(dnd||!badgesOn||!names.length){var li0=document.createElement("li");li0.style.color="var(--mut)";li0.textContent=dnd?"Quiet is on. Nothing to show.":!badgesOn?"Notification badges are off in settings.":"All caught up.";ul.appendChild(li0);return;}
+    names.slice(0,3).forEach(function(n){
+      var li=document.createElement("li");li.tabIndex=0;li.setAttribute("role","button");li.setAttribute("aria-label",n+": "+COUNTS[n]+" "+NTXT[n][0]);
+      var s=el("svg",{viewBox:"-24 -24 48 48",class:"ni"});disc(s,n,19);li.appendChild(s);
+      var b=document.createElement("b");b.textContent=n;li.appendChild(b);
+      var sp=document.createElement("span");sp.textContent=COUNTS[n]+" "+NTXT[n][0];li.appendChild(sp);
+      var em=document.createElement("em");em.textContent=NTXT[n][1];li.appendChild(em);
+      var x=document.createElement("button");x.type="button";x.className="x";x.textContent="✕";x.setAttribute("aria-label","Clear "+n+" notices");
+      x.addEventListener("click",function(ev){ev.stopPropagation();COUNTS[n]=0;applyBadges();logIt("Cleared the "+n+" notices.");});
+      li.appendChild(x);
+      li.addEventListener("click",function(){openApp(n);});
+      li.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();openApp(n);}});
+      ul.appendChild(li);
+    });
+  }
+  function renderAlerts(){
+    refreshInner();render();renderNtf();
+    var ul=$("alertList");ul.innerHTML="";
+    var names=["Messages","Mail","Calendar","Notes"].filter(function(n){return COUNTS[n]>0;});
+    if(dnd||!badgesOn||!names.length){var li0=document.createElement("li");li0.textContent=dnd?"Quiet is on. Nothing to show.":!badgesOn?"Badges are off in settings.":"All caught up.";ul.appendChild(li0);return;}
+    names.slice(0,3).forEach(function(n){var li=document.createElement("li");var b=document.createElement("button");b.type="button";b.className="u";b.innerHTML="<span>"+n+"</span><span class='pbadge'>"+(COUNTS[n]>9?"9+":COUNTS[n])+"</span>";b.addEventListener("click",function(ev){ev.stopPropagation();openApp(n);});li.appendChild(b);ul.appendChild(li);});
+  }
+  // the band under the calendar: forecast, tasks, alerts (swipe it, or tap its label)
+  var pgIdx=0,swiped=false,pgX=null,fcEl=$("fc"),FCN=["NEXT DAYS","TASKS","ALERTS"];
+  function showPg(i){
+    pgIdx=((i%3)+3)%3;
+    for(var k=0;k<3;k++){$("fp"+k).classList.toggle("on",k===pgIdx);}
+    Array.prototype.forEach.call(document.querySelectorAll("#fcDots i"),function(d,k){d.classList.toggle("on",k===pgIdx);});
+    $("fcTab").textContent=FCN[pgIdx];
+    logIt("Band: "+["Forecast","Tasks","Alerts"][pgIdx]+".");
+  }
+  fcEl.addEventListener("pointerdown",function(e){pgX=e.clientX;swiped=false;});
+  fcEl.addEventListener("pointerup",function(e){if(pgX===null)return;var dx=e.clientX-pgX;pgX=null;if(Math.abs(dx)>28){swiped=true;showPg(pgIdx+(dx<0?1:-1));}});
+  fcEl.addEventListener("click",function(e){if(swiped){swiped=false;e.stopPropagation();}},true);
+  $("fcTab").addEventListener("click",function(){showPg(pgIdx+1);});
+  $("fp0").addEventListener("click",function(){toast("Would open your weather app (Samsung Weather) on the full forecast.");logIt("Tapped the forecast: opens the weather app.");});
+  $("fp0").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();this.click();}});
+  $("calW").addEventListener("click",function(){openApp("Calendar");});
+
+  function applyBadges(){
+    var show=badgesOn&&!dnd;
+    Object.keys(BADGES).forEach(function(k){BADGES[k].forEach(function(b){b.style.display=show&&COUNTS[k]>0?"":"none";});});
+    renderAlerts();
+  }
+  $("notif").addEventListener("click",function(){
+    badgesOn=!badgesOn;this.setAttribute("aria-pressed",badgesOn);this.textContent="Notifications: "+(badgesOn?"on":"off");
+    if(badgesOn){COUNTS.Mail=3;COUNTS.Notes=1;COUNTS.Messages=12;COUNTS.Calendar=2;}
+    applyBadges();syncSettings();
+    logIt(badgesOn?"Demo notifications on: Mail 3, Notes 1, Calendar 2, Messages 12 (shows 9+). Opening an app clears its badge.":"Notifications off.");
+  });
+
+  // ---------- now playing text round the dial ----------
+  var playing=false,paused=false,ti=0,ringAng=0,TRACKS=[["Example track one","Example artist"],["Example track two","Example artist"],["Example track three","Example artist"]];
+  function npRefresh(){
+    var unit=("Now playing · "+TRACKS[ti][0]+" · "+TRACKS[ti][1]+" · ").toUpperCase();
+    var reps=Math.max(1,Math.round(465/(unit.length*6.4)));var s="";for(var r=0;r<reps;r++)s+=unit;
+    $("npTP").textContent=s;$("npText").setAttribute("textLength","465");$("npText").setAttribute("lengthAdjust","spacing");
+    $("npRing").setAttribute("display",playing?"inline":"none");
+    $("sparks").setAttribute("display",playing?"none":"inline");
+    ambient();
+  }
+  $("music").addEventListener("click",function(){
+    playing=!playing;paused=false;ti=0;this.setAttribute("aria-pressed",playing);this.textContent="Music demo: "+(playing?"on":"off");
+    npRefresh();
+    logIt(playing?"Music started in another app: the track name scrolls slowly round the clock. Tap it to pause, double-tap for next.":"Music stopped: the scrolling name disappears.");
+  });
+  setInterval(function(){ // about 6 updates a second, only while music plays, visible, and motion allowed
+    if(!playing||paused||document.hidden||effMotion()==="off")return;
+    ringAng=(ringAng+1.1)%360;$("npRing").setAttribute("transform","rotate("+ringAng.toFixed(1)+" 180 290)");
+  },160);
+
+  // ---------- controls ----------
+  $("fric").addEventListener("input",function(e){fricVal=+e.target.value;});
+  $("spin").addEventListener("click",function(){
+    if(effMotion()==="off"){pos=Math.round(pos)+3;snapping=false;logIt("Spin it once: with motion off the ring steps 3 apps and stops.");start();return;}
+    snapping=false;v=9;start();logIt("Spin it once: a push of 9 apps per second.");
+  });
+
+  // ---------- clock: once every 30 seconds, only while visible ----------
+  function tick(){
+    var d=new Date(),m=d.getMinutes(),h=d.getHours()%12;
+    $("hMin").setAttribute("transform","rotate("+(m*6)+" 180 290)");
+    $("hHour").setAttribute("transform","rotate("+((h+m/60)*30)+" 180 290)");
+    var hh=fmt24?d.getHours():((d.getHours()%12)||12);
+    $("digi").textContent=(fmt24&&hh<10?"0":"")+hh+":"+(m<10?"0":"")+m;
+    var days=["SUN","MON","TUE","WED","THU","FRI","SAT"],mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    $("dateTxt").textContent=days[d.getDay()]+" "+d.getDate()+" "+mo[d.getMonth()];
+    $("calDow").textContent=days[d.getDay()];$("calDay").textContent=d.getDate();$("calMon").textContent=mo[d.getMonth()];
+    if(schemeSet==="auto"||modeSet==="auto")applyScheme();
+  }
+  tick();setInterval(function(){if(!document.hidden)tick();},30000);
+  // ambient effects, at most TWO at once: the ticking second hand (once a second) and the valve steam (12 steps a second).
+  // Music text counts as one, so steam rests while music plays. Both stop on Motion Off, Battery saver, battery 15% or less, or when the page is hidden.
+  var secOn=false;
+  function ambient(){
+    var m=effMotion(),vis=!document.hidden;
+    secOn=vis&&m!=="off";
+    var steamOn=vis&&m==="full"&&!playing;
+    $("hSec").setAttribute("display",secOn?"inline":"none");
+    scr.classList.toggle("steamOn",steamOn);
+    var n=(secOn?1:0)+(steamOn?1:0)+(playing&&!paused&&m!=="off"?1:0);
+    $("rAmb").textContent=n+" of 2 allowed"+(n===0?" (all resting)":"");
+  }
+  function secTick(){if(!secOn)return;$("hSec").setAttribute("transform","rotate("+(new Date().getSeconds()*6)+" 180 290)");}
+  setInterval(secTick,1000);
+  document.addEventListener("visibilitychange",function(){ambient();if(!document.hidden){tick();secTick();if(v||snapping)start();}});
+
+  // ---------- log ----------
+  var logEl=$("log"),entries=[];
+  function logIt(s){entries.unshift(s);entries=entries.slice(0,4);logEl.innerHTML="";entries.forEach(function(t){var li=document.createElement("li");li.textContent=t;logEl.appendChild(li);});}
+
+  // valve wheels: left = light/dark, right = motion (Full, Gentle, Off). Each turns a quarter turn per tap.
+  var wheelA={L:0,R:0};
+  function turnWheel(id,key){wheelA[key]+=90;$(id).querySelector(".wheel").style.transform="rotate("+wheelA[key]+"deg)";}
+  $("valveL").addEventListener("click",function(){turnWheel("valveL","L");setMode(effMode()==="dark"?"light":"dark");});
+  $("valveR").addEventListener("click",function(){
+    turnWheel("valveR","R");motion=motion==="full"?"min":motion==="min"?"off":"full";syncSettings();updateMotionUI();
+    logIt("Right valve: motion "+(motion==="full"?"Full":motion==="min"?"Gentle":"Off")+".");
+  });
+  try{var mq=window.matchMedia("(prefers-color-scheme: dark)");if(mq.addEventListener)mq.addEventListener("change",function(){if(modeSet==="auto"){applyScheme();buildSchemeRows();}});}catch(err){console.warn("launcher mock: no media listener",err);}
+  updatePill();buildTray();applyScheme();buildSchemeRows();syncSettings();renderTasks();renderAlerts();setBattery();npRefresh();buildDrawer("");render();
+})();
+</script>

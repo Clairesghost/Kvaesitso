@@ -1,0 +1,29 @@
+# Owner checks on the phone: <id>
+
+Copy to `tasks/<id>/testlist.md`. The owner is not technical. Rules:
+- Start with how to get the build onto the phone (link to `playbook/ci-and-signing.md`, "Install on the phone").
+- Visible result FIRST in every step: "You should see: ...".
+- At most 3 do-lines per step. Say where to be on the phone, what to tap, what to report.
+- At least ONE "You should NOT see / should NOT happen" step.
+- If the feature saves anything: a "close the launcher completely and open it again" step, and "it should still be there".
+- End with "Report: ..." naming exactly what the owner should tell Claude (a number, yes/no, a screenshot).
+- Plain words only. No step codes alone, no jargon.
+
+## A. <what is checked, in words>
+1. Where to be: ...
+   Do: ...
+   You should see: ...
+2. Do: ...
+   You should see: ...
+   Report: ...
+
+## B. Should NOT happen
+1. Do: ...
+   You should NOT see: ...
+
+## C. Restart check (only if something is saved)
+1. Close the launcher completely (recent-apps button, swipe its card away), then press Home.
+   You should see: the same thing as before.
+
+## What was NOT verified (copied from the handoff)
+- ...

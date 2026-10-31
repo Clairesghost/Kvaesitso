@@ -1,0 +1,142 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Swatches</title><style>
+@font-face{font-family:"Caveat";src:url("fonts/Caveat-VF.ttf");font-weight:400 700}
+@font-face{font-family:"Patrick Hand";src:url("fonts/PatrickHand-Regular.ttf")}
+@font-face{font-family:"Share Tech Mono";src:url("fonts/ShareTechMono-Regular.ttf")}
+@font-face{font-family:"Rajdhani";src:url("fonts/Rajdhani-Medium.ttf");font-weight:500}
+@font-face{font-family:"Rajdhani";src:url("fonts/Rajdhani-SemiBold.ttf");font-weight:600 700}
+@font-face{font-family:"Manrope";src:url("fonts/Manrope-VF.ttf");font-weight:200 800}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#777}
+.home{position:relative;width:360px;height:800px;overflow:hidden;background:var(--bg);color:var(--ink)}
+.home *{position:absolute}
+.home .flow{position:static}
+.hole{left:174px;top:10px;width:14px;height:14px;border-radius:50%;background:#000;box-shadow:0 0 0 1px rgba(128,128,128,.35)}
+.tag{font-size:11px;letter-spacing:.08em}
+.t{white-space:nowrap}
+/* ---------- COTTAGE ---------- */
+.cot{font-family:"Patrick Hand",cursive;
+ background:var(--bg) radial-gradient(circle at 1px 1px,rgba(var(--wood-rgb),.18) 1px,transparent 1.5px) 0 0/16px 16px}
+.cot .clock{left:20px;top:8px;font-family:"Caveat";font-weight:700;font-size:38px;line-height:44px;color:var(--ink)}
+.cot .bat{right:20px;top:16px;width:92px;height:28px;border-radius:14px;border:2px dashed var(--accent);background:var(--panel)}
+.cot .bat i{left:5px;top:5px;height:14px;width:38px;border-radius:7px;background:var(--accent)}
+.cot .bat b{right:8px;top:2px;font-weight:400;font-size:15px;color:var(--ink)}
+.cot .win{left:80px;top:74px;width:200px;height:170px;border-radius:14px 14px 4px 4px;border:10px solid var(--wood);background:linear-gradient(var(--sky1),var(--sky2));box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.cot .win .m1{left:calc(50% - 4px);top:0;width:8px;height:100%;background:var(--wood)}
+.cot .win .m2{left:0;top:calc(50% - 4px);width:100%;height:8px;background:var(--wood)}
+.cot .win svg{left:62px;top:14px}
+.cot .curL{left:62px;top:80px;width:36px;height:150px;border-radius:0 0 30px 6px;background:var(--accent);opacity:.9}
+.cot .curR{left:262px;top:80px;width:36px;height:150px;border-radius:0 0 6px 30px;background:var(--accent);opacity:.9}
+.cot .rod{left:56px;top:76px;width:248px;height:6px;border-radius:3px;background:var(--wood)}
+.cot .sill{left:66px;top:244px;width:228px;height:14px;border-radius:5px;background:var(--wood)}
+.cot .plaque{left:112px;top:262px;width:136px;height:34px;border-radius:12px;background:var(--panel);border:2px dashed var(--accent);text-align:center;font-size:19px;line-height:30px;color:var(--ink)}
+.cot .pot{left:236px;top:222px}
+.cot .note{left:20px;top:316px;width:320px;height:186px;border-radius:20px;background:var(--panel);box-shadow:0 5px 0 rgba(0,0,0,.16)}
+.cot .note .st{left:6px;top:6px;right:6px;bottom:6px;border:2px dashed var(--accent);border-radius:15px}
+.cot .note h3{left:20px;top:12px;font-family:"Caveat";font-size:28px;font-weight:700;color:var(--ink)}
+.cot .note .nx{left:18px;top:50px;width:284px;height:44px;border-radius:12px;background:var(--tile)}
+.cot .note .nx span{left:12px;top:5px;font-size:19px;color:var(--ink);white-space:nowrap}
+.cot .note .nx em{left:12px;top:25px;font-style:normal;font-size:14px;color:var(--muted);white-space:nowrap}
+.cot .note .ln{left:22px;font-size:17px;color:var(--ink);white-space:nowrap}
+
+.cot .note .dot{left:22px;width:12px;height:12px;border-radius:50%;border:2px solid var(--accent)}
+.cot .note .dot.a{border-color:var(--alert);background:var(--alert)}
+.cot .app{width:80px;height:78px;text-align:center}
+.cot .app .tile{left:12px;top:0;width:56px;height:56px;border-radius:19px;background:var(--tile);color:var(--ink);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.cot .app .tile:after{content:"";position:absolute;left:4px;top:4px;right:4px;bottom:4px;border:2px dashed var(--accent);border-radius:15px;opacity:.9}
+.cot .app .tile svg{left:14px;top:14px;color:var(--ink)}
+.cot .app .lb{left:0;top:58px;width:80px;font-size:15px;color:var(--ink)}
+.cot .shelf{left:20px;top:688px;width:320px;height:96px;border-radius:18px;border:2px dashed var(--muted)}
+.cot .shelf .opt{left:16px;top:-11px;padding:0 8px;background:var(--bg);font-size:14px;color:var(--muted)}
+.cot .fold{left:14px;top:14px;width:64px;height:68px}
+.cot .fold .tile{left:4px;top:0;width:56px;height:56px;border-radius:19px;background:var(--panel);border:2px solid var(--accent)}
+.cot .fold .tile i{width:14px;height:14px;border-radius:5px;background:var(--accent)}
+.cot .fold .lb{left:0;top:52px;width:64px;text-align:center;font-size:15px;color:var(--ink)}
+.cot .tg{left:96px;width:210px;height:26px;font-size:16px;color:var(--ink)}
+.cot .tg .sw{right:0;top:1px;width:46px;height:24px;border-radius:12px;background:var(--tile);border:2px solid var(--accent)}
+.cot .tg .sw i{top:2px;width:16px;height:16px;border-radius:50%;background:var(--accent)}
+.cot .tg .seg{right:0;top:0;width:118px;height:26px;border-radius:13px;border:2px solid var(--accent);overflow:hidden}
+.cot .tg .seg u{top:0;height:22px;width:38px;text-decoration:none;text-align:center;font-size:14px;line-height:22px;color:var(--ink)}
+.cot .tg .seg u.on{background:var(--accent);color:var(--bg)}
+/* ---------- COCKPIT ---------- */
+.ck{font-family:"Rajdhani",sans-serif;font-weight:500;
+ background:linear-gradient(rgba(var(--acc-rgb),.07) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(var(--acc-rgb),.07) 1px,transparent 1px) 0 0/24px 24px,var(--bg)}
+.ck .mono{font-family:"Share Tech Mono",monospace}
+.ck .clock{left:18px;top:12px;font-family:"Share Tech Mono";font-size:28px;line-height:32px;color:var(--accent);letter-spacing:.04em}
+.ck .bat{right:18px;top:12px;width:116px;height:32px}
+.ck .bat .lbl{left:0;top:0;font-family:"Share Tech Mono";font-size:13px;color:var(--muted);line-height:32px}
+.ck .bat .seg{top:11px;width:5px;height:11px;background:rgba(var(--acc-rgb),.28)}
+.ck .bat .seg.on{background:var(--accent)}
+.ck .bat .pc{right:0;top:0;font-family:"Share Tech Mono";font-size:16px;color:var(--ink);line-height:32px}
+.ck .hl{height:1px;background:rgba(var(--acc-rgb),.55)}
+.ck .radar{left:18px;top:62px;width:186px;height:186px}
+.ck .radar .ring{border:1px solid rgba(var(--acc-rgb),.6);border-radius:50%}
+.ck .radar .sweep{left:2px;top:2px;width:182px;height:182px;border-radius:50%;background:conic-gradient(from 280deg,transparent 0deg,rgba(var(--acc-rgb),.38) 80deg,transparent 80.5deg)}
+.ck .radar .cx{left:92px;top:0;width:1px;height:186px;background:rgba(var(--acc-rgb),.4)}
+.ck .radar .cy{left:0;top:92px;width:186px;height:1px;background:rgba(var(--acc-rgb),.4)}
+.ck .blip{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.ck .blip.a{background:var(--alert)}
+.ck .rd{left:222px;font-family:"Share Tech Mono";white-space:nowrap}
+.ck .rd .k{position:static;display:block;font-size:12px;color:var(--muted);letter-spacing:.1em}
+.ck .rd .v{position:static;display:block;font-size:24px;color:var(--ink);line-height:26px}
+.ck .brk{width:14px;height:14px;border:0 solid var(--accent)}
+.ck .panel{left:18px;top:268px;width:324px;height:206px;background:var(--panel);border:1px solid rgba(var(--acc-rgb),.45)}
+.ck .panel h3{left:14px;top:8px;font-family:"Share Tech Mono";font-weight:400;font-size:13px;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.ck .nx{left:14px;top:34px;width:296px;height:64px;border-left:3px solid var(--accent);background:rgba(var(--acc-rgb),.1)}
+.ck .nx .tm{left:12px;top:6px;font-family:"Share Tech Mono";font-size:26px;color:var(--accent);line-height:28px}
+.ck .nx .ti{left:12px;top:34px;font-size:20px;font-weight:600;color:var(--ink);line-height:24px;white-space:nowrap}
+.ck .nx .cd{right:12px;top:8px;font-family:"Share Tech Mono";font-size:14px;color:var(--ink)}
+.ck .tl{left:14px;width:296px;height:24px;font-size:17px;color:var(--ink);white-space:nowrap}
+.ck .tl .h{left:0;font-family:"Share Tech Mono";font-size:15px;color:var(--muted);top:1px}
+.ck .tl .n{left:62px;top:7px;width:8px;height:8px;border:1px solid var(--accent);background:var(--panel)}
+.ck .tl .x{left:82px;top:0}
+.ck .tl.al .h,.ck .tl.al .x{color:var(--alert)}
+.ck .tl.al .n{background:var(--alert);border-color:var(--alert)}
+.ck .app{width:80px;height:84px;text-align:center}
+.ck .app .fr{left:12px;top:0;width:56px;height:56px}
+.ck .app .fr svg.g{left:14px;top:14px;color:var(--accent)}
+.ck .app .lb{left:0;top:60px;width:80px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.ck .sys{left:18px;top:668px;width:324px;height:108px;border:1px solid rgba(var(--acc-rgb),.45);background:var(--panel)}
+.ck .sys h3{left:12px;top:6px;font-family:"Share Tech Mono";font-weight:400;font-size:12px;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.ck .col{top:28px;width:70px;text-align:center}
+.ck .col .k{left:0;top:0;width:100%;font-family:"Share Tech Mono";font-size:11px;color:var(--muted);letter-spacing:.06em}
+.ck .col .ctl{left:0;top:20px;width:100%;height:26px;border:1px solid var(--accent)}
+.ck .col .ctl u{top:0;height:24px;text-decoration:none;font-family:"Share Tech Mono";font-size:12px;line-height:24px;text-align:center;color:var(--ink)}
+.ck .col .ctl u.on{background:var(--accent);color:var(--bg)}
+.ck .col .vv{left:0;top:52px;width:100%;font-family:"Share Tech Mono";font-size:12px;color:var(--ink)}
+/* ---------- MINIMAL ---------- */
+.mn{font-family:"Manrope",sans-serif}
+.mn .clock{left:24px;top:30px;font-weight:300;font-size:64px;line-height:70px;letter-spacing:-.03em;color:var(--ink)}
+.mn .bat{right:24px;top:44px;width:30px;height:30px}
+.mn .bat span{right:38px;top:6px;font-size:15px;font-weight:600;color:var(--ink)}
+.mn .date{left:26px;top:108px;font-size:17px;color:var(--muted);font-weight:500}
+.mn .wxr{left:26px;top:146px;width:240px;height:44px}
+.mn .wxr b{left:54px;top:3px;font-size:20px;font-weight:700;color:var(--ink)}
+.mn .wxr em{left:54px;top:26px;font-style:normal;font-size:14px;color:var(--muted)}
+.mn .wid{left:26px;top:262px;width:308px;height:230px}
+.mn .wid .k{left:0;top:0;font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.mn .wid .big{left:0;top:26px;font-size:38px;font-weight:600;letter-spacing:-.02em;line-height:44px;color:var(--ink);white-space:nowrap}
+.mn .wid .sub{left:0;top:76px;font-size:18px;color:var(--muted);white-space:nowrap}
+.mn .wid .hr{left:0;top:116px;width:308px;height:1px;background:var(--wood)}
+.mn .wid .r{left:0;width:308px;height:26px;font-size:16px;color:var(--ink);white-space:nowrap}
+.mn .wid .r b{left:0;font-weight:500;color:var(--muted);font-size:15px}
+.mn .wid .r span{left:64px}
+.mn .wid .r.al b,.mn .wid .r.al span{color:var(--alert)}
+.mn .app{width:80px;height:80px;text-align:center}
+.mn .app svg{left:24px;top:2px;color:var(--ink)}
+.mn .app.ac svg{color:var(--accent)}
+.mn .app .lb{left:0;top:42px;width:80px;font-size:13px;font-weight:500;color:var(--muted)}
+.mn .ex{left:26px;top:716px;width:308px;height:60px}
+.mn .ex .fo{left:0;top:2px;width:60px;color:var(--ink)}
+.mn .ex .fo svg{left:0;top:0}
+.mn .ex .fo span{left:0;top:30px;font-size:12px;color:var(--muted);font-weight:500}
+.mn .ex .c{top:0;width:78px}
+.mn .ex .c .k{left:0;top:30px;font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap}
+.mn .ex .sw{left:0;top:2px;width:38px;height:22px;border-radius:11px;border:1.5px solid var(--muted)}
+.mn .ex .sw.on{background:var(--accent);border-color:var(--accent)}
+.mn .ex .sw i{top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--muted)}
+.mn .ex .sw.on i{left:19px;background:var(--bg)}
+.mn .ex .tri{left:0;top:2px;height:22px;font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap}
+.mn .ex .tri u{position:static;text-decoration:none;margin-right:7px;color:var(--muted)}
+.mn .ex .tri u.on{color:var(--accent);border-bottom:2px solid var(--accent)}
+.mn .opt{left:26px;top:696px;font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.w{position:static;padding:24px;font-family:sans-serif;background:#fff;color:#111;width:760px}.w h2{font-size:24px;margin-bottom:6px}.w h3{font-size:15px;margin:16px 0 8px;color:#444}.row{display:flex;gap:10px}.s{width:96px;font-size:12px;line-height:1.3}.s b{display:block}.s i{display:block;font-style:normal;font-family:monospace}.c{height:48px;border-radius:8px;border:1px solid #888;margin-bottom:4px}.c2{display:flex;height:48px;margin-bottom:4px}.c2 span{flex:1;border:1px solid #888}.f{font-size:14px;line-height:1.6}.s{width:104px}</style></head><body style="width:810px;height:780px;overflow:hidden;background:#777"><div class="w"><h2>Clean minimal: colours and fonts</h2><h3>dark</h3><div class="row"><div class="s"><div class="c" style="background:#0D0E11"></div><b>bg</b><i>#0D0E11</i></div><div class="s"><div class="c" style="background:#16181D"></div><b>panel</b><i>#16181D</i></div><div class="s"><div class="c" style="background:#16181D"></div><b>tile</b><i>#16181D</i></div><div class="s"><div class="c" style="background:#F4F5F7"></div><b>ink</b><i>#F4F5F7</i></div><div class="s"><div class="c" style="background:#9BA1AD"></div><b>muted</b><i>#9BA1AD</i></div><div class="s"><div class="c" style="background:#7DA8FF"></div><b>accent</b><i>#7DA8FF</i></div><div class="s"><div class="c" style="background:#FF6B7A"></div><b>alert</b><i>#FF6B7A</i></div></div><h3>light</h3><div class="row"><div class="s"><div class="c" style="background:#FAFAF8"></div><b>bg</b><i>#FAFAF8</i></div><div class="s"><div class="c" style="background:#F0F0EC"></div><b>panel</b><i>#F0F0EC</i></div><div class="s"><div class="c" style="background:#F0F0EC"></div><b>tile</b><i>#F0F0EC</i></div><div class="s"><div class="c" style="background:#14161A"></div><b>ink</b><i>#14161A</i></div><div class="s"><div class="c" style="background:#5A606B"></div><b>muted</b><i>#5A606B</i></div><div class="s"><div class="c" style="background:#2457D6"></div><b>accent</b><i>#2457D6</i></div><div class="s"><div class="c" style="background:#B4213A"></div><b>alert</b><i>#B4213A</i></div></div><h3>4 accent candidates (dark / light version)</h3><div class="row"><div class="s"><div class="c2"><span style="background:#7DA8FF"></span><span style="background:#2457D6"></span></div><b>Blue (recommended)</b><i>#7DA8FF / #2457D6</i></div><div class="s"><div class="c2"><span style="background:#FF7A59"></span><span style="background:#C2410C"></span></div><b>Coral</b><i>#FF7A59 / #C2410C</i></div><div class="s"><div class="c2"><span style="background:#4FD18B"></span><span style="background:#12794A"></span></div><b>Green</b><i>#4FD18B / #12794A</i></div><div class="s"><div class="c2"><span style="background:#B79CFF"></span><span style="background:#6D3FD1"></span></div><b>Violet</b><i>#B79CFF / #6D3FD1</i></div></div><h3>Recommended alert colour (separate from the accent)</h3><div class="row"><div class="s"><div class="c" style="background:#FF6B7A"></div><b>dark</b><i>#FF6B7A</i></div><div class="s"><div class="c" style="background:#B4213A"></div><b>light</b><i>#B4213A</i></div></div><h3>Fonts (free, may be bundled)</h3><p class="f">Everything: <span style="font-family:Manrope;font-weight:300;font-size:34px">Manrope Light</span> <span style="font-family:Manrope;font-weight:600;font-size:24px">Semibold</span><br>SIL OFL 1.1 (OFL-manrope.txt)</p></div></body></html>

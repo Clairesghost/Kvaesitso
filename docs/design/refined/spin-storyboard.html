@@ -1,0 +1,18 @@
+<!doctype html><meta charset=utf-8><body style="width:2200px;background:#17181b"><script src="lib.js"></script><script src="sheets.js"></script><script>
+const co=(x,y,w,t,tx,ty)=>(tx!=null?`<path d="M${x+w/2} ${y+30}L${tx} ${ty}" stroke="${CORAL}" stroke-width="6"/><circle cx="${tx}" cy="${ty}" r="11" fill="${CORAL}"/>`:'')+`<rect x="${x}" y="${y-38}" width="${w}" height="76" rx="38" fill="#1b1d20" stroke="${CORAL}" stroke-width="5"/><text x="${x+w/2}" y="${y+14}" text-anchor="middle" font-family="Lato" font-weight="700" font-size="44" fill="${CORAL}">${t}</text>`;
+const st=[
+ ['1  At rest','Tap a disc and its app opens.',{scheme:'a',layout:'i',weather:'rain',over:co(560,478,440,'tap opens the app',831,777)+co(250,1805,580,'pinned favourites stay')}],
+ ['2  Finger drag','The ring follows the finger; the discs stay upright.',{scheme:'a',layout:'i',weather:'rain',spin:14,mode:'drag',fingerIdx:0,arrowFrom:-6,arrowTo:50,over:co(640,478,300,'drag spins',650,610)}],
+ ['3  Let go','It keeps turning, slows by itself and stops on a notch.',{scheme:'a',layout:'i',weather:'rain',spin:52,mode:'fling',arrowFrom:30,arrowTo:100,over:co(90,478,640,'keeps turning, then slows',420,640)}],
+ ['4  Tap a disc','It presses in with a brass ring, then the app opens.',{scheme:'a',layout:'i',weather:'rain',spin:52,mode:'tap',tapIdx:2,over:co(640,478,400,'tap opens the app',851,1071)}]
+];
+let h=`<div style="padding:34px 40px;color:#f1ead6"><div style="font:600 46px CG,serif">The spinning dial: four moments</div><div style="font:400 20px Lato;color:#bfc7c4;margin:8px 0 24px;max-width:1900px">Scheme (a), day. Coral marks and the finger circle are explanations, not part of the design. Nothing turns in this picture. Disc order is a placeholder.</div><div style="display:flex;gap:24px">`;
+st.forEach(([a,b,o])=>{h+=`<div style="width:490px"><div style="width:490px;overflow:hidden;border-radius:18px;background:#000">${home(o).replace('width="1080" height="2400"','width="490" height="1089"')}</div><div style="font:700 25px Lato;margin-top:12px;color:#fff">${a}</div><div style="font:400 20px Lato;color:#d4dcd9;margin-top:4px">${b}</div></div>`});
+h+=`</div><div style="font:600 36px CG,serif;margin:40px 0 6px">More than 12 apps: one belt of up to 24, same ring</div><div style="font:400 20px Lato;color:#bfc7c4;max-width:1900px">The ring always shows 12 discs. Each notch moves everything one place along; the disc passing the brass finger stop is swapped, out of sight, for the next app on the belt. No second screen, discs stay big. The 3 pinned favourites never move.</div>`;
+const sc=SCH.a,P='z'+(UID++)+'_';
+let b=`<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="190" viewBox="0 0 2100 190"><defs>${defs(sc)}</defs><rect width="2100" height="190" rx="22" fill="${sc.paint2}"/>`;
+for(let i=0;i<24;i++){const on=i>=6&&i<18;b+=`<g transform="translate(${62+i*84} 98) scale(${on?1:.8})" opacity="${on?1:.4}">${icon(sc,LABELS[i%12],30,'A')}</g>`}
+b+=`<path d="M${62+6*84-44} 28H${62+17*84+44}" stroke="${CORAL}" stroke-width="4" stroke-dasharray="3 9" stroke-linecap="round"/><text x="${62+6*84-44}" y="22" font-family="Lato" font-weight="700" font-size="22" fill="${CORAL}">12 shown in the ring</text><text x="1960" y="176" text-anchor="end" font-family="Lato" font-size="20" fill="#e8efee">dim = waiting on the belt (up to 24 in all)</text></svg>`;
+h+=`<div style="margin-top:14px">${b.replace(/@/g,P)}</div></div>`;
+mount(h);
+</script>

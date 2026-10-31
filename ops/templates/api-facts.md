@@ -1,0 +1,26 @@
+# Verified Android and Kvaesitso facts
+
+Copy to `ops/api-facts.md`. Add `AF-n` entries; mark UNVERIFIED until tested on the owner's phone.
+
+IMPORTANT: AF-1 to AF-10 below were verified on ONE phone (a Samsung phone with a punch-hole camera, Android 13, 3-button navigation) during the project this kit comes from. They are VERIFIED-ELSEWHERE for you: re-verify each on your phone the first time you depend on it (ask `api-scout`, then a small probe), then change the label to VERIFIED on your phone and add the date. Class names are those of Kvaesitso and Android at that time; check they still exist.
+
+## Generic facts, verified on one other phone
+- AF-1 Notifications: Kvaesitso's own NotificationListenerService plus `cancelNotification(key)` through its NotificationRepository works. The owner grants access once on Android's notification-access screen (`Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS`). Use `extras.getCharSequence` for title and text (`getString` returns null for styled text). Never log notification text.
+- AF-2 Weather: the Bright Sky service (German weather service open data) returned forecasts for a US location although the settings screen labelled it "Germany only". A background job (WorkManager) gets no live GPS without background-location permission, so take a location fix in the foreground when the screen is shown, and look at the fetch job first when weather is wrong, not the UI.
+- AF-3 Camera hole: on that phone the display cutout outline was a box from the top edge (y = 0) down past the hole, and the hole is a circle as wide as the box at its bottom, so centre y = bottom - width / 2. Bounds from `cutoutPath` (API 31+) equalled `boundingRects` there. Other phones differ: ship on-screen numbers in the first test build instead of a guessed offset.
+- AF-4 Status bar: hiding it through the scaffold configuration (`showStatusBar = false` in the launcher scaffold) works; hiding it from a child composable lost to the scaffold's show-on-resume. The phone maker's status-bar icons cannot be moved or filtered by a launcher: you can only hide the whole bar and redraw what you want.
+- AF-5 Search page: `SearchComponent(openKeyboard = true)` opens the keyboard with the cursor. The empty-query app list and favourites are controlled by upstream user settings; forcing them in code makes the settings switches dead.
+- AF-6 Typing overlay: a `BasicTextField` whose value is `SearchVM.searchQuery` (`searchVM.search(text)`) shows the normal results below it. A text field in the middle of Home cannot share the screen with results (keyboard leaves no room): use an overlay with the field at the top.
+- AF-7 Home button: while the launcher is on top, pressing Home arrives as ACTION_MAIN with CATEGORY_HOME in the launcher activity's `onNewIntent`; use it to close pop-ups. The phone maker's skin delivered it.
+- AF-8 Quick-setting chips without special access on Android 13: `CameraManager.setTorchMode` (torch) and `AudioManager.setRingerMode` (Normal and Vibrate). Auto-rotate (`Settings.System.ACCELEROMETER_ROTATION`) works after the owner grants "Modify system settings" (WRITE_SETTINGS). Wi-Fi, Bluetooth, location and power saving can only open their settings page. Wi-Fi panel: `Settings.Panel.ACTION_INTERNET_CONNECTIVITY`.
+- AF-9 Press feedback: delay the launch of an app about 120 ms after a tap so the press animation is visible (none when animations are off); reset the press state on ON_RESUME and when the motion gate closes, or it can stick. Start reactions on Press, not on Release.
+- AF-10 Sharing text to another app: `ACTION_SEND` with `text/plain` and `setPackage("<app package>")` opens the app and lets the user choose where the text goes; it never sends by itself. Copy the text to the clipboard as a backup. No route auto-sends without an API key or an accessibility service.
+- AF-11 Samsung-like system app package names (dialer, camera, gallery, clock, calendar) written from memory are UNVERIFIED: a miss should fall back to a letter shield or default icon, and the owner reports which fall back.
+- AF-12 Launcher settings are unreachable if Home offers no entry: Kvaesitso's default long-press on Home does nothing. Launch `SettingsActivity` with `EXTRA_ROUTE` to open a screen directly.
+- AF-13 The launcher draws edge to edge: read `WindowInsets.navigationBars` and `statusBars` yourself for the bars; the Home component's `insets` parameter holds only the cutout.
+- AF-14 Taps handled by your own Home code bypass Kvaesitso's launch counter: keep your own usage counter if you build a "most used" list.
+- AF-15 Old pollers (`produceState { while (true) { delay } }`) keep running when Home is stopped; use a lifecycle-aware ticker instead.
+- AF-16 Not used and not tested: `AlarmManager.getNextAlarmClock`, AGSL `RuntimeShader` on Android 13.
+
+## Your facts (add below)
+<!-- AF-17 (task id, date, phone): ... VERIFIED on <phone> / UNVERIFIED -->

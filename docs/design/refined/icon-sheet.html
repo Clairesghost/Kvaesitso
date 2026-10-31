@@ -1,0 +1,10 @@
+<!doctype html><meta charset=utf-8><body style="width:1640px;background:#17181b"><script src="lib.js"></script><script src="sheets.js"></script><script>
+const N=[...LABELS];
+const sec=(t,d,row)=>`<div style="margin-top:26px"><div style="font:700 27px Lato;color:#fff">${t}</div><div style="font:400 20px Lato;color:#c4ccc9;margin:3px 0 10px;max-width:1500px">${d}</div>${row}</div>`;
+mount(`<div style="padding:34px 40px;color:#f1ead6"><div style="font:600 46px CG,serif">The 12 app icons, in three styles</div><div style="font:400 20px Lato;color:#bfc7c4;margin-top:8px;max-width:1500px">Each icon is a thin engraved line glyph, one hue, tone on tone, no accent colour at all. App choice and order are placeholders. Phone, Messages and Camera (pinned) use the same style. Labels are small caps in Cormorant SC.</div>`
++sec('Style 1: enamel disc with a brass rim (shown in all Home pictures)','Deep teal enamel, soft gloss, brass line glyph. Closest to the thin icons on the first photo. Recommended.',iconRow('a','A',50,N))
++sec('Style 2: polished brass disc, glyph engraved','Whole disc is aged brass; the glyph is cut into it (dark line with a light edge). Warmer and heavier, a little busier.',iconRow('a','B',50,N))
++sec('Style 3: glass dimple, bare glyph','A dark glass well with a hairline brass edge and a thinner glow-line glyph. Calmest and most modern; least like a button.',iconRow('a','C',50,N))
++sec('Style 1 in the other schemes (b night, c graphite and rose gold, d ivory)','Same glyphs; only the metal and enamel change.',iconRow('b','A',50,N)+'<div style="height:12px"></div>'+iconRow('c','A',50,N)+'<div style="height:12px"></div>'+iconRow('d','A',50,N))
++`<div style="font:400 19px Lato;color:#aeb6b3;margin-top:22px">Disc size on the phone: about 100 px across (about 38 dp), with the label under it. Glyph strokes are 3 px at that size. Not tested on the real screen.</div></div>`)
+</script>
