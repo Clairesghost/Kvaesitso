@@ -48,7 +48,9 @@ import de.mm20.launcher2.ui.vpd.VpdFonts
 import de.mm20.launcher2.ui.vpd.vpdColors
 import de.mm20.launcher2.ui.vpd.home.VpdMotionGate
 import de.mm20.launcher2.ui.vpd.home.VpdStage
+import de.mm20.launcher2.ui.vpd.home.VpdHomeVM
 import de.mm20.launcher2.ui.vpd.sheet.VpdSheet
+import de.mm20.launcher2.ui.vpd.usage.VpdUsage
 
 /** Our own Settings page (D-138, D-177, D-189, D-195): Look, Motion, Dial, Alerts, Calendars, Go back, More. */
 @Composable
@@ -72,6 +74,8 @@ internal fun VpdSettingsSheet(
     val calendars by vm.calendarList.collectAsStateWithLifecycle()
     val hiddenCalendars by vm.hiddenCalendars.collectAsStateWithLifecycle()
     val calendarPermission by vm.hasCalendarPermission.collectAsStateWithLifecycle()
+    val homeVm = viewModel<VpdHomeVM>()
+    val usageAccess by homeVm.usageAccess.collectAsStateWithLifecycle()
     val animate = remember { gate.animationsAllowed(motion) }
 
     VpdSheet(
@@ -102,6 +106,11 @@ internal fun VpdSettingsSheet(
 
             GroupTitle(st, "Dial")
             ActionRow(st, "Choose the 12 apps", onChooseDial)
+            ActionRow(
+                st, "Fill the dial with my most-used apps",
+                status = if (usageAccess) "On" else "Tap to allow",
+            ) { VpdUsage.openAccessPage(context) }
+            Hint(st, "Only how long you use each app; it stays on your phone.")
             ChoiceRow(
                 st, "Ring returns home",
                 listOf("On" to true, "Off" to false),
@@ -187,7 +196,7 @@ private fun Hint(st: VpdStage, text: String) {
 }
 
 @Composable
-private fun ActionRow(st: VpdStage, text: String, onClick: () -> Unit) {
+private fun ActionRow(st: VpdStage, text: String, status: String? = null, onClick: () -> Unit) {
     val c = LocalVpdColors.current
     Row(
         modifier = Modifier
@@ -201,6 +210,10 @@ private fun ActionRow(st: VpdStage, text: String, onClick: () -> Unit) {
             text, Modifier.weight(1f),
             color = c.textOnSheet, fontFamily = VpdFonts.Body, fontWeight = FontWeight.Medium, fontSize = st.sp(14f),
         )
+        if (status != null) {
+            Text(status, color = c.textDim, fontFamily = VpdFonts.Body, fontSize = st.sp(12f))
+            Box(Modifier.size(st.dp(6f)))
+        }
         Text("›", color = c.accent, fontSize = st.sp(22f))
     }
 }

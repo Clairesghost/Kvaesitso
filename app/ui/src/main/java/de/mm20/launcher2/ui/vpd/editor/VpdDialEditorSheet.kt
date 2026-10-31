@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -55,6 +56,7 @@ import de.mm20.launcher2.ui.vpd.home.VpdMotionGate
 import de.mm20.launcher2.ui.vpd.home.VpdStage
 import de.mm20.launcher2.ui.vpd.home.drawDialPlate
 import de.mm20.launcher2.ui.vpd.sheet.VpdSheet
+import de.mm20.launcher2.ui.vpd.usage.VpdUsage
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -89,6 +91,10 @@ internal fun VpdDialEditorSheet(
 
     val slots: List<SavableSearchable?> = List(SLOTS) { dial.getOrNull(it) }
     val slotsNow by rememberUpdatedState(slots)
+    val saved by homeVm.dialSaved.collectAsStateWithLifecycle()
+    val savedNow by rememberUpdatedState(saved)
+    val usageAccess by homeVm.usageAccess.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val placeNow by rememberUpdatedState(place)
 
     var pickSlot by remember { mutableStateOf<Int?>(null) }
@@ -100,12 +106,16 @@ internal fun VpdDialEditorSheet(
     val ds = remember(est.k, st.density) { VpdStage(est.k * DIAL_SCALE, st.density) }
     val small = remember(st.k, st.density) { VpdStage(st.k * 0.7f, st.density) }
 
+    // "" = automatic, "-" = blank on purpose; a disc the owner touches becomes theirs
+    fun rawKeys(): MutableList<String> =
+        MutableList(SLOTS) { savedNow?.getOrNull(it) ?: "" }
+
     fun set(index: Int, app: SavableSearchable?) {
-        val list = slotsNow.toMutableList()
-        // an app sits on the dial once: moving it empties its old disc
-        if (app != null) for (i in list.indices) if (list[i]?.key == app.key) list[i] = null
-        list[index] = app
-        homeVm.saveDial(list)
+        val keys = rawKeys()
+        // an app sits on the dial once: moving it frees its old disc
+        if (app != null) for (i in keys.indices) if (keys[i] == app.key) keys[i] = ""
+        keys[index] = app?.key ?: VpdHomeVM.BLANK
+        homeVm.saveDial(keys)
     }
 
     VpdSheet(
@@ -119,6 +129,15 @@ internal fun VpdDialEditorSheet(
                 color = c.textDim, fontFamily = VpdFonts.Body, fontSize = st.sp(12f),
                 modifier = Modifier.padding(horizontal = st.dp(4f), vertical = st.dp(2f)),
             )
+            if (!usageAccess) {
+                Text(
+                    "Fill empty discs with my most-used apps: tap to allow",
+                    color = c.accent, fontFamily = VpdFonts.Body, fontSize = st.sp(12f),
+                    modifier = Modifier
+                        .clickable { VpdUsage.openAccessPage(context) }
+                        .padding(horizontal = st.dp(4f), vertical = st.dp(4f)),
+                )
+            }
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 Box(
                     modifier = Modifier
@@ -153,11 +172,13 @@ internal fun VpdDialEditorSheet(
                                             val to = hit(ch.position)
                                             dragFrom = -1
                                             if (to >= 0 && to != from) {
-                                                val list = slotsNow.toMutableList()
-                                                val tmp = list[from]
-                                                list[from] = list[to]
-                                                list[to] = tmp
-                                                homeVm.saveDial(list)
+                                                // both discs become the owner's own
+                                                val keys = rawKeys()
+                                                val a = slotsNow[from]?.key ?: if (keys[from] == VpdHomeVM.BLANK) VpdHomeVM.BLANK else ""
+                                                val b = slotsNow[to]?.key ?: if (keys[to] == VpdHomeVM.BLANK) VpdHomeVM.BLANK else ""
+                                                keys[from] = b
+                                                keys[to] = a
+                                                homeVm.saveDial(keys)
                                             }
                                         } else {
                                             val p = placeNow
