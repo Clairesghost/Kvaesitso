@@ -105,7 +105,7 @@ internal fun VpdSettingsSheet(
             Hint(st, "Off stops every animation. Full and Minimal also stop by themselves when the phone is in Battery Saver, the battery is low, or Android's remove-animations is on.")
 
             GroupTitle(st, "Dial")
-            ActionRow(st, "Choose the 12 apps", onChooseDial)
+            ActionRow(st, "Choose the 12 apps", onClick = onChooseDial)
             ActionRow(
                 st, "Fill the dial with my most-used apps",
                 status = if (usageAccess) "On" else "Tap to allow",
