@@ -7,6 +7,7 @@ import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.ui.VpdListSettings
 import de.mm20.launcher2.search.CalendarEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,7 @@ class VpdCardsVM : ViewModel(), KoinComponent {
     private val calendarRepository: CalendarRepository by inject()
     private val notificationRepository: NotificationRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val listSettings: VpdListSettings by inject()
 
     val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
@@ -45,9 +47,13 @@ class VpdCardsVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     /** Events of the next 14 days from all calendars, tasks left out, in start order. */
-    val events = flow { emit(System.currentTimeMillis()) }
-        .flatMapLatest { now ->
-            calendarRepository.findMany(from = now, to = now + 14 * 24 * 60 * 60 * 1000L)
+    val events = combine(flow { emit(System.currentTimeMillis()) }, listSettings.hiddenCalendars) { now, hidden -> now to hidden }
+        .flatMapLatest { (now, hidden) ->
+            calendarRepository.findMany(
+                from = now,
+                to = now + 14 * 24 * 60 * 60 * 1000L,
+                excludeCalendars = hidden.toList(),
+            )
         }
         .map { list ->
             list.filter { !it.isTask }.sortedBy { it.startTime ?: it.endTime }
@@ -57,8 +63,8 @@ class VpdCardsVM : ViewModel(), KoinComponent {
     private val dismissed = MutableStateFlow<Set<String>>(emptySet())
 
     /** Newest first. */
-    val alerts = combine(notificationRepository.notifications, dismissed) { all, gone ->
-        all.filter { it.key !in gone && !it.isGroupSummary }
+    val alerts = combine(notificationRepository.notifications, dismissed, listSettings.hiddenAlertApps) { all, gone, hiddenApps ->
+        all.filter { it.key !in gone && !it.isGroupSummary && it.packageName !in hiddenApps }
             .mapNotNull { n ->
                 val title = n.extras.getCharSequence(android.app.Notification.EXTRA_TITLE)
                     ?.toString()?.takeIf { it.isNotBlank() }
