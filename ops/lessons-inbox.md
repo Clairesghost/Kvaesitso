@@ -16,3 +16,4 @@ Copy to `ops/lessons-inbox.md`. Threads add 0 to 3 lines each: only surprises. F
 - B4a-lists: a bash heredoc with apostrophes can fail and write nothing; use the Write tool for big files and ls afterwards.
 - B4a-s2: usage access is an owner switch in Android settings, not a pop-up; the app can only check it and open the page, so the launcher must work fully without it (fallback to favourites).
 - B4a-s2: a saved list that mixes "owner set" and "automatic" needs explicit markers ("" auto, "-" blank); showing the filled list in the editor and saving it back would turn automatic discs into the owner's own.
+- B4a guide: GitHub job logs need sign-in, and the check-run annotations show no compiler messages. To read a failed build, compare it with the last green branch and read the diff; one wrong positional argument after a new default parameter broke B4a-s2.
