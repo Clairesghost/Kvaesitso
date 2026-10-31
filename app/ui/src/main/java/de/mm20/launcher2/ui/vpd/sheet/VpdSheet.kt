@@ -6,8 +6,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -79,17 +81,13 @@ internal fun VpdSheet(
                 Brush.linearGradient(if (c.isNight) c.chrome else listOf(c.chromeFrameDark, c.chromeFrameDark)),
                 shape,
             )
-            // the sheet swallows every touch so nothing reaches Home underneath
-            .pointerInput(Unit) {
-                awaitEachGesture {
-                    awaitFirstDown(requireUnconsumed = false).consume()
-                    while (true) {
-                        val e = awaitPointerEvent()
-                        e.changes.forEach { it.consume() }
-                        if (e.changes.none { it.pressed }) break
-                    }
-                }
-            },
+            // Nothing on the sheet may reach the launcher frame behind it, but lists inside must
+            // still scroll (D-196: swallowing every touch here stopped them). Taps and double
+            // taps on empty parts end here, and drags the lists don't use (or the leftover at a
+            // list's end) are taken by these two do-nothing scrollers instead of the frame.
+            .pointerInput(Unit) { detectTapGestures(onDoubleTap = {}, onLongPress = {}, onTap = {}) }
+            .scrollable(rememberScrollableState { it }, Orientation.Vertical)
+            .scrollable(rememberScrollableState { it }, Orientation.Horizontal),
     ) {
         Column(Modifier.fillMaxSize()) {
             Row(
