@@ -39,5 +39,5 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Then G7-G11 as needed, G15 remaining (name, money features, AI).
 - Then phone-stylist makes preview pictures in docs/design/ BEFORE any code; owner approves previews; then write docs/design-system.md.
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
-| B0-pipeline | build | written locally: `.github/workflows/build-debug.yml` (debug APK for claude/* branches) | main (uncommitted) | not run; pushing it needs the owner's yes |
-| B1-foundation | build | brief written, thread not started | claude/B1-foundation | tasks/B1-foundation/brief.md |
+| B0-pipeline | build | DONE: debug workflow ran green on claude/B1-foundation | main | |
+| B1-foundation | build | pushed 2026-10-31, GitHub build green (run 41215748144, APK vintage-pocket-dial-debug-apk); waiting for owner phone check (tasks/B1-foundation/testlist.md on the branch) | claude/B1-foundation | not yet merged into main |
