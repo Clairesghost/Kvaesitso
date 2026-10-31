@@ -12,3 +12,5 @@ Copy to `ops/lessons-inbox.md`. Threads add 0 to 3 lines each: only surprises. F
 - B3-cards: `PermissionsManager.hasPermission(Notifications)` only means "listener bound", so a freshly granted access can look missing for a moment.
 - T1-tasks: Keyboard Back is not delivered to the app on Android 13, so cancel an inline text field by watching `WindowInsets.isImeVisible` instead of BackHandler.
 - T1-tasks: the guide's Python shortcut does not exist on this PC; use sed or the Write tool for edits (a bash heredoc with odd quotes silently wrote nothing).
+- B4a-lists: working copies here are CRLF, so multi-line perl/sed replacements silently miss; use the Edit tool on existing files and Write for new ones.
+- B4a-lists: a bash heredoc with apostrophes can fail and write nothing; use the Write tool for big files and ls afterwards.
