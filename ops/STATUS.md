@@ -44,7 +44,7 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 | B2-home | build | DONE (owner verified on phone 2026-11-01): home, coins, dial spin and return, clock hold, Day/Night, bigger dial (D-183), charging ring. Battery number after a day: parked by the owner, ask later. | claude/B2-home-s3 | merged into main locally (not pushed) |
 
 | B3-cards | build | DONE (owner verified on phone 2026-11-01): calendar, alerts with swipe to clear, tasks shell | claude/B3-cards | merged into main locally (not pushed) |
-| T1-tasks | build | built by its thread, under review by the guide; owner added DEBUG_KEYSTORE_BASE64 (D-191, D-194). | claude/T1-tasks | tasks/T1-tasks/brief.md |
+| T1-tasks | build | pushed 2026-11-01, GitHub build green with the fixed key step (run 41229217803); waiting for owner phone check (tasks/T1-tasks/testlist.md on the branch). | claude/T1-tasks | tasks/T1-tasks/brief.md |
 
 ## Parked by the owner
 - Battery check (Settings > Battery, Vintage Pocket Dial percentage after a day of use): owner said put a pin in it (2026-11-01). Ask again before B6.
