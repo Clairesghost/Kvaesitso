@@ -1,0 +1,28 @@
+# Task brief: B3-cards
+
+One task = one stage = one branch `claude/B3-cards`. Read only this, `CLAUDE.md`, `docs/design-system.md` and your row in `ops/STATUS.md`. For exact looks, Grep the mock-up `docs/design/refined/dial-mockup-cute.html` for the part you build (calendar card, Alerts block, tasks block, swipe to clear); never read it whole. Search the code with Grep and open only matching files. B2 code is in `app/ui/src/main/java/de/mm20/launcher2/ui/vpd/home/` (read `tasks/B2-home/handoff.md` first).
+
+Goal: put the three placards under the dial on Home: Calendar (real events from all calendars), Alerts (real notifications, swipe to clear) and a Tasks card shell (Google Tasks is wired in the next stage, G1). Implements D-90, D-107, D-115 (Tasks half only), D-116/D-117, D-118, D-120, D-121, D-148/D-149, D-152, D-160, D-173b (no weather yet), D-183 (layout), D-186 to D-189.
+
+Files in scope (new files in `de.mm20.launcher2.ui.vpd.home` or a new `de.mm20.launcher2.ui.vpd.cards`; upstream edits tiny, each in its own commit):
+- Layout (stage units, D-183): Calendar 412-516, Alerts 524-602, Tasks 610-704, all 12 to 348 wide (match the mock-up margins). Panel motif from the design system: tan placard, 3 px black frame, 6 px corners, chrome bezel, soft shadow; Night: near-black with one subtle cool-grey shade on all three (D-149). Dotted dividers between rows; no dotted underline under titles (D-152). Script headings in `VpdFonts.Heading`, body in `VpdFonts.Body`.
+- Calendar card: date tab on the left (date number in script; the weather icon and temperature space stays EMPTY until B5, never invented numbers), next event title (script), its time, and a "Then…" line with the following one or two. No events today: "Nothing on today" in script with "Next: <title>, <day> <time>" beneath (D-120). Events from all calendars on the phone through Kvaesitso's `CalendarRepository` (as `CalendarWidgetVM` does). Calendar permission: if missing, the card shows one row "Show your calendar" that asks Android once (through Kvaesitso's `PermissionsManager`). Tap the card: opens the phone's Calendar app (D-121).
+- Alerts card: script title "Alerts", the 2 newest notifications (app icon, sender/app name weight 500 (D-118), one line of text, an outlined pill action button "Open" (D-117) and ✕). Source: Kvaesitso's `NotificationRepository` / its NotificationListenerService (AF-1, re-verify on the phone). "+N more ›" opens Android's own notification list (D-188); Kvaesitso already has a shade opener (`NotificationShadeController` / `GlobalActionsService`; AF-24 says the reflection call is UNVERIFIED on Android 13: probe once, keep what works, write the AF line). Swipe a row sideways past about 90 px: it flies off and the notification is cleared (`cancelNotification(key)`, AF-1); a short drag springs back; ongoing notifications cannot be swiped and have no ✕ (D-160). Motion Off or the gate closed (`VpdMotionGate`): no fly-off animation, the row just goes. Nothing new: "all clear" only (D-173b; the 5-day strip comes with weather in B5). No notification access yet: one row "Show your alerts" that opens Android's notification access page with a plain line of explanation. Never log notification text (CLAUDE.md).
+- Tasks card: script title "Tasks" only, no Notes switch (D-186). Until G1 it shows one row "Connect Google Tasks" that does nothing yet except a short toast "Coming in the next update". Draw the row positions so G1 can drop in up to 2 task rows (tick box + text) and the "Add a task…" last row (D-187). Store nothing.
+- Collect everything only while Home is visible (lifecycle STARTED), no polling (AF-15).
+
+Done when (visible on the phone):
+- Three cards under the dial in Day and Night, matching the mock-up style.
+- The Calendar card shows the real next event (or "Nothing on today" + Next), tapping it opens the Calendar app.
+- The Alerts card shows the 2 newest real notifications; swiping one clears it (it is gone from Android's list too); ✕ clears; "+N more" opens Android's list; ongoing ones can't be swiped.
+- The Tasks card shows "Connect Google Tasks".
+- Restart the launcher: the cards come back the same.
+
+Out of scope: Google Tasks connection and the fixed signing key (G1); Today sheet, settings, calendar choice, search "Add as task/note" (B4); weather and the 5-day strip (B5); Notes (dropped). Do not change the dial, housing or other Kvaesitso screens.
+Android calls needed: AF-1, AF-15, AF-24 (all UNVERIFIED on this phone). Ask `api-scout` for: opening the phone's default Calendar app on One UI; Kvaesitso's notification access check and settings page. Write AF lines for what you learn.
+Motion or battery impact: small. Only the swipe fly-off and spring-back animate, touch-driven, gated by `VpdMotionGate` and the Motion setting. No ambient effects. Battery checklist in CLAUDE.md applies.
+Sellable parts [M]: none.
+Open questions for the owner: none (D-184 to D-189 answered). Anything still unclear: pick the simplest option that matches the mock-up and list it in the handoff.
+Model: mid (Sonnet class). Commit in small steps (layout + panel, calendar, alerts, swipe, tasks shell).
+
+Deliver: commit locally on `claude/B3-cards` (messages end with the co-author trailer); `tasks/B3-cards/testlist.md` from `ops/templates/testlist.md` (visible result first, at least one "should NOT happen", a restart-the-launcher step, the notification access and calendar permission steps in plain words); `tasks/B3-cards/handoff.md` from `ops/templates/handoff.md`; 0 to 3 lines in `ops/lessons-inbox.md`; update your STATUS row. Re-read every new file's imports. Do NOT push. Say READY TO PUSH with a plain-words summary and what you could not verify, then stop.
