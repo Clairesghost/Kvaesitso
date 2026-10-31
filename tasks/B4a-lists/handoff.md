@@ -44,3 +44,25 @@ Sellable parts added ([M] rows): none.
 Lessons: see inbox.
 Next stage needs: B4b can reuse `VpdSheet`, `VpdPage` (add pages there) and `vpdTapOrHold`.
 Branch: claude/B4a-lists (see `git log`).
+
+# Handoff: B4a-lists stage 2 (D-196, branch claude/B4a-s2)
+
+What changed (plain words):
+- Manifest (own commit): `PACKAGE_USAGE_STATS` with `tools:ignore="ProtectedPermissions"`.
+- New `ui.vpd.usage.VpdUsage`: `hasAccess` (AppOps `unsafeCheckOpNoThrow` on `OPSTR_GET_USAGE_STATS`), `rankedPackages` (`queryAndAggregateUsageStats` over 14 days, most foreground time first, this launcher left out, nothing logged), `openAccessPage` (Usage access page with `package:` data when the phone resolves it, else the general page).
+- `VpdHomeVM` (now an `AndroidViewModel`): `refreshUsage()` runs on `Dispatchers.Default`, called once per Home resume from `VpdHomeScreen` (ON_RESUME). No timers. `dialApps` now: owner-set discs stay; every empty disc ("" or an uninstalled app) takes the next app from usage ranking, then from the old favourites (D-180) as top-up and as the whole fallback without access; "-" (`VpdHomeVM.BLANK`) stays blank. Nothing saved (null) = all 12 automatic. New `dialSaved` (raw keys) and `usageAccess` flows.
+- Editor: works on raw keys. Tapping/replacing a disc, a swap (both discs) or "Leave this disc empty" ("-") makes those discs the owner's own; untouched automatic discs stay automatic. "Put on the dial" frees the app's old disc (shown again by the auto fill). One quiet line "Fill empty discs with my most-used apps: tap to allow" when access is off.
+- Settings > Dial: row "Fill the dial with my most-used apps", status "On" / "Tap to allow", explanation line under it. Nothing asks on start.
+- `VpdListSettings` comment only (marker meaning).
+
+Owner's old save (1 app + 11 ""): the 11 empties now fill automatically, no migration needed.
+
+How it was checked: read-through of every changed file and its imports. NOT compiled, NOT run.
+
+NOT verified: compile; that the `package:` link opens the launcher's own row on One UI 5 (api-scout: UNVERIFIED, docs only); that `queryAndAggregateUsageStats` returns data on this phone; Samsung Device care possibly resetting Usage access; the menu path Settings > Apps > three dots > Special access > Usage data access (check on your phone); that the refresh runs after coming back from the Android page (it should, Home resumes).
+
+Decided simply (to confirm): ranking = 14 days of foreground time; only Home-resume refresh (the Home dial may show the old fill until the first read finishes, a moment); work-profile duplicates use the first app of the package; the editor's auto-filled discs look exactly like owner-set ones.
+
+Proposed AF lines (api-scout 2026-10-31, docs only; UNVERIFIED on phone):
+- AF-39: `PACKAGE_USAGE_STATS` is granted by the owner in Settings (app-op), no runtime dialog. Check `AppOpsManager.unsafeCheckOpNoThrow(OPSTR_GET_USAGE_STATS, Process.myUid(), packageName) == MODE_ALLOWED` (API 29). Read `UsageStatsManager.queryAndAggregateUsageStats(begin, end)` (one total per package; no bucket overlap). UNVERIFIED on phone.
+- AF-40: `Settings.ACTION_USAGE_ACCESS_SETTINGS` with `package:<pkg>` data may open the app's own toggle or the general list on One UI 5. UNVERIFIED on phone (the owner reports which).

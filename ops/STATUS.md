@@ -46,7 +46,7 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 | B3-cards | build | DONE (owner verified on phone 2026-11-01): calendar, alerts with swipe to clear, tasks shell | claude/B3-cards | merged into main locally (not pushed) |
 | T1-tasks | build | DONE (owner verified on phone 2026-11-01): add, tick, +N more, restart; fixed key build green | claude/T1-tasks | merged into main locally (not pushed) |
 
-| B4a-lists | build | READY TO PUSH (not compiled): app list, Settings, dial editor, colours | claude/B4a-lists | tasks/B4a-lists/brief.md |
+| B4a-lists | build | stage 1 on the phone; bug 1 fixed by the guide; stage 2 (D-196 usage-filled dial) READY TO PUSH on claude/B4a-s2, not compiled | claude/B4a-lists, claude/B4a-s2 | tasks/B4a-lists/brief.md |
 | B4b-search | build | todo after B4a: search results, Today sheet, full task list, first-run, About | claude/B4b-search | (brief not written) |
 
 ## Parked by the owner
