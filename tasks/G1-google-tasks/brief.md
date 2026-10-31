@@ -1,3 +1,5 @@
+> PARKED (D-194, 2026-11-01): owner kept local tasks (T1). Use this brief only if Google Tasks comes back.
+
 # Task brief: G1-google-tasks
 
 One task = one stage = one branch `claude/G1-google-tasks`. Read only this, `CLAUDE.md`, `docs/design-system.md`, your row in `ops/STATUS.md`, `tasks/B3-cards/handoff.md` and AF-33 / AF-34 in `ops/api-facts.md`. Search the code with Grep and open only matching files. The cards are in `app/ui/src/main/java/de/mm20/launcher2/ui/vpd/cards/`.

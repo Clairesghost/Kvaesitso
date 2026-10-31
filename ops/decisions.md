@@ -300,4 +300,4 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-192 (2026-11-01): Owner: a ticked task is crossed out at once (tap again to undo) and disappears the next time Home comes back.
 - D-193 (2026-11-01): Owner: the Tasks card shows the newest 2 tasks and "+N more" next to the title when there are more; the full task list comes with the sheets in B4.
 
-- D-190 (2026-11-01): Owner added the GitHub secret DEBUG_KEYSTORE_BASE64 (fixed debug key from Documents/vpd-signing). Owner chose to PUBLISH the Google project (one "unverified app" warning at sign-in, then the sign-in most likely stays) instead of staying in Testing (7-day expiry).
+- D-194 (2026-11-01): Two conversations crossed: one recorded D-190 to D-193 (local tasks, T1 built), the other got a "publish the Google project" answer. Owner settled it: keep T1, tasks stay on the phone; Google Tasks stays parked (AF-33, brief kept in tasks/G1-google-tasks/ for later). Owner confirmed the GitHub secret DEBUG_KEYSTORE_BASE64 is added (D-191).
