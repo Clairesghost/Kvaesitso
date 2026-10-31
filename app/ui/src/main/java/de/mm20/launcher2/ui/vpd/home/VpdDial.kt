@@ -82,7 +82,8 @@ private class DialJobs {
 @Composable
 fun VpdDial(
     st: VpdStage,
-    apps: List<SavableSearchable>,
+    apps: List<SavableSearchable?>,
+    onDiscHold: (Int) -> Unit = {},
     motion: VpdMotion,
     ringReturnsHome: Boolean,
     gate: VpdMotionGate,
@@ -104,6 +105,7 @@ fun VpdDial(
     val returnsNow by rememberUpdatedState(ringReturnsHome)
     val onLaunchNow by rememberUpdatedState(onLaunch)
     val onHoldNow by rememberUpdatedState(onClockHold)
+    val onDiscHoldNow by rememberUpdatedState(onDiscHold)
 
     fun armHome() {
         jobs.home?.cancel()
@@ -209,14 +211,40 @@ fun VpdDial(
                     jobs.cancel()
                     val animated = gate.animationsAllowed(motionNow)
                     val hit = hitDisc(down.position)
-                    if (animated && hit in appsNow.indices) pressed = hit
+                    if (animated && appsNow.getOrNull(hit) != null) pressed = hit
+
+                    // hold half a second on a disc opens the editor (D-141); a drag still spins
+                    var releasedEarly = false
+                    if (hit >= 0) {
+                        var phase = 0
+                        val held = withTimeoutOrNull(HOLD_MS) {
+                            while (true) {
+                                val event = awaitPointerEvent()
+                                val ch = event.changes.firstOrNull { it.id == down.id }
+                                if (ch == null) { phase = 1; return@withTimeoutOrNull true }
+                                event.changes.forEach { it.consume() }
+                                if (!ch.pressed) { phase = 1; return@withTimeoutOrNull true }
+                                if ((ch.position - down.position).getDistance() > 6f * k) {
+                                    phase = 2
+                                    return@withTimeoutOrNull true
+                                }
+                            }
+                        }
+                        if (held == null) {
+                            pressed = -1
+                            onDiscHoldNow(hit)
+                            consumeUntilUp()
+                            return@awaitEachGesture
+                        }
+                        releasedEarly = phase == 1
+                    }
 
                     var lastAngle = angleOf(down.position)
                     var lastT = down.uptimeMillis
                     var v = 0f
                     var moved = 0f
                     var spun = false
-                    while (true) {
+                    while (!releasedEarly) {
                         val event = awaitPointerEvent()
                         val ch = event.changes.firstOrNull { it.id == down.id } ?: break
                         event.changes.forEach { it.consume() }
@@ -293,7 +321,7 @@ private suspend fun AwaitPointerEventScope.consumeUntilUp() {
 }
 
 @Composable
-private fun Disc(
+internal fun Disc(
     st: VpdStage,
     colors: VpdColors,
     app: SavableSearchable?,
@@ -328,7 +356,7 @@ private fun Disc(
 }
 
 /** Plate, rims, ticks, finger stop, centre band (mock-up dial svg; k = dial scale, c = centre in px). */
-private fun DrawScope.drawDialPlate(c: Offset, k: Float, colors: VpdColors) {
+internal fun DrawScope.drawDialPlate(c: Offset, k: Float, colors: VpdColors) {
     fun r(u: Float) = u * k
     val chrome = Brush.linearGradient(
         colors.chrome,
