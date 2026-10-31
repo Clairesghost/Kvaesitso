@@ -40,4 +40,4 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Then phone-stylist makes preview pictures in docs/design/ BEFORE any code; owner approves previews; then write docs/design-system.md.
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
 | B0-pipeline | build | written locally: `.github/workflows/build-debug.yml` (debug APK for claude/* branches) | main (uncommitted) | not run; pushing it needs the owner's yes |
-| B1-foundation | build | brief written, thread not started | claude/B1-foundation | tasks/B1-foundation/brief.md |
+| B1-foundation | build | READY TO PUSH (not compiled, not pushed): name, icon A, fonts + OFL, vpd tokens, VpdLook preference | claude/B1-foundation | tasks/B1-foundation/handoff.md, testlist.md |
