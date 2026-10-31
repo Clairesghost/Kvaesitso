@@ -88,7 +88,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 @media (prefers-reduced-motion:reduce){.anim{animation:none!important}}
 
 /* ---------- A: cute vintage phone ---------- */
-.A{background:radial-gradient(120% 70% at 30% 0%,#c52a35 0%,#a01a24 45%,#6b0c15 100%);color:#fbeee0;font-family:Nunito,"DM Sans",sans-serif}
+.A{background:radial-gradient(120% 70% at 30% 0%,var(--g1,#c52a35) 0%,var(--g2,#a01a24) 45%,var(--g3,#6b0c15) 100%);color:#fbeee0;font-family:Nunito,"DM Sans",sans-serif}
 .A .tb .l,.A .tb .r{display:none}
 .A .tb .l{left:20px}.A .tb .r{right:20px}
 .A .srch{background:linear-gradient(#fffaf0,#efe4cc);border-radius:22px;color:#4a1a1d;box-shadow:0 2px 0 #7d1019,0 4px 8px rgba(0,0,0,.3),inset 0 0 0 2px #d9cdb2}
@@ -103,7 +103,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .cal .d big,.cal .d small{position:relative}
 .wxrow{position:relative;display:flex;align-items:center;gap:4px;font-size:12px;font-weight:800;margin-bottom:5px}
 .chips{position:absolute;left:0;bottom:0;display:flex;gap:6px;align-items:center;height:28px}
-.nchip{all:unset;cursor:pointer;display:flex;align-items:center;gap:4px;height:26px;min-width:44px;justify-content:center;padding:0 9px;border-radius:13px;background:#f0e1c0;color:#8d141d;font-weight:800;font-size:12px;box-shadow:0 1px 0 #c9b890;touch-action:pan-y}
+.nchip{all:unset;cursor:pointer;display:flex;align-items:center;gap:4px;height:26px;min-width:44px;justify-content:center;padding:0 9px;border-radius:13px;background:#f0e1c0;color:var(--acc,#8d141d);font-weight:800;font-size:12px;box-shadow:0 1px 0 #c9b890;touch-action:pan-y}
 .nall{font-size:11px;font-weight:700;opacity:.6}
 .nscrim{position:absolute;inset:0;background:rgba(10,0,2,.5);z-index:28;display:none}
 .nscrim.on{display:block}
@@ -114,15 +114,15 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .nb,.nr button,.tog{all:unset;cursor:pointer}
 .nb{min-height:32px;padding:0 12px;border-radius:16px;background:#e7d8b6;font-size:12px;font-weight:800;display:flex;align-items:center}
 .nbody{flex:1;overflow-y:auto;padding:0 12px;scrollbar-width:none}
-.nsec{font-size:10px;letter-spacing:.14em;font-weight:800;color:#8d141d;margin:6px 2px 0}
+.nsec{font-size:10px;letter-spacing:.14em;font-weight:800;color:var(--acc,#8d141d);margin:6px 2px 0}
 .nr{display:flex;align-items:center;gap:10px;min-height:42px;border-bottom:1px solid #e1d3ad;font-size:13px;cursor:pointer}
-.nr svg{flex:none;color:#8d141d}
+.nr svg{flex:none;color:var(--acc,#8d141d)}
 .nr .nt{flex:1;min-width:0}
 .nr .nt b{display:block;font-size:13px}
 .nr .nt span{display:block;font-size:12px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nr em{font-style:normal;font-size:11px;opacity:.65;flex:none}
 .nr button{min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;border-radius:17px;flex:none}
-.nr .act{background:#f0e1c0;padding:0 10px;color:#8d141d}
+.nr .act{background:#f0e1c0;padding:0 10px;color:var(--acc,#8d141d)}
 .nr.ev{cursor:default}
 .nr .dot{width:9px;height:9px;border-radius:50%;background:#d62b37;flex:none;margin:0 5px}
 .nfoot{padding:8px 14px 12px;border-top:2px dotted #c9b890;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;font-weight:800}
@@ -145,7 +145,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
  background:radial-gradient(circle at 7px 7px,#8f9194 0 2px,transparent 2.5px),radial-gradient(circle at calc(100% - 7px) 7px,#8f9194 0 2px,transparent 2.5px),linear-gradient(#fdfdfb,#b9bbbd 55%,#e6e6e2);
  box-shadow:0 2px 0 var(--deep,#7d1019),0 5px 10px rgba(0,0,0,.35),inset 0 0 0 1.5px #d7d8da}
 .A .srch::before,.A .srch::after{content:none}
-.A .srch input{height:30px;padding:0 14px;border-radius:15px;background:#1b0b0d;color:#fbeee0;box-shadow:inset 0 2px 5px rgba(0,0,0,.85),0 1px 0 #fff}
+.A .srch input{height:30px;padding:0 14px;border-radius:15px;background:var(--slot,#1b0b0d);color:#fbeee0;box-shadow:inset 0 2px 5px rgba(0,0,0,.85),0 1px 0 #fff}
 .A .srch input::placeholder{color:#fbeee0;opacity:.62}
 .coins{display:flex;gap:5px;flex:none}
 .coins i{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:9px;font-weight:800;color:#2b2b2e;background:radial-gradient(circle at 35% 30%,#fff,#c3c5c8 60%,#8f9194);box-shadow:inset 0 0 0 2px #e9e9e6,inset 0 0 0 3.5px #6b6d70,0 1px 0 #fff}
@@ -166,8 +166,8 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A .tl textarea{color:#15110f;background:repeating-linear-gradient(transparent 0 18px,rgba(20,16,16,.25) 18px 19px)}
 .A .nchip{background:#15110f;color:#efe8c8;box-shadow:none}
 
-.coins .coin{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;color:#8d141d;background:radial-gradient(circle at 35% 30%,#fff,#c3c5c8 60%,#8f9194);box-shadow:inset 0 0 0 2px #e9e9e6,inset 0 0 0 3.5px #6b6d70,0 1px 0 #fff}
-.coins button.coin{all:unset;box-sizing:border-box;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;color:#8d141d;background:radial-gradient(circle at 35% 30%,#fff,#c3c5c8 60%,#8f9194);box-shadow:inset 0 0 0 2px #e9e9e6,inset 0 0 0 3.5px #6b6d70,0 1px 0 #fff;touch-action:pan-y}
+.coins .coin{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;color:var(--acc,#8d141d);background:radial-gradient(circle at 35% 30%,#fff,#c3c5c8 60%,#8f9194);box-shadow:inset 0 0 0 2px #e9e9e6,inset 0 0 0 3.5px #6b6d70,0 1px 0 #fff}
+.coins button.coin{all:unset;box-sizing:border-box;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;color:var(--acc,#8d141d);background:radial-gradient(circle at 35% 30%,#fff,#c3c5c8 60%,#8f9194);box-shadow:inset 0 0 0 2px #e9e9e6,inset 0 0 0 3.5px #6b6d70,0 1px 0 #fff;touch-action:pan-y}
 .coins .coin b{position:absolute;right:-5px;top:-6px;min-width:15px;height:15px;border-radius:8px;background:#d62b37;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 3px;box-shadow:0 0 0 1.5px #fdfdfb}
 
 /* camera as the coin-release button: coins left, camera centre, search slot right, all on one raised housing */
@@ -199,7 +199,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A .cal .d big,.A .cal .e .n,.nbh b,.nh b,.nsec{font-family:"Oleo Script Swash Caps","Libre Franklin",cursive;font-weight:700;letter-spacing:0;text-transform:none}
 .A .cal .e .n{font-size:19px;line-height:1.1}
 .nbh b{font-size:15px}
-.nh b{font-size:20px;color:#8d141d}
+.nh b{font-size:20px;color:var(--acc,#8d141d)}
 .nsec{font-size:15px}
 /* script font also on the tasks/notes block and the search bar (D-112) */
 .A .tabs button{font-family:"Oleo Script Swash Caps","Libre Franklin",cursive;font-weight:700;letter-spacing:.02em;font-size:14px}
@@ -256,7 +256,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 
 /* app list sheet (D-135) */
 .aps{padding-right:0}
-.aps .nh b{font-family:"Oleo Script Swash Caps","Libre Franklin",cursive;font-weight:700;letter-spacing:0;font-size:20px;color:#8d141d}
+.aps .nh b{font-family:"Oleo Script Swash Caps","Libre Franklin",cursive;font-weight:700;letter-spacing:0;font-size:20px;color:var(--acc,#8d141d)}
 .apsrch{padding:6px 12px 4px}
 .apsrch input{all:unset;box-sizing:border-box;width:100%;height:32px;padding:0 12px;border-radius:16px;background:#e7d8b6;color:#3a0d12;font:500 13px "Libre Franklin",sans-serif}
 .apsrch input::placeholder{color:#7a4a43}
@@ -264,7 +264,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .aps .nr{min-height:44px;gap:12px}
 .aps .nr .nt b{font-weight:500;font-size:14px}
 .aps .nsec{font-family:"Oleo Script Swash Caps","Libre Franklin",cursive;font-weight:700;letter-spacing:0;font-size:15px;margin-top:8px}
-.astrip{position:absolute;right:2px;top:92px;bottom:10px;width:22px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;font-size:9.5px;font-weight:700;color:#8d141d}
+.astrip{position:absolute;right:2px;top:92px;bottom:10px;width:22px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;font-size:9.5px;font-weight:700;color:var(--acc,#8d141d)}
 .astrip i{font-style:normal;cursor:pointer;line-height:1;padding:1px 4px}
 .astrip i.off{opacity:.3}
 
@@ -278,14 +278,14 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .srow.dim{opacity:.55}
 .srow[data-dial]{cursor:pointer}
 .sseg{display:flex;gap:6px;flex-wrap:wrap;padding:6px 0 8px}
-.sseg button{all:unset;cursor:pointer;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px #8d141d;color:#8d141d;font:500 12px "Libre Franklin",sans-serif;display:flex;align-items:center}
-.sseg button.on{background:#8d141d;color:#fbf3de}
+.sseg button{all:unset;cursor:pointer;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px var(--acc,#8d141d);color:var(--acc,#8d141d);font:500 12px "Libre Franklin",sans-serif;display:flex;align-items:center}
+.sseg button.on{background:var(--acc,#8d141d);color:#fbf3de}
 .srow.steps i{opacity:.8}
 
 /* quick timer pop-up (D-140) */
 .tpop{position:absolute;left:50px;right:50px;top:238px;z-index:31;background:linear-gradient(#f2edd2,#e4dcbb);color:#15110f;border:3px solid #141010;border-radius:6px;box-shadow:0 0 0 2px #dcdedf,0 0 0 3.5px #7d7f82,0 10px 24px rgba(0,0,0,.5);padding:8px 10px 8px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s,transform .16s;font-family:"Libre Franklin",sans-serif}
 .tpop.on{opacity:1;transform:none;pointer-events:auto}
-.tph{font:700 18px "Oleo Script Swash Caps","Libre Franklin",cursive;color:#8d141d;margin-bottom:4px}
+.tph{font:700 18px "Oleo Script Swash Caps","Libre Franklin",cursive;color:var(--acc,#8d141d);margin-bottom:4px}
 .tpb{display:flex;gap:6px}
 .tpb button{all:unset;cursor:pointer;flex:1;min-height:48px;border-radius:8px;box-shadow:inset 0 0 0 1px #15110f;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
 .tpb button b{font-size:16px;font-weight:600}
@@ -302,7 +302,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 /* night version (D-144): deep burgundy lacquer, dark placards with cream type, dimmed chrome */
 .A .nightdim{display:none}
 .A.night [id^="pl"] stop:first-child{stop-color:#3a1219}.A.night [id^="pl"] stop:last-child{stop-color:#1f0b10}
-.A.night{background:radial-gradient(120% 70% at 30% 0%,#303034 0%,#18181b 48%,#0b0b0d 100%);color:#f1ece0}
+.A.night{background:radial-gradient(120% 70% at 30% 0%,var(--n1,#303034) 0%,var(--n2,#18181b) 48%,var(--n3,#0b0b0d) 100%);color:#f1ece0}
 .A.night .card,.A.night .card.nbk{background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,0) 40%),linear-gradient(#232226,#141416);color:#f1ece0;border-color:#000;box-shadow:0 0 0 2px #dcdedf,0 0 0 3.5px #7d7f82,0 6px 10px rgba(0,0,0,.55)}
 .A.night .cal::before{border-left-color:rgba(241,236,224,.35)}
 .A.night .nbr,.A.night .nbe,.A.night .tl label{border-top-color:rgba(241,236,224,.25)}
@@ -316,19 +316,19 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A.night .wxrow span{color:#f1ece0}
 .A.night .nsheet,.A.night .tpop{background:linear-gradient(#1c1c1f,#111113);color:#f1ece0}
 .A.night .tpop{border-color:#000}
-.A.night .nh b,.A.night .nsec,.A.night .aps .nh b,.A.night .tph{color:#ff6a5f}
+.A.night .nh b,.A.night .nsec,.A.night .aps .nh b,.A.night .tph{color:var(--accn,#ff6a5f)}
 .A.night .nb{background:#34343a;color:#f1ece0}
 .A.night .nr,.A.night .srow{border-bottom-color:rgba(241,236,224,.18)}
-.A.night .nr svg{color:#ff6a5f}
+.A.night .nr svg{color:var(--accn,#ff6a5f)}
 .A.night .nr .act{background:#34343a;color:#ff8d80}
 .A.night .nfoot{border-top-color:rgba(241,236,224,.25)}
 .A.night .tog{background:#34343a;color:#f1ece0}
-.A.night .tog.on{background:#a8222e;color:#fff4e6}
+.A.night .tog.on{background:var(--accbg,#a8222e);color:#fff4e6}
 .A.night .apsrch input{background:#2a2a2e;color:#f1ece0}
 .A.night .apsrch input::placeholder{color:#a8a49b}
-.A.night .astrip{color:#ff6a5f}
-.A.night .sseg button{color:#ff6a5f;box-shadow:inset 0 0 0 1px #ff6a5f}
-.A.night .sseg button.on{background:#a8222e;color:#fff4e6;box-shadow:none}
+.A.night .astrip{color:var(--accn,#ff6a5f)}
+.A.night .sseg button{color:var(--accn,#ff6a5f);box-shadow:inset 0 0 0 1px var(--accn,#ff6a5f)}
+.A.night .sseg button.on{background:var(--accbg,#a8222e);color:#fff4e6;box-shadow:none}
 .A.night .tpb button{box-shadow:inset 0 0 0 1px #f1ece0}
 .A.night .toast{background:#1c1c1f;color:#f1ece0}
 .A.night .cal .d{color:#f1ece0!important}
@@ -347,7 +347,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A.night .tl label.done i{opacity:.6}
 .A.night .nsheet,.A.night .tpop{box-shadow:0 8px 28px rgba(0,0,0,.6),inset 0 0 0 2px #7d7f82,inset 0 0 0 3.5px #1a1a1d}
 /* subtle tint on the three black cards so they do not merge with the phone body (D-148) */
-.A.night .nr[data-set] svg{stroke:#ff6a5f}
+.A.night .nr[data-set] svg{stroke:var(--accn,#ff6a5f)}
 /* night clock centre: black face, ivory ticks and hands, amber pin, wine ring (D-163) */
 .A.night [id^="rd"] stop:first-child{stop-color:#7a1019}
 .A.night [id^="rd"] stop:last-child{stop-color:#430910}
@@ -359,19 +359,19 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 /* first-run screens (D-154) */
 .frs{top:54px;justify-content:space-between;padding:22px 22px 20px;text-align:center}
 .frc{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:40px}
-.frt{font:700 28px "Oleo Script Swash Caps","Libre Franklin",cursive;color:#8d141d}
+.frt{font:700 28px "Oleo Script Swash Caps","Libre Franklin",cursive;color:var(--acc,#8d141d)}
 .frb{font:400 14.5px/1.5 "Libre Franklin",sans-serif;max-width:280px}
 .frd{display:flex;gap:7px;justify-content:center}
-.frd i{width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.5px #8d141d}
-.frd i.on{background:#8d141d}
+.frd i{width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--acc,#8d141d)}
+.frd i.on{background:var(--acc,#8d141d)}
 .frbtn{display:flex;flex-direction:column;gap:8px;align-items:center}
-.frp{all:unset;cursor:pointer;min-height:48px;padding:0 24px;border-radius:24px;background:#8d141d;color:#fbf3de;font:600 14px "Libre Franklin",sans-serif;display:flex;align-items:center}
+.frp{all:unset;cursor:pointer;min-height:48px;padding:0 24px;border-radius:24px;background:var(--acc,#8d141d);color:#fbf3de;font:600 14px "Libre Franklin",sans-serif;display:flex;align-items:center}
 .frs2{all:unset;cursor:pointer;min-height:44px;padding:0 16px;font:500 13px "Libre Franklin",sans-serif;color:#7a4a43;display:flex;align-items:center}
 .A.night .frs{box-shadow:0 8px 28px rgba(0,0,0,.6),inset 0 0 0 2px #7d7f82,inset 0 0 0 3.5px #1a1a1d}
-.A.night .frt{color:#ff6a5f}
-.A.night .frd i{box-shadow:inset 0 0 0 1.5px #ff6a5f}
-.A.night .frd i.on{background:#ff6a5f}
-.A.night .frp{background:#a8222e;color:#fff4e6}
+.A.night .frt{color:var(--accn,#ff6a5f)}
+.A.night .frd i{box-shadow:inset 0 0 0 1.5px var(--accn,#ff6a5f)}
+.A.night .frd i.on{background:var(--accn,#ff6a5f)}
+.A.night .frp{background:var(--accbg,#a8222e);color:#fff4e6}
 .A.night .frs2{color:#cfc6b4}
 .A.night .frc svg{filter:none}
 
@@ -422,22 +422,22 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 /* app list: category chips, bigger letter strip with a bubble, move menu (D-168) */
 .acats{display:flex;gap:6px;overflow-x:auto;padding:2px 12px 6px;scrollbar-width:none}
 .acats::-webkit-scrollbar{display:none}
-.acats button{all:unset;cursor:pointer;flex:none;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px #8d141d;color:#8d141d;font:500 12px "Libre Franklin",sans-serif;display:flex;align-items:center;white-space:nowrap}
-.acats button.on{background:#8d141d;color:#fbf3de;box-shadow:none}
-.A.night .acats button{color:#ff6a5f;box-shadow:inset 0 0 0 1px #ff6a5f}
-.A.night .acats button.on{background:#a8222e;color:#fff4e6;box-shadow:none}
+.acats button{all:unset;cursor:pointer;flex:none;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px var(--acc,#8d141d);color:var(--acc,#8d141d);font:500 12px "Libre Franklin",sans-serif;display:flex;align-items:center;white-space:nowrap}
+.acats button.on{background:var(--acc,#8d141d);color:#fbf3de;box-shadow:none}
+.A.night .acats button{color:var(--accn,#ff6a5f);box-shadow:inset 0 0 0 1px var(--accn,#ff6a5f)}
+.A.night .acats button.on{background:var(--accbg,#a8222e);color:#fff4e6;box-shadow:none}
 .astrip{width:30px;right:0;top:134px;font-size:11.5px;touch-action:none}
 .astrip i{padding:0 8px 0 4px;flex:1;display:flex;align-items:center;justify-content:center}
-.abub{position:absolute;right:46px;top:100px;width:52px;height:52px;border-radius:26px;background:#8d141d;color:#fbf3de;font:700 30px/52px "Oleo Script Swash Caps",cursive;text-align:center;opacity:0;pointer-events:none;transition:opacity .12s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.abub{position:absolute;right:46px;top:100px;width:52px;height:52px;border-radius:26px;background:var(--acc,#8d141d);color:#fbf3de;font:700 30px/52px "Oleo Script Swash Caps",cursive;text-align:center;opacity:0;pointer-events:none;transition:opacity .12s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
 .abub.on{opacity:1}
-.A.night .abub{background:#a8222e}
+.A.night .abub{background:var(--accbg,#a8222e)}
 .amove{position:absolute;left:30px;right:30px;top:90px;z-index:3;background:#fbf4e3;color:#3a0d12;border:3px solid #141010;border-radius:6px;box-shadow:0 0 0 2px #dcdedf,0 0 0 3.5px #7d7f82,0 10px 24px rgba(0,0,0,.5);padding:8px 10px;display:none;flex-direction:column;gap:4px}
 .amove.on{display:flex}
 .A.night .amove{background:#1c1c1f;color:#f1ece0}
-.amt{font:700 17px "Oleo Script Swash Caps",cursive;color:#8d141d;margin-bottom:2px}
-.A.night .amt{color:#ff6a5f}
+.amt{font:700 17px "Oleo Script Swash Caps",cursive;color:var(--acc,#8d141d);margin-bottom:2px}
+.A.night .amt{color:var(--accn,#ff6a5f)}
 .amove button{all:unset;cursor:pointer;min-height:36px;padding:0 10px;border-radius:8px;box-shadow:inset 0 0 0 1px currentColor;font:500 13px "Libre Franklin",sans-serif;display:flex;align-items:center}
-.amove button.on{background:#8d141d;color:#fbf3de;box-shadow:none}
+.amove button.on{background:var(--acc,#8d141d);color:#fbf3de;box-shadow:none}
 .amove .amx{box-shadow:none;opacity:.7;justify-content:center}
 
 /* category grid (D-169) */
@@ -445,11 +445,11 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A.land .ggrid{grid-template-columns:repeat(4,1fr)}
 .gtile{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px 8px;border-radius:10px;background:#f6ecd0;box-shadow:inset 0 0 0 1.5px #c9b890,0 2px 0 #d9c9a0;text-align:center}
 .gpeek{display:grid;grid-template-columns:repeat(2,26px);gap:3px;justify-content:center;min-height:55px;align-content:center}
-.gtile b{font:700 15px "Oleo Script Swash Caps","Libre Franklin",cursive;color:#8d141d;line-height:1.15}
+.gtile b{font:700 15px "Oleo Script Swash Caps","Libre Franklin",cursive;color:var(--acc,#8d141d);line-height:1.15}
 .gtile i{font:500 11px "Libre Franklin",sans-serif;font-style:normal;opacity:.7}
 .A.night .gtile{background:linear-gradient(#2a292d,#1a191c);box-shadow:inset 0 0 0 1.5px #55565a,0 2px 0 #0a0a0b}
-.A.night .gtile b{color:#ff6a5f}
-.A.night .gset .gpeek svg{stroke:#ff6a5f}
+.A.night .gtile b{color:var(--accn,#ff6a5f)}
+.A.night .gset .gpeek svg{stroke:var(--accn,#ff6a5f)}
 .nh .nb svg{display:block}
 
 /* app list layout A: icon grid in category sections (D-171) */
@@ -469,19 +469,19 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A.night .sres{background:linear-gradient(#232226,#141416);color:#f1ece0;border-color:#000}
 .sra{display:flex;flex-direction:column;align-items:flex-start;padding:2px 0 8px;border-bottom:1px dotted rgba(20,16,16,.35);position:relative}
 .sra small{font-size:12px;opacity:.7}
-.sra b{font:700 34px/1.1 "Oleo Script Swash Caps",cursive;color:#8d141d}
+.sra b{font:700 34px/1.1 "Oleo Script Swash Caps",cursive;color:var(--acc,#8d141d)}
 .sra em{font-style:normal;font-size:11px;opacity:.7}
 .sra button{position:absolute;right:0;top:8px}
-.A.night .sra b{color:#ff6a5f}
+.A.night .sra b{color:var(--accn,#ff6a5f)}
 .A .sres button{all:unset;cursor:pointer;box-sizing:border-box;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px currentColor;font:500 11.5px "Libre Franklin",sans-serif;display:inline-flex;align-items:center;justify-content:center}
-.srh{font:700 13px "Oleo Script Swash Caps",cursive;color:#8d141d;margin:7px 0 3px}
-.A.night .srh{color:#ff6a5f}
+.srh{font:700 13px "Oleo Script Swash Caps",cursive;color:var(--acc,#8d141d);margin:7px 0 3px}
+.A.night .srh{color:var(--accn,#ff6a5f)}
 .srapps{display:flex;gap:6px;flex-wrap:wrap}
 .A .sres .srapp{box-shadow:none;flex-direction:column;gap:1px;padding:2px 4px;min-height:0;width:56px;border-radius:8px}
 .srapp span{font-size:10.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .srp{display:flex;align-items:center;gap:8px;min-height:40px;border-top:1px dotted rgba(20,16,16,.3)}
 .A.night .srp,.A.night .sra{border-color:rgba(241,236,224,.25)}
-.srp i{font-style:normal;width:28px;height:28px;border-radius:50%;background:#8d141d;color:#fbf3de;display:flex;align-items:center;justify-content:center;font:700 13px "Libre Franklin",sans-serif;flex:none}
+.srp i{font-style:normal;width:28px;height:28px;border-radius:50%;background:var(--acc,#8d141d);color:#fbf3de;display:flex;align-items:center;justify-content:center;font:700 13px "Libre Franklin",sans-serif;flex:none}
 .srp b{flex:1;font-weight:500;font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .srj{display:flex;gap:8px;padding-bottom:4px}
 .A .sres .srj button{flex:1;min-height:36px}
@@ -495,11 +495,35 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .nbf .fd em{font-size:10px}
 .nbf .fd b{font-size:11.5px}
 .abt{display:flex;gap:12px;align-items:center;padding:8px 0}
-.abt b{display:block;font:700 20px "Oleo Script Swash Caps",cursive;color:#8d141d}
+.abt b{display:block;font:700 20px "Oleo Script Swash Caps",cursive;color:var(--acc,#8d141d)}
 .abt span{font-size:12px;opacity:.7}
-.A.night .abt b{color:#ff6a5f}
+.A.night .abt b{color:var(--accn,#ff6a5f)}
 .abs .nbody{padding-right:12px}
 .srow[data-lic]{cursor:pointer}
+
+/* colour variations (D-177): Cherry (default), Mint, Midnight, Powder; each with a Day and a Night version */
+.A{--acc:#8d141d;--accn:#ff6a5f;--accbg:#a8222e;--g1:#c52a35;--g2:#a01a24;--g3:#6b0c15;--n1:#303034;--n2:#18181b;--n3:#0b0b0d;
+  --pl1:#5a0f16;--pl2:#2a0509;--pl1n:#3a1219;--pl2n:#1f0b10;--rd1:#c52a35;--rd2:#8d141d;--rd1n:#7a1019;--rd2n:#430910}
+.A.c-mint{--acc:#1f7a5a;--accn:#7fe0b8;--accbg:#1f6a4e;--g1:#9bdcbf;--g2:#62b895;--g3:#2f7a5e;--n1:#2a3a33;--n2:#141c18;--n3:#080c0a;
+  --pl1:#1d4a3a;--pl2:#0d2820;--pl1n:#16382c;--pl2n:#0b2019;--rd1:#6fc5a1;--rd2:#2f8a68;--rd1n:#1f5a44;--rd2n:#0f3326}
+.A.c-midnight{--acc:#2a4d94;--accn:#ffb347;--accbg:#2a4d94;--g1:#4a6dba;--g2:#2a4d94;--g3:#15295a;--n1:#232a40;--n2:#10141f;--n3:#07090f;
+  --pl1:#0e1c3d;--pl2:#060d1f;--pl1n:#131f3f;--pl2n:#0a1228;--rd1:#5a7fd0;--rd2:#24407a;--rd1n:#1d2f5e;--rd2n:#0f1a38}
+.A.c-powder{--acc:#2f6fa0;--accn:#8cc8f0;--accbg:#2a6a9c;--g1:#b6dcf2;--g2:#86bde0;--g3:#4f8fb8;--n1:#2a3540;--n2:#141b22;--n3:#080b0f;
+  --pl1:#16405e;--pl2:#0a2236;--pl1n:#12293c;--pl2n:#091722;--rd1:#8cc6ea;--rd2:#3f86b5;--rd1n:#1d4260;--rd2n:#0f2638}
+.A [id^="pl"] stop:first-child{stop-color:var(--pl1)}
+.A [id^="pl"] stop:last-child{stop-color:var(--pl2)}
+.A [id^="rd"] stop:first-child{stop-color:var(--rd1)}
+.A [id^="rd"] stop:last-child{stop-color:var(--rd2)}
+.A.night [id^="pl"] stop:first-child{stop-color:var(--pl1n)}
+.A.night [id^="pl"] stop:last-child{stop-color:var(--pl2n)}
+.A.night [id^="rd"] stop:first-child{stop-color:var(--rd1n)}
+.A.night [id^="rd"] stop:last-child{stop-color:var(--rd2n)}
+.A{--deep:#7d1019}.A.c-mint{--deep:#1f5a44}.A.c-midnight{--deep:#15295a}.A.c-powder{--deep:#2f6a96}
+.A.night .srch{--deep:#000}
+.A{--slot:#1b0b0d}.A.c-mint{--slot:#0c1a15}.A.c-midnight{--slot:#0b1020}.A.c-powder{--slot:#0c1722}
+/* drawn pictograms and rims follow the accent */
+.A [fill="#8d141d"]{fill:var(--acc)}
+.A [stroke="#8d141d"]{stroke:var(--acc)}
 /* ---------- B: retro-modern ---------- */
 .B{background-color:#e9e4d9;background-image:radial-gradient(#cbc4b4 1px,transparent 1.4px);background-size:14px 14px;color:#1f1f23;font-family:"Space Grotesk","DM Sans",sans-serif}
 .B .tb .l,.B .tb .r{color:#e9e4d9;font-family:"DM Mono",monospace;font-weight:500}
@@ -534,6 +558,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
   <div class="g" id="cNet"><b>Connection</b></div>
   <div class="g" id="cScr"><b>Screen</b></div>
   <div class="g" id="cLook"><b>Look</b></div>
+  <div class="g" id="cCol"><b>Colour</b></div>
   <div class="g" id="cMot"><b>Motion</b></div>
   <button type="button" id="cFirst" style="margin:4px 0;padding:6px 12px;border-radius:14px;border:1px solid currentColor;background:none;color:inherit;font:inherit;cursor:pointer">Show the first-run setup screens</button>
   <label><input type="checkbox" id="cSaver"> Pretend Battery Saver is on</label>
@@ -609,7 +634,7 @@ var GF=(function(){
   return o;
 })();
 var CX=180,CY=180,RING=112,SLOT=30;
-var state={haptic:"Light",sound:"Off",scr:"port",look:"auto",cond:"clear",tod:"auto",motion:"Full",saver:false,note:true,ev:true,net:"wifi",bt:true};
+var state={col:"cherry",haptic:"Light",sound:"Off",scr:"port",look:"auto",cond:"clear",tod:"auto",motion:"Full",saver:false,note:true,ev:true,net:"wifi",bt:true};
 var phones=[];
 function el(h){var d=document.createElement("div");d.innerHTML=h;return d.firstElementChild}
 function pad(n){return n<10?"0"+n:""+n}
@@ -1156,6 +1181,7 @@ function drawSettings(ph){
   h+='<div class="srow"><div class="nt"><b>Click feel</b><span>A small tap in your hand for each notch the ring turns. Light or Firm; Off turns it off.</span></div></div>'+seg("haptic",state.haptic,["Off","Light","Firm"]);
   h+='<div class="srow"><div class="nt"><b>Click sound</b><span>A soft ratchet click per notch, like a real rotary dial. Follows the phone volume.</span></div></div>'+seg("sound",state.sound,["Off","On"]);
   h+='<div class="nsec">Look</div><div class="srow"><div class="nt"><b>Text size</b><span>Follows the phone\'s own font size setting.</span></div><em>Auto</em></div>';
+  h+='<div class="srow"><div class="nt"><b>Colour</b><span>The lacquer colour of the phone, in both Day and Night.</span></div></div>'+seg("col",{cherry:"Cherry",mint:"Mint",midnight:"Midnight",powder:"Powder"}[state.col],["Cherry","Mint","Midnight","Powder"]);
   h+='<div class="srow"><div class="nt"><b>Day or night look</b><span>Auto follows the time of day; later it will follow the dark mode setting of the phone.</span></div></div>'+seg("look",{auto:"Auto",day:"Day",night:"Night"}[state.look],["Auto","Day","Night"]);
   h+='<div class="srow" data-about="1" style="cursor:pointer"><div class="nt"><b>About and licences ›</b><span>Who made this, fonts and open-source licences.</span></div></div>';
   h+='<div class="nsec">Go back to your old launcher</div><div class="srow steps"><div class="nt"><b>Your Samsung home screen is still on the phone.</b><span>1. Open the phone\'s Settings app.<br>2. Tap Apps, then Choose default apps, then Home app.<br>3. Tap One UI Home. Your old screen is back. To return here, repeat and tap this launcher.<br><i>Menu names may differ a little; check this on your phone.</i></span></div></div>';
@@ -1166,6 +1192,7 @@ function drawSettings(ph){
     var k=b.getAttribute("data-k"),v=b.getAttribute("data-v");
     if(k==="motion"){[].slice.call(document.querySelectorAll("#cMot button")).forEach(function(x){if(x.textContent===v)x.click()})}
     if(k==="home")state.home=(v==="On");
+    if(k==="col"){state.col=v.toLowerCase();applyCol();[].slice.call(document.querySelectorAll("#cCol button")).forEach(function(x){x.className=(x.textContent===v?"on":"")})}
     if(k==="haptic"){state.haptic=v;dialTick()}
     if(k==="sound"){state.sound=v;dialTick()}
     if(k==="look"){state.look=v.toLowerCase();applyLook();[].slice.call(document.querySelectorAll("#cLook button")).forEach(function(x){x.className=(x.textContent===v?"on":"")})}
@@ -1293,11 +1320,14 @@ function applyScr(){
   var c=document.getElementById("phA").closest(".col");if(c)c.classList.toggle("wide",land);
   fit();
 }
+function applyCol(){
+  phones.forEach(function(ph){["cherry","mint","midnight","powder"].forEach(function(c){ph.root.classList.toggle("c-"+c,state.col===c)})});
+}
 function applyLook(){
   var h=todHour(),nightNow=h<6||h>=18,on=state.look==="night"||(state.look==="auto"&&nightNow);
   phones.forEach(function(ph){ph.root.classList.toggle("night",on)});
 }
-function refreshAll(){phones.forEach(function(ph){setClock(ph);setStatus(ph);setWeather(ph)});applyAmb();applyLook()}
+function refreshAll(){phones.forEach(function(ph){setClock(ph);setStatus(ph);setWeather(ph)});applyAmb();applyLook();applyCol()}
 
 /* ---------- page controls ---------- */
 function seg(id,opts,key,after){
@@ -1322,6 +1352,7 @@ seg("cCond",[["clear","Clear"],["cloud","Cloud"],["rain","Rain"],["snow","Snow"]
 seg("cTod",[["auto","Now"],["dawn","Dawn"],["day","Day"],["dusk","Dusk"],["night","Night"]],"tod",refreshAll);
 seg("cNet",[["wifi","Wi-Fi"],["mobile","Mobile"]],"net",function(){phones.forEach(setStatus)});
 seg("cScr",[["port","Portrait"],["land","Landscape"]],"scr",applyScr);
+seg("cCol",[["cherry","Cherry"],["mint","Mint"],["midnight","Midnight"],["powder","Powder"]],"col",applyCol);
 seg("cLook",[["auto","Auto"],["day","Day"],["night","Night"]],"look",applyLook);
 seg("cMot",[["Full","Full"],["Minimal","Minimal"],["Off","Off"]],"motion",applyAmb);
 document.getElementById("cSaver").onchange=function(){state.saver=this.checked;applyAmb()};

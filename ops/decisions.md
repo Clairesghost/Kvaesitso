@@ -275,3 +275,7 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-175 (2026-10-31): Owner: draw the About page (go ahead). Built: Settings > About and licences: app name, made from Kvaesitso under GPL-3.0, source code row (link pending), fonts with OFL, artwork, weather service placeholder, privacy line. Build brief: owner said 'see #3' (go ahead) but had also asked to stop pushing build, so the brief is not written yet. Backup: `dial-mockup-cute-before-empty-haptics.html`.
 
 - D-176 (2026-10-31): Owner: 'lets continue the build! onward and forward'. Build phase opened. Wrote `ops/build-plan.md` (stages B0 to B6), `.github/workflows/build-debug.yml` (debug APK workflow, not yet pushed) and `tasks/B1-foundation/brief.md`. Nothing pushed; a push needs the owner's yes per batch.
+
+- D-177 (2026-10-31): Owner: popular colour variations for both Day and Night, selectable in the design settings. Chosen: Mint, Midnight blue, Powder blue (plus Cherry, the current). Scope: phone body, the ring round the clock, the dial plate, accents (headings, buttons, chips, icon glyphs and rims); chrome, ivory discs and cards stay. Built in the mock-up: page 'Colour' row and Settings > Look > Colour. In the real app these are extra token sets in the vpd package. Backup: `dial-mockup-cute-before-colours.html`.
+
+- D-178 (2026-10-31): Owner approved the colour choices (Cherry, Mint, Midnight, Powder). No more colours for now.

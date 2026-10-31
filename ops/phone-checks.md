@@ -95,3 +95,7 @@ Collected from the mock-up comments. When a build exists, these go into `tasks/<
 
 ## About page (D-175)
 - [ ] Settings > About and licences: the licence rows open the real licence text and the source link works (once the project is published).
+
+## Colour variations (D-177)
+- [ ] Settings > Look > Colour: Cherry, Mint, Midnight, Powder, each in Day and in Night. Check text on the cards stays readable and the icons on the discs keep enough contrast.
+- [ ] The choice is remembered after closing the launcher.

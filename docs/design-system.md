@@ -14,6 +14,7 @@ Setting "Day or night look": Auto, Day, Night (Auto follows the time of day for 
 ## Palette roles
 | Role | Meaning | Day | Night (black lacquer edition) |
 |---|---|---|---|
+| Colour variations | Cherry (default), Mint, Midnight, Powder: change the phone body, dial plate, ring round the clock and the accents, in both looks (D-177). Chrome, ivory discs and cards stay | | |
 | Ground | phone body | cherry gradient `#c52a35` → `#a01a24` → `#6b0c15` | black gradient `#303034` → `#18181b` → `#0b0b0d` |
 | Dial plate | dark band the discs sit on | `#5a0f16` → `#2a0509` | `#3a1219` → `#1f0b10` (not dimmed) |
 | Centre band and clock face | ring round the clock, and the clock face | ring `#c52a35` → `#8d141d`, ivory face | ring wine `#7a1019` → `#430910`, black face `#17171a`, ivory ticks and hands, amber pin `#ffb347` (D-163) |

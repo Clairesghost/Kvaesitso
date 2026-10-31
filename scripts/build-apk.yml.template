@@ -1,0 +1,52 @@
+# Copy to .github/workflows/build-apk.yml (CC BY 4.0, Launcher Studio Kit).
+# Builds a signed APK on every push to a branch named claude/** and on demand.
+# Needs four repository secrets (see playbook/ci-and-signing.md): KEYSTORE (base64 text of the key file),
+# KEYSTORE_PASSWORD, SIGNING_KEY_ALIAS, SIGNING_KEY_PASSWORD.
+# The Gradle task and APK path below match Kvaesitso's "default nightly" flavour at the time the kit was
+# written; if the build says the task is missing, ask the guide to check `./gradlew tasks` output in the log.
+# Kvaesitso's app/app/build.gradle.kts already has a signing config "gh-actions" that reads these names:
+#   storeFile = ${RUNNER_TEMP}/keystore/keystore.jks, KEYSTORE_PASSWORD, SIGNING_KEY_ALIAS, SIGNING_KEY_PASSWORD
+name: Build APK
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Decode keystore
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo "$ENCODED_STRING" | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/keystore.jks
+      - name: Version code from run number (each build installs over the last)
+        run: echo "VERSION_CODE_OVERRIDE=$((<START_NUMBER> + GITHUB_RUN_NUMBER))" >> "$GITHUB_ENV"
+      - name: Build and sign APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: ./gradlew assembleDefaultNightly
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: launcher-apk
+          path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
+# <START_NUMBER>: a number at or above the upstream versionCode written in app/app/build.gradle.kts
+# (it looks like 2026091500), and well below 2100000000, which is the largest Android allows. Run numbers
+# are added to it, so each build is higher than the last. Keep it the same for the whole project.
