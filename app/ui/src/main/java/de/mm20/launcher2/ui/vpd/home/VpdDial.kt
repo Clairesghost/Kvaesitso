@@ -57,7 +57,6 @@ import kotlin.math.sin
 private const val SLOT_DEG = 30f
 private const val RING_R = 112f
 private const val DISC_R = 23f
-private const val CENTRE_Y = 152f
 private const val CLOCK_ZONE = 52f
 private const val DIAL_ZONE = 152f
 private const val HOME_DELAY_MS = 5000L
@@ -76,7 +75,7 @@ private class DialJobs {
 }
 
 /**
- * The dial (stage 360 x 304, centre at 180 / 152): plate, static ticks, finger stop, 12 discs that
+ * The dial (box 360 x 350 units, centre 180 / 175, drawn DIAL_SCALE bigger inside, D-183): plate, static ticks, finger stop, 12 discs that
  * spin with the ring, and the clock in the middle. It consumes every touch on itself so the
  * scaffold's swipes and double tap do not fire on it (AF-22).
  */
@@ -93,6 +92,8 @@ fun VpdDial(
     modifier: Modifier = Modifier,
 ) {
     val colors = LocalVpdColors.current
+    // ds draws and measures the dial itself (15% bigger, D-183); st only places the box and centre
+    val ds = remember(st.k, st.density) { VpdStage(st.k * DIAL_SCALE, st.density) }
     var rot by remember { mutableFloatStateOf(0f) }
     var pressed by remember { mutableIntStateOf(-1) }
     val jobs = remember { DialJobs() }
@@ -156,22 +157,23 @@ fun VpdDial(
 
     Box(
         modifier = modifier
-            .size(st.dp(360f), st.dp(304f))
+            .size(st.dp(DIAL_BOX_W), st.dp(DIAL_BOX_H))
             .pointerInput(st.k) {
                 val k = st.k
-                val centre = Offset(180f * k, CENTRE_Y * k)
+                val dk = ds.k
+                val centre = Offset(DIAL_CX * k, DIAL_CY * k)
 
                 fun discCentre(i: Int): Offset {
                     val a = Math.toRadians((i * SLOT_DEG + rot).toDouble())
                     return Offset(
-                        centre.x + RING_R * k * sin(a).toFloat(),
-                        centre.y - RING_R * k * cos(a).toFloat(),
+                        centre.x + RING_R * dk * sin(a).toFloat(),
+                        centre.y - RING_R * dk * cos(a).toFloat(),
                     )
                 }
 
                 fun hitDisc(p: Offset): Int {
                     for (i in 0 until 12) {
-                        if ((p - discCentre(i)).getDistance() <= (DISC_R + 3f) * k) return i
+                        if ((p - discCentre(i)).getDistance() <= (DISC_R + 3f) * dk) return i
                     }
                     return -1
                 }
@@ -190,7 +192,7 @@ fun VpdDial(
 
                 awaitEachGesture {
                     val down = awaitFirstDown(requireUnconsumed = false)
-                    val dist = (down.position - centre).getDistance() / k
+                    val dist = (down.position - centre).getDistance() / dk
                     if (dist > DIAL_ZONE) return@awaitEachGesture
                     down.consume()
 
@@ -256,10 +258,10 @@ fun VpdDial(
                 }
             }
     ) {
-        Canvas(Modifier.size(st.dp(360f), st.dp(304f))) {
-            drawDialPlate(st.k, colors)
+        Canvas(Modifier.size(st.dp(DIAL_BOX_W), st.dp(DIAL_BOX_H))) {
+            drawDialPlate(Offset(DIAL_CX * st.k, DIAL_CY * st.k), ds.k, colors)
         }
-        VpdClock(st = st, modifier = Modifier.size(st.dp(360f), st.dp(304f)))
+        VpdClock(st = st, modifier = Modifier.size(st.dp(DIAL_BOX_W), st.dp(DIAL_BOX_H)))
 
         for (i in 0 until 12) {
             val app = apps.getOrNull(i)
@@ -268,15 +270,15 @@ fun VpdDial(
                     .offset {
                         val a = Math.toRadians((i * SLOT_DEG + rot).toDouble())
                         IntOffset(
-                            (st.px(180f) + st.px(RING_R) * sin(a).toFloat() - st.px(DISC_R)).roundToInt(),
-                            (st.px(CENTRE_Y) - st.px(RING_R) * cos(a).toFloat() - st.px(DISC_R)).roundToInt(),
+                            (st.px(DIAL_CX) + ds.px(RING_R) * sin(a).toFloat() - ds.px(DISC_R)).roundToInt(),
+                            (st.px(DIAL_CY) - ds.px(RING_R) * cos(a).toFloat() - ds.px(DISC_R)).roundToInt(),
                         )
                     }
-                    .size(st.dp(DISC_R * 2f))
+                    .size(ds.dp(DISC_R * 2f))
                     .scale(if (pressed == i) 0.9f else 1f),
                 contentAlignment = Alignment.Center,
             ) {
-                Disc(st, colors, app, pressed == i, iconFor)
+                Disc(ds, colors, app, pressed == i, iconFor)
             }
         }
     }
@@ -325,9 +327,8 @@ private fun Disc(
     }
 }
 
-/** Plate, rims, ticks, finger stop, centre band (mock-up dial svg, centre 180 / 152). */
-private fun DrawScope.drawDialPlate(k: Float, colors: VpdColors) {
-    val c = Offset(180f * k, CENTRE_Y * k)
+/** Plate, rims, ticks, finger stop, centre band (mock-up dial svg; k = dial scale, c = centre in px). */
+private fun DrawScope.drawDialPlate(c: Offset, k: Float, colors: VpdColors) {
     fun r(u: Float) = u * k
     val chrome = Brush.linearGradient(
         colors.chrome,

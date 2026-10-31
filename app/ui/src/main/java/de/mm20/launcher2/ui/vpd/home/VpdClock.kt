@@ -32,10 +32,11 @@ import java.util.Calendar
 /**
  * Clock in the centre of the dial: 12 ticks, two hands, pin, and the enamel plate at six o'clock
  * with the 12-hour time in script (D-165). No date window (D-124). Updates once per minute and only
- * while the launcher is started (AF-15). Same box as the dial (stage 360 x 304, centre 180 / 152).
+ * while the launcher is started (AF-15). Same box as the dial (DIAL_BOX_W x DIAL_BOX_H, centre DIAL_CX / DIAL_CY), drawn DIAL_SCALE bigger (D-183).
  */
 @Composable
 fun VpdClock(st: VpdStage, modifier: Modifier = Modifier) {
+    val ds = remember(st.k, st.density) { VpdStage(st.k * DIAL_SCALE, st.density) }
     val colors = LocalVpdColors.current
     var nowMs by remember { mutableLongStateOf(System.currentTimeMillis()) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -56,10 +57,10 @@ fun VpdClock(st: VpdStage, modifier: Modifier = Modifier) {
     val minuteAngle = minute * 6f
     val marks = colors.clockMarks
 
-    Box(modifier = modifier.size(st.dp(360f), st.dp(304f))) {
-        Canvas(Modifier.size(st.dp(360f), st.dp(304f))) {
-            val k = st.k
-            val c = Offset(180f * k, 152f * k)
+    Box(modifier = modifier.size(st.dp(DIAL_BOX_W), st.dp(DIAL_BOX_H))) {
+        Canvas(Modifier.size(st.dp(DIAL_BOX_W), st.dp(DIAL_BOX_H))) {
+            val k = ds.k
+            val c = Offset(DIAL_CX * st.k, DIAL_CY * st.k)
             for (i in 0 until 12) {
                 val major = i % 3 == 0
                 rotate(i * 30f, pivot = c) {
@@ -93,15 +94,18 @@ fun VpdClock(st: VpdStage, modifier: Modifier = Modifier) {
         }
         Box(
             modifier = Modifier
-                .offset(st.dp(148f), st.dp(152f + 41f))
-                .size(st.dp(64f), st.dp(22f)),
+                .offset(
+                    st.dp(DIAL_CX) - ds.dp(32f),
+                    st.dp(DIAL_CY) + ds.dp(41f),
+                )
+                .size(ds.dp(64f), ds.dp(22f)),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text,
                 color = Color(0xFF8D141D),
                 fontFamily = VpdFonts.Heading,
-                fontSize = st.sp(13f),
+                fontSize = ds.sp(13f),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
             )

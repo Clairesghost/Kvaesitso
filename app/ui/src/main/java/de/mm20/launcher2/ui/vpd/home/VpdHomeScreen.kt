@@ -150,7 +150,7 @@ internal fun VpdHomeScreen(
                 iconFor = vm::icon,
                 onLaunch = { app -> launchApp(context, vm, app) },
                 onClockHold = { VpdActions.openClock(context) },
-                modifier = Modifier.offset(originX, st.dp(60f)),
+                modifier = Modifier.offset(originX, st.dp(DIAL_TOP)),
             )
 
             // chevron 706-750: opens the existing search page with the app list
