@@ -8,3 +8,5 @@ Copy to `ops/lessons-inbox.md`. Threads add 0 to 3 lines each: only surprises. F
 - B2-home: no Python or Java in the workspace, so a code stage cannot be compiled before pushing; keep new code in new files and re-read imports, and expect the first cloud build to find a few errors.
 - B2-home: callbackFlow must end in awaitClose even on early-exit paths, or it crashes when collected.
 - B2-home s2: a branch can only be checked out in one worktree; a later stage thread has to branch off (…-s2) and the guide merges it back.
+- B3-cards: Kvaesitso's `Notification.flags` is dropped after a ranking update and `title/text` use getString (null for styled text); read extras yourself and treat `!isClearable` as ongoing.
+- B3-cards: `PermissionsManager.hasPermission(Notifications)` only means "listener bound", so a freshly granted access can look missing for a moment.
