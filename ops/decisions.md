@@ -299,3 +299,5 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-191 (2026-11-01): Owner: keep the fixed signing key (made by the guide in Documents\vpd-signing, AF-34) so updates install over the old app and saved tasks survive. Owner adds the GitHub secret DEBUG_KEYSTORE_BASE64.
 - D-192 (2026-11-01): Owner: a ticked task is crossed out at once (tap again to undo) and disappears the next time Home comes back.
 - D-193 (2026-11-01): Owner: the Tasks card shows the newest 2 tasks and "+N more" next to the title when there are more; the full task list comes with the sheets in B4.
+
+- D-190 (2026-11-01): Owner added the GitHub secret DEBUG_KEYSTORE_BASE64 (fixed debug key from Documents/vpd-signing). Owner chose to PUBLISH the Google project (one "unverified app" warning at sign-in, then the sign-in most likely stays) instead of staying in Testing (7-day expiry).
