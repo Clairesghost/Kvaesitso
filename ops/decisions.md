@@ -285,3 +285,5 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-180 (2026-10-31): Owner: until the dial editor exists (B4), the 12 dial apps are the launcher's favourites: pinned apps first, then most used.
 - D-181 (2026-10-31): Owner: in B2 the space under the dial is plain phone body (no empty card frames); cards come in B3.
 - D-182 (2026-10-31): Owner: OK for Android to ask once for the "Nearby devices" permission so the Bluetooth coin can show connected (dark) or not (grey). Read only the connected yes/no, never device names or details.
+
+- D-183 (2026-11-01): Owner tested B2 on the phone: coins open Internet, Bluetooth and Battery saver pages; dial spins and returns home after 5 s; holding the clock opens the alarm clock; search and chevron work; Day/Night switch works. Owner: make the dial about 15% bigger to fit the page better; the room comes from a shorter Tasks / Notes card (2 rows instead of 3). New layout: housing 8-46, dial 52-402 (centre y 227, outer rim radius 168), Calendar 412-516, Alerts 524-602, Tasks 610-704, chevron 706-750.

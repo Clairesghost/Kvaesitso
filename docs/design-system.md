@@ -47,7 +47,7 @@ Licence files must go in `docs/licenses/fonts` when the fonts are bundled (the a
 - Texture: none.
 
 ## Layout (stage 360 x 780 units, scaled to the screen width)
-Top housing 8–46; dial 60–364; calendar 384–488; Alerts 496–574; Tasks 582–704; chevron 706–750. Inside the system bars and the camera cut-out. All sizes in stage units; they are dp at 360 dp wide.
+Top housing 8–46; dial 52–402 (15% bigger, D-183); calendar 412–516; Alerts 524–602; Tasks 610–704 (2 rows, D-183); chevron 706–750. Inside the system bars and the camera cut-out. All sizes in stage units; they are dp at 360 dp wide.
 
 ## Rules for any new screen
 1. Reuse the pieces above; invent a new motif only after asking (multiple choice, with previews).
