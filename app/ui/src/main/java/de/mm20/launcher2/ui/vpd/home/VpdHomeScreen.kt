@@ -48,6 +48,7 @@ import de.mm20.launcher2.preferences.ui.VpdMotion
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.vpd.LocalVpdColors
+import de.mm20.launcher2.ui.vpd.cards.VpdCards
 import de.mm20.launcher2.ui.vpd.colors
 import kotlinx.coroutines.launch
 
@@ -152,6 +153,9 @@ internal fun VpdHomeScreen(
                 onClockHold = { VpdActions.openClock(context) },
                 modifier = Modifier.offset(originX, st.dp(DIAL_TOP)),
             )
+
+            // cards 412-704 (B3)
+            VpdCards(st = st, originX = originX, motion = motion ?: VpdMotion.Full, gate = gate)
 
             // chevron 706-750: opens the existing search page with the app list
             Box(

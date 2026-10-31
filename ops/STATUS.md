@@ -43,7 +43,7 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 | B1-foundation | build | DONE (owner verified on phone 2026-10-31): installed, name and icon right, home screen is plain Kvaesitso as expected, lock screen unchanged. Build run 41215748144 green. | claude/B1-foundation | merged into main locally (not pushed) |
 | B2-home | build | DONE (owner verified on phone 2026-11-01): home, coins, dial spin and return, clock hold, Day/Night, bigger dial (D-183), charging ring. Battery number after a day: parked by the owner, ask later. | claude/B2-home-s3 | merged into main locally (not pushed) |
 
-| B3-cards | build | pushed 2026-11-01, GitHub build green (run 41226451298); waiting for owner phone check (tasks/B3-cards/testlist.md on the branch) | claude/B3-cards | tasks/B3-cards/brief.md |
+| B3-cards | build | DONE (owner verified on phone 2026-11-01): calendar, alerts with swipe to clear, tasks shell | claude/B3-cards | merged into main locally (not pushed) |
 | G1-google-tasks | build | todo (after B3): fixed signing key, Google project with the owner, sign in, tasks on the card | claude/G1-google-tasks | ops/build-plan.md |
 
 ## Parked by the owner
