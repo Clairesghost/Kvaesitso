@@ -9,7 +9,7 @@ Source of truth for how every screen looks. Built from the owner's decisions (`o
 - Name: **Vintage Pocket Dial** (D-153). Launcher icon: a cherry square with the round dial and clock (icon option A, D-157).
 
 ## Two looks: Day and Night (D-144, D-146)
-Setting "Day or night look": Auto, Day, Night (Auto follows the time of day for now; later the phone's dark mode). Only the table below changes between looks.
+Setting "Day or night look": Auto, Day, Night (Auto follows the phone's dark mode, D-179). Only the table below changes between looks.
 
 ## Palette roles
 | Role | Meaning | Day | Night (black lacquer edition) |

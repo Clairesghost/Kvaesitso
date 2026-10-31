@@ -279,3 +279,5 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-177 (2026-10-31): Owner: popular colour variations for both Day and Night, selectable in the design settings. Chosen: Mint, Midnight blue, Powder blue (plus Cherry, the current). Scope: phone body, the ring round the clock, the dial plate, accents (headings, buttons, chips, icon glyphs and rims); chrome, ivory discs and cards stay. Built in the mock-up: page 'Colour' row and Settings > Look > Colour. In the real app these are extra token sets in the vpd package. Backup: `dial-mockup-cute-before-colours.html`.
 
 - D-178 (2026-10-31): Owner approved the colour choices (Cherry, Mint, Midnight, Powder). No more colours for now.
+
+- D-179 (2026-10-31): Owner: the Look setting's Auto follows the phone's dark mode, not the time of day (the earlier "time of day" note was a test). Matches what B1 built; design-system.md updated.
