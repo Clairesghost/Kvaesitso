@@ -41,4 +41,7 @@ States: `todo`, `active` (a thread is working; only then may it be messaged), `R
 - Also before first install: walk owner through allowing APK installs from outside the Play Store.
 | B0-pipeline | build | DONE: debug workflow ran green on claude/B1-foundation | main | |
 | B1-foundation | build | DONE (owner verified on phone 2026-10-31): installed, name and icon right, home screen is plain Kvaesitso as expected, lock screen unchanged. Build run 41215748144 green. | claude/B1-foundation | merged into main locally (not pushed) |
-| B2-home | build | stages 2+3 pushed 2026-11-01 on claude/B2-home-s3 (bigger dial D-183, charging light fix), build green (run 41223620043); waiting for owner phone check. Stage 1 phone results in handoff. | claude/B2-home-s3 | tasks/B2-home/ (on the branch) |
+| B2-home | build | DONE (owner verified on phone 2026-11-01): home, coins, dial spin and return, clock hold, Day/Night, bigger dial (D-183), charging ring. Battery number after a day: parked by the owner, ask later. | claude/B2-home-s3 | merged into main locally (not pushed) |
+
+## Parked by the owner
+- Battery check (Settings > Battery, Vintage Pocket Dial percentage after a day of use): owner said put a pin in it (2026-11-01). Ask again before B6.

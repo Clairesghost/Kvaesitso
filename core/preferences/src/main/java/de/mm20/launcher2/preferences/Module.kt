@@ -23,6 +23,7 @@ import de.mm20.launcher2.preferences.ui.LocaleSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.UiState
+import de.mm20.launcher2.preferences.ui.VpdHomeSettings
 import de.mm20.launcher2.preferences.ui.VpdLookSettings
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import org.koin.android.ext.koin.androidContext
@@ -56,4 +57,5 @@ val preferencesModule = module {
     factory { LocaleSettings(get()) }
     factory { FeedSettings(get()) }
     factory { VpdLookSettings(get()) }
+    factory { VpdHomeSettings(get()) }
 }
