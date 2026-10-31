@@ -115,25 +115,21 @@ internal fun VpdHomeScreen(
         .collectAsStateWithLifecycle(false)
     val battery by remember { VpdStatus.battery(context) }.collectAsStateWithLifecycle(null)
 
+    // stage scale for the swipe detector below (set inside BoxWithConstraints)
+    val kNow = remember { floatArrayOf(1f) }
+
     CompositionLocalProvider(LocalVpdColors provides colors) {
         BoxWithConstraints(
             modifier = modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(colors.ground)),
-        ) {
-            val widthPx = with(density) { maxWidth.toPx() }
-            val heightPx = with(density) { maxHeight.toPx() }
-            val navBottomPx = WindowInsets.navigationBars.getBottom(density)
-            val k = minOf(widthPx / STAGE_WIDTH, (heightPx - navBottomPx) / STAGE_HEIGHT)
-            val st = VpdStage(k, density)
-            val originX = with(density) { ((widthPx - STAGE_WIDTH * k) / 2f).toDp() }
-
-            // empty body: swipe up opens the app list (D-171); starts below the dial, never on it
-            Box(
-                Modifier.fillMaxSize().pointerInput(k) {
+                .background(Brush.verticalGradient(colors.ground))
+                // swipe up below the dial opens the app list (D-171). On the parent, so it also
+                // sees swipes that start on the cards (their taps don't consume drags); the dial,
+                // the alert rows and the sheets consume their own touches, so they never trigger it.
+                .pointerInput(Unit) {
                     awaitEachGesture {
                         val down = awaitFirstDown(requireUnconsumed = true)
-                        if (down.position.y < 404f * k || pagesNow.isNotEmpty()) return@awaitEachGesture
+                        if (down.position.y < 404f * kNow[0] || pagesNow.isNotEmpty()) return@awaitEachGesture
                         var opened = false
                         while (true) {
                             val e = awaitPointerEvent()
@@ -151,7 +147,14 @@ internal fun VpdHomeScreen(
                         }
                     }
                 },
-            )
+        ) {
+            val widthPx = with(density) { maxWidth.toPx() }
+            val heightPx = with(density) { maxHeight.toPx() }
+            val navBottomPx = WindowInsets.navigationBars.getBottom(density)
+            val k = minOf(widthPx / STAGE_WIDTH, (heightPx - navBottomPx) / STAGE_HEIGHT)
+            kNow[0] = k
+            val st = VpdStage(k, density)
+            val originX = with(density) { ((widthPx - STAGE_WIDTH * k) / 2f).toDp() }
 
             // housing
             VpdHousing(
