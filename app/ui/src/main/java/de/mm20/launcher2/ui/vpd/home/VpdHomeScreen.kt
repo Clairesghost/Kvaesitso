@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
@@ -231,7 +232,9 @@ internal fun VpdHomeScreen(
             }
 
             // sheets: app list, settings, dial editor
-            val sheetHeight = with(density) { (heightPx - navBottomPx).toDp() } - st.dp(60f)
+            // the sheet ends on top of the keyboard while one is open (D-197)
+            val imeBottomPx = WindowInsets.ime.getBottom(density)
+            val sheetHeight = with(density) { (heightPx - maxOf(navBottomPx, imeBottomPx)).toDp() } - st.dp(60f)
             val page = pages.lastOrNull()
             val motionNow = motion ?: VpdMotion.Full
             fun pop() { pages = pages.dropLast(1) }
