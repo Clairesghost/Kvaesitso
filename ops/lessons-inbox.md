@@ -10,3 +10,5 @@ Copy to `ops/lessons-inbox.md`. Threads add 0 to 3 lines each: only surprises. F
 - B2-home s2: a branch can only be checked out in one worktree; a later stage thread has to branch off (…-s2) and the guide merges it back.
 - B3-cards: Kvaesitso's `Notification.flags` is dropped after a ranking update and `title/text` use getString (null for styled text); read extras yourself and treat `!isClearable` as ongoing.
 - B3-cards: `PermissionsManager.hasPermission(Notifications)` only means "listener bound", so a freshly granted access can look missing for a moment.
+- T1-tasks: Keyboard Back is not delivered to the app on Android 13, so cancel an inline text field by watching `WindowInsets.isImeVisible` instead of BackHandler.
+- T1-tasks: the guide's Python shortcut does not exist on this PC; use sed or the Write tool for edits (a bash heredoc with odd quotes silently wrote nothing).

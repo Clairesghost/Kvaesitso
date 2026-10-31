@@ -1,6 +1,6 @@
 name: Build debug APK (branch check)
 
-# Builds an installable debug APK for any claude/* branch, with no signing secrets.
+# Builds an installable debug APK for any claude/* branch, signed with the owner's fixed debug key (secret DEBUG_KEYSTORE_BASE64).
 # Debug builds install next to the original launcher (applicationIdSuffix .debug); nothing is replaced.
 on:
   push:
@@ -18,6 +18,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+      - name: Write the fixed debug key
+        env:
+          DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$DEBUG_KEYSTORE_BASE64" ]; then
+            echo "::error::Fixed debug key missing: add the DEBUG_KEYSTORE_BASE64 secret"
+            exit 1
+          fi
+          mkdir -p ~/.android
+          echo "$DEBUG_KEYSTORE_BASE64" | base64 -d > ~/.android/debug.keystore
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build debug APK

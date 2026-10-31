@@ -21,6 +21,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.ui.VpdMotion
 import de.mm20.launcher2.ui.vpd.home.VpdMotionGate
 import de.mm20.launcher2.ui.vpd.home.VpdStage
+import de.mm20.launcher2.ui.vpd.tasks.VpdTasksVM
 import org.koin.compose.koinInject
 
 /** Stage rows (D-183): Calendar 412-516, Alerts 524-602, Tasks 610-704; all 12 to 348 wide. */
@@ -40,18 +41,23 @@ internal fun VpdCards(
 ) {
     val context = LocalContext.current
     val vm = viewModel<VpdCardsVM>()
+    val tasksVm = viewModel<VpdTasksVM>()
     val permissions: PermissionsManager = koinInject()
 
     val events by vm.events.collectAsStateWithLifecycle()
     val calendarPermission by vm.hasCalendarPermission.collectAsStateWithLifecycle()
     val alerts by vm.alerts.collectAsStateWithLifecycle()
+    val tasks by tasksVm.tasks.collectAsStateWithLifecycle()
     val notificationAccess by vm.hasNotificationAccess.collectAsStateWithLifecycle()
 
     var now by remember { mutableLongStateOf(System.currentTimeMillis()) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) now = System.currentTimeMillis()
+            if (event == Lifecycle.Event.ON_RESUME) {
+                now = System.currentTimeMillis()
+                tasksVm.removeDone()
+            }
         }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
@@ -86,7 +92,9 @@ internal fun VpdCards(
         )
         VpdTasksCard(
             st = st,
-            onConnect = { VpdCardActions.comingSoon(context) },
+            tasks = tasks,
+            onAdd = tasksVm::add,
+            onToggle = tasksVm::toggle,
             modifier = place(610f, 94f),
         )
     }
