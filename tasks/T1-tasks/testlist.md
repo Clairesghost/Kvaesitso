@@ -9,9 +9,9 @@ How to get the build onto the phone: see `playbook/ci-and-signing.md`, "Install 
 ## A. Tasks card
 1. Where to be: the home screen, Tasks card at the bottom.
    You should see: the title "Tasks", two empty dotted rows, and a last row "Add a task…". No "Connect Google Tasks" row.
-2. Do: tap "Add a task…", type "milk", press Done on the keyboard.
+2. Do: tap "Add a task…". You should see: the card lifts so the line you type in stays visible above the keyboard. Then type "milk" and press Done on the keyboard.
    You should see: "milk" with a small tick box as the top task; the keyboard closes.
-   Report: does the text field stay visible above the keyboard? (yes/no)
+   Report: did the line you type in stay visible above the keyboard? (yes/no)
 3. Do: tap "milk" (or its tick box).
    You should see: a check mark and the text crossed out and paler. Tap again: back to normal.
 4. Do: tick "milk" so it is crossed out, press the Home button, then open the launcher again (or open any app and come back).
@@ -35,5 +35,5 @@ How to get the build onto the phone: see `playbook/ci-and-signing.md`, "Install 
 ## What was NOT verified
 - That it compiles (cloud build is the first compile); nothing run on a phone.
 - That the fixed signing key works (first build with it). The build fails with a clear message if the GitHub secret is missing.
-- Look and fit of the new rows; whether the keyboard hides the Add line.
+- Look and fit of the new rows; whether the card really lifts above the keyboard (see handoff).
 - Report: A1 to A5, B1 to B3, C1 as yes/no, plus a screenshot of the Tasks card.

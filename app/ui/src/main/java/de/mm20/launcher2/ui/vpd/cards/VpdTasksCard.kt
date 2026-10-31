@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.getBottom
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,6 +34,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -81,10 +89,24 @@ internal fun VpdTasksCard(
         }
     }
 
+    // While typing, lift the card so the line stays above the keyboard (no animation).
+    val density = LocalDensity.current
+    val rootHeight = LocalView.current.rootView.height
+    val imeBottom = WindowInsets.ime.getBottom(density)
+    var cardBottom by remember { mutableFloatStateOf(0f) }
+    val lift = if (adding && imeVisible) {
+        (cardBottom - (rootHeight - imeBottom) + with(density) { st.dp(8f).toPx() }).coerceAtLeast(0f)
+    } else 0f
+
     val shown = tasks.take(SHOWN)
     val more = tasks.size - shown.size
 
-    VpdPanel(st = st, modifier = modifier) {
+    VpdPanel(
+        st = st,
+        modifier = modifier
+            .onGloballyPositioned { cardBottom = it.boundsInWindow().bottom }
+            .graphicsLayer { translationY = -lift },
+    ) {
         Column(Modifier.fillMaxSize().padding(horizontal = st.dp(10f))) {
             Row(
                 modifier = Modifier.fillMaxWidth().height(st.dp(22f)),

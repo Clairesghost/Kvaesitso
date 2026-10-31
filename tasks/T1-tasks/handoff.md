@@ -8,8 +8,9 @@ What changed (plain words):
 - No upstream files touched. `VpdCardActions.comingSoon` is now unused (left in place).
 
 How it was checked: read-through of every new file and its imports only. NOT compiled, NOT run.
+Keyboard lift (guide review): while adding and the keyboard is up, the card is moved up (graphicsLayer, no animation) so its bottom is 8 units above the keyboard top; back to place when adding ends. Uses the card bottom from onGloballyPositioned, the root view height and WindowInsets.ime. UNVERIFIED: that ime insets reach this composable under the scaffold (if the activity consumes them, nothing lifts and the line stays hidden); no second route written.
 
-NOT verified: compile; that the fixed key is accepted by Gradle (AF-34 still UNVERIFIED); looks; keyboard not covering the Add row (no scroll/inset handling written); Samsung keyboard Done key; `isImeVisible` cancel behaviour.
+NOT verified: compile; that the fixed key is accepted by Gradle (AF-34 still UNVERIFIED); looks; that the lift above the keyboard works; Samsung keyboard Done key; `isImeVisible` cancel behaviour.
 
 Simple choices made (confirm or change):
 - Cancel: Back / anything that closes the keyboard cancels the add line. Tapping elsewhere on the screen with the keyboard still open does NOT cancel (no outside-tap catcher was written, to avoid touching the page scaffold). Say if needed.
