@@ -1,0 +1,43 @@
+<title>Night Clock Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--pg:#f3efe8;--pgfg:#241f1b;--pgmute:#6d655c;--pgline:#d8d0c3;--pgcard:#fffdf9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}}
+:root[data-theme="dark"]{--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}
+body{background:var(--pg);color:var(--pgfg);font-family:"DM Sans",system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px;line-height:1.5}
+.wrap{max-width:960px;margin:0 auto}
+h1{font-size:26px;margin:0 0 6px}
+.lead{color:var(--pgmute);margin:0 0 16px;max-width:66ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.opt{background:var(--pgcard);border:1px solid var(--pgline);border-radius:12px;padding:10px;min-width:0}
+.opt h3{font-size:14px;margin:0 0 6px}
+.opt p{font-size:12.5px;color:var(--pgmute);margin:8px 0 0}
+svg{display:block;width:100%;height:auto;border-radius:8px}
+</style>
+<div class="wrap">
+<h1>Clock centre ideas for the night look</h1>
+<p class="lead">Six ways to do the middle of the dial in the black night look. The ring, the ring of discs and the plate are the same in each; only the centre changes. The phone page is unchanged.</p>
+<div class="grid" id="g"></div>
+</div>
+<script>
+function face(o){
+  var s='<svg viewBox="0 0 240 240"><defs><radialGradient id="b'+o.i+'" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="'+o.band[0]+'"/><stop offset="1" stop-color="'+o.band[1]+'"/></radialGradient><radialGradient id="f'+o.i+'" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="'+o.face[0]+'"/><stop offset="1" stop-color="'+o.face[1]+'"/></radialGradient></defs><rect width="240" height="240" fill="#16161a"/>'+
+  '<circle cx="120" cy="120" r="116" fill="#d6d8da"/><circle cx="120" cy="120" r="113" fill="#2a0509"/>';
+  for(var i=0;i<12;i++){var a=i*30*Math.PI/180,x=120+84*Math.sin(a),y=120-84*Math.cos(a);s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="17" fill="#fbf3de" stroke="#8d141d" stroke-width="2.2"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="6" fill="#8d141d"/>'}
+  s+='<circle cx="120" cy="120" r="64" fill="#fbf3de"/><circle cx="120" cy="120" r="61" fill="url(#b'+o.i+')"/>'+
+  '<circle cx="120" cy="120" r="44" fill="'+o.rim+'"/><circle cx="120" cy="120" r="42" fill="url(#f'+o.i+')"/>';
+  for(var k=0;k<12;k++){s+='<line x1="120" y1="'+(120-37)+'" x2="120" y2="'+(120-(k%3===0?30:33))+'" stroke="'+o.tick+'" stroke-width="'+(k%3===0?2.4:1.3)+'" stroke-linecap="round" transform="rotate('+(k*30)+' 120 120)"/>'}
+  s+='<line x1="120" y1="120" x2="120" y2="96" stroke="'+o.hand+'" stroke-width="3.6" stroke-linecap="round" transform="rotate(300 120 120)"/><line x1="120" y1="120" x2="120" y2="86" stroke="'+o.hand+'" stroke-width="2.4" stroke-linecap="round" transform="rotate(60 120 120)"/><circle cx="120" cy="120" r="3.6" fill="'+o.pin+'"/><rect x="104" y="140" width="32" height="12" rx="2.5" fill="#fffaf0" stroke="#c9b890"/><text x="120" y="149.6" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.6" font-weight="700" fill="#3a0d12">10:42 PM</text></svg>';
+  return s}
+var O=[
+ {i:0,t:"1. As now (night)",band:["#c0222d","#7a1019"],face:["#fffaf0","#e6d7b6"],rim:"#d6d8da",tick:"#4a1a1d",hand:"#3a0d12",pin:"#d62b37",n:"Cherry ring, bright ivory face. Bright against black."},
+ {i:1,t:"2. Wine ring, cherry face (your idea)",band:["#7a1019","#430910"],face:["#d62b37","#a01a24"],rim:"#d6d8da",tick:"#fbf3de",hand:"#fbf3de",pin:"#fbf3de",n:"Deep ring, red face, ivory hands. Warm and quiet at night."},
+ {i:2,t:"3. Black face, ivory hands",band:["#7a1019","#430910"],face:["#26262a","#101012"],rim:"#d6d8da",tick:"#fbf3de",hand:"#fbf3de",pin:"#ffb347",n:"Like a dashboard clock. Least glare, still crisp. My pick."},
+ {i:3,t:"4. Black face, glowing mint hands",band:["#6b0c15","#3a0910"],face:["#1b1b1f","#0c0c0e"],rim:"#d6d8da",tick:"#9be3c6",hand:"#9be3c6",pin:"#d62b37",n:"Old watch lume: a soft mint glow on black. Mint was in your first palette. Colour only, no animation."},
+ {i:4,t:"5. Silver face, black hands",band:["#7a1019","#430910"],face:["#f2f3f4","#b9bbbd"],rim:"#8f9194",tick:"#2b2b2e",hand:"#1b1b1f",pin:"#d62b37",n:"A chrome watch face. Bright, classy, matches the chrome rims; more glare than the dark faces."},
+ {i:5,t:"6. Aged ivory face",band:["#6b0c15","#3a0910"],face:["#d9cba8","#b3a37c"],rim:"#9a9ca0",tick:"#3a0d12",hand:"#2a0509",pin:"#a01a24",n:"The ivory but toned down like old paper, so it glows less at night while keeping the look."}
+];
+var g=document.getElementById("g");
+O.forEach(function(o){var d=document.createElement("div");d.className="opt";d.innerHTML='<h3>'+o.t+'</h3>'+face(o)+'<p>'+o.n+'</p>';g.appendChild(d)});
+</script>

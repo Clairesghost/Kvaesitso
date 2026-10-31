@@ -239,3 +239,39 @@ D-109 (font reference, 2026-10-30, owner): The font reference is 'Adventurer 02'
 - D-157 (2026-10-31): Owner chose icon A (dial and clock, cherry square with round dial) for the launcher. Name: Vintage Pocket Dial. Weather source still pending.
 
 - D-158 (2026-10-31): Wrote `docs/design-system.md` from the approved mock-up and decisions D-72 to D-157 (day and night, fonts, motifs, layout, rules, what can and cannot be styled, screen inventory). Weather source and swipe-to-clear still open.
+
+- D-160 (2026-10-31): Owner: do swipe to clear; weather: free weather service (D-159, approximate location, no key; source to be checked, AF-2 Bright Sky worked for a US spot). Built swipe to clear on the Alerts rows: drag a row sideways past about 90 px and it flies off and is cleared; a short drag springs back; ongoing notifications (demo: music 'Now playing', shown only in the Today sheet) cannot be swiped, have no ✕, and say so. 'Clear all' keeps ongoing ones. Motion Off: no slide animation. Backup: `dial-mockup-cute-before-swipe.html`.
+
+- D-159 (2026-10-31): Owner: use a free weather service for the real weather corner and rain alert (sends approximate location; no key preferred). To check before wiring: which service, terms, cost, what is sent. AF-2 says Bright Sky returned a US forecast although labelled Germany only; verify on the phone. Tapping the corner still opens the weather app (D-121).
+
+- D-161 (2026-10-31): Owner comment 'what if the red centre ring is darker and the clock face red?'. Drew `centre-options.html` (now / your idea / deeper-cherry face = my pick / darker ring only). Phone page unchanged until the owner picks.
+
+- D-162 (2026-10-31): Owner asked for other variations for the night clock centre. Made `night-centre-options.html` (6 ideas: as now, wine ring + cherry face, black face ivory hands = my pick, black face mint lume, silver face, aged ivory). Phone page unchanged until the owner picks (the day centre pick from centre-options.html is still open too).
+
+- D-163 (2026-10-31): Owner chose night clock centre option 3: black face, ivory ticks and hands, amber centre pin, deep wine ring. Night look only; the number card stays ivory. Day clock centre still open (centre-options.html). Backup: `dial-mockup-cute-before-nightcentre.html`.
+
+- D-164 (2026-10-31): Owner: the digital time text overlaps the clock arms, blends in and does not fit the cute vintage style. Drew `time-options.html` with 4 replacements in the red ring below the clock (coin-return window = my pick, flip-card tiles, curved lettering, enamel plate on the rim). Phone page unchanged until the owner picks.
+
+- D-165 (2026-10-31): Owner chose option D (enamel plate on the rim) for the digital time, in all modes. Replaces the tan number card (D-119): a small cream plate with a chrome rim just under the clock at six o'clock, time in script e.g. '10:42 pm'; hands never reach it. Backup: `dial-mockup-cute-before-enamel.html`. Day clock centre (D-161) still open; landscape home screen is next.
+
+- D-166 (2026-10-31): Owner answers for the landscape home screen: dial in the centre with cards either side (not on the left); cards: the same three plus the weather forecast farther out; chrome housing across the top as in portrait. Built into the same page as a 'Screen: Portrait / Landscape' control (780 x 360 stage): Calendar and Alerts on the left, 5-day forecast card and Tasks on the right, chevron under the left cards. Camera hole is on a side edge in landscape (AF-3 not measured), so the camera button in the housing is just a button there. Backup: `dial-mockup-cute-before-landscape.html`.
+
+- D-167 (2026-10-31): Owner answers to the landscape review: give Alerts a third row (landscape shows 3); cards a bit narrower with even gutters (224 wide, dial 300 wide); dial lowered under the housing; thin brass-cream edge on the dial in the Day look (all orientations); dial editor side by side (ring left, list right); camera ring removed from the landscape housing (search left, coins right); app list in two columns in landscape with a larger letter strip showing only letters in use; chevron bigger (100 x 40) under the dial. Not done: brass plate, widening the housing, other review points. Backup: `dial-mockup-cute-before-land-fixes.html`.
+
+- D-168 (2026-10-31): Owner answers for the app list: category chips across the top; keep the right-hand letter strip but bigger, with a big letter bubble (slide a thumb down it); categories automatic first, with a hold-to-move menu. Built with demo categories. Android gives some apps a category and many none: to check how many land in Other on the phone; moves must be saved. Backup: dial-mockup-cute-before-appcats.html.
+
+- D-169 (2026-10-31): Owner: try a grid layout of categories in the app list. Built: the app list now opens as a grid of category tiles (All apps, then each category, then Launcher settings), each tile showing a 2 x 2 peek of its apps and a count; tap a tile for that group as the A to Z list with the chips and letter strip. A small button in the header switches between grid and list; typing in Find an app goes to the list. Backup: `dial-mockup-cute-before-grid.html`.
+
+- D-170 (2026-10-31): Owner did not want the tiles grid; wants another grouped layout of the apps, keeping the quick alphabet strip. Drew `applist-layouts.html` (A icon grid in category sections = my pick, B shelves swiped sideways, C folder cards), each with the right-hand letter strip; sliding to a letter jumps to the first such app and glows every app with that letter across groups. Phone page keeps the D-169 tiles until the owner picks.
+
+- D-171 (2026-10-31): Owner chose layout A for the app list (icon grid in category sections, 4 per row; 6 in landscape) with chips across the top and the right-hand letter strip. Sliding the strip jumps to the first app with that letter and glows every app with that letter for about 1.6 s. The tile grid (D-169) is removed. Hold an app to move it between categories. Backup: `dial-mockup-cute-before-layoutA.html`.
+
+- D-172 (2026-10-31): Owner chose search results as an answer card on top, then Apps, People, Jot buttons, web; buttons Add as task / Add as note appear for any text (the t / n prefix still works). Built: tan placard panel; calculator, percent and unit answers (miles/km, lb/kg, F/C, in/cm, ft/m, oz/g, gal/L) in a big script answer card with Copy; app icons; demo contacts with Call and Message; web search row. Night version too. Backup: `dial-mockup-cute-before-search.html`.
+
+- D-173 (2026-10-31): Owner: do NOT change the Day clock centre; it stays as it is now (cherry ring, ivory face). The night centre (black face) stays as chosen in D-163.
+
+- D-173b (2026-10-31): Owner: when Alerts has nothing, show the weather forecast (a small 5-day strip under 'all clear'). Read as the Alerts block; tell me if you meant the calendar card.
+- D-174 (2026-10-31): Owner: yes to a click per notch of the dial, customizable in the design settings. Built: Settings > Dial > Click feel (Off / Light / Firm, default Light) and Click sound (Off / On, default Off). The mock-up uses the browser's vibration and a soft click; real feel needs the phone.
+- D-175 (2026-10-31): Owner: draw the About page (go ahead). Built: Settings > About and licences: app name, made from Kvaesitso under GPL-3.0, source code row (link pending), fonts with OFL, artwork, weather service placeholder, privacy line. Build brief: owner said 'see #3' (go ahead) but had also asked to stop pushing build, so the brief is not written yet. Backup: `dial-mockup-cute-before-empty-haptics.html`.
+
+- D-176 (2026-10-31): Owner: 'lets continue the build! onward and forward'. Build phase opened. Wrote `ops/build-plan.md` (stages B0 to B6), `.github/workflows/build-debug.yml` (debug APK workflow, not yet pushed) and `tasks/B1-foundation/brief.md`. Nothing pushed; a push needs the owner's yes per batch.

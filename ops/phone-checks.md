@@ -55,3 +55,43 @@ Collected from the mock-up comments. When a build exists, these go into `tasks/<
 - [ ] "Skip" on every optional step works; nothing is asked twice. Setup does not come back after closing the launcher.
 - [ ] "Choose home app" opens Android's chooser and the launcher becomes the home app. Press Home once to confirm.
 - [ ] Weather location: only asks if you tap Allow; say what Android shows you.
+
+## Swipe to clear (D-160)
+- [ ] Drag an Alerts row sideways: it slides away and the notification is cleared in Android too. A short drag springs back.
+- [ ] An ongoing one (music player, call, timer) refuses: no ✕, it springs back with a message. "Clear all" leaves it.
+- [ ] Scrolling the page / spinning the ring is not triggered by a sideways drag on a row.
+
+## Landscape (D-166)
+- [ ] Turn the phone sideways (with auto-rotate on): the landscape home appears. Report which edge the camera hole is on, and whether the housing, cards or dial touch it.
+- [ ] Spin the ring and tap an app in landscape; check the cards on both sides are readable and tappable.
+- [ ] "Next days" forecast shows real data once the weather service is wired; before that it must not show made-up numbers (D-153).
+
+## App list categories and letter strip (D-168)
+- [ ] Open the app list. Count how many of your real apps land in "Other" (Android only tags some apps). Report the number and a few examples.
+- [ ] Hold an app for half a second: the "Move to" menu opens. Move one app, close the launcher completely, reopen: it should still be in the new group.
+- [ ] Slide a thumb down the letter strip: the big letter bubble follows and the list jumps. Check the strip is easy to hit (letters are about 14 px apart, below 48 dp).
+
+## App list grid (D-169)
+- [ ] The app list opens as category tiles. Tap a tile: that group appears as the A to Z list. The header button switches between grid and list. Say which you prefer to start in.
+- [ ] Each tile's 2 x 2 peek shows the first four apps of the group; check the picks make sense for your real apps.
+
+## App list, layout A (D-171)
+- [ ] Open the app list: apps sit in an icon grid under category headings (4 per row; 6 sideways). Slide the right-hand strip: the list jumps to the first app with that letter and every app with that letter glows for a moment. Report how it feels with a thumb and whether the letters are easy to hit.
+- [ ] Hold an app: the Move menu opens; a moved app stays moved after restarting the launcher.
+
+## Search results (D-172)
+- [ ] Type "12*4.5", "20% of 85", "5 mi", "70 f": a big answer card appears. Copy puts the answer on the clipboard.
+- [ ] Type part of an app name: icons appear; tap one opens it. Type a contact's name: Call and Message buttons act on the right person (needs the contacts permission; ask first, privacy).
+- [ ] Type any words: Add as task / Add as note put it in the Tasks / Notes card, and it is still there after restarting the launcher.
+- [ ] The keyboard must not hide the result panel (the panel is near the top, check on the phone).
+
+## Empty Alerts shows the forecast (D-173b)
+- [ ] With no notifications, the Alerts block says "all clear" and shows a 5-day strip. Before the weather service is wired it must not show made-up numbers: show only "all clear".
+
+## Dial click feel (D-174)
+- [ ] Settings > Dial > Click feel: spin the ring slowly. Light and Firm should feel clearly different; Off is silent. Report which you prefer.
+- [ ] Click sound On: a soft click per notch. Check it follows the phone's volume and does not play when the phone is on silent.
+- [ ] Battery: spinning is the only time it runs; check Settings > Battery after a day.
+
+## About page (D-175)
+- [ ] Settings > About and licences: the licence rows open the real licence text and the source link works (once the project is published).

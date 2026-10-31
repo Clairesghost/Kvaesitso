@@ -1,0 +1,40 @@
+<title>Digital Time Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Franklin:wght@500;700&family=Oleo+Script+Swash+Caps:wght@700&display=swap">
+<style>
+:root{--pg:#f3efe8;--pgfg:#241f1b;--pgmute:#6d655c;--pgline:#d8d0c3;--pgcard:#fffdf9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}}
+:root[data-theme="dark"]{--pg:#17151a;--pgfg:#efe9df;--pgmute:#a59d92;--pgline:#35303a;--pgcard:#201d25;color-scheme:dark}
+body{background:var(--pg);color:var(--pgfg);font-family:"DM Sans",system-ui,sans-serif;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px;line-height:1.5}
+.wrap{max-width:960px;margin:0 auto}
+h1{font-size:26px;margin:0 0 6px}
+.lead{color:var(--pgmute);margin:0 0 16px;max-width:66ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.opt{background:var(--pgcard);border:1px solid var(--pgline);border-radius:12px;padding:10px;min-width:0}
+.opt h3{font-size:14px;margin:0 0 6px}
+.opt p{font-size:12.5px;color:var(--pgmute);margin:8px 0 0}
+svg{display:block;width:100%;height:auto;border-radius:8px}
+</style>
+<div class="wrap">
+<h1>Showing the time in numbers</h1>
+<p class="lead">The little card now sits across the clock hands and blends in. These move the digital time off the face, into the red ring, in ways that suit a telephone. The day look is shown; night would use the same shapes in the black palette. The phone page is unchanged.</p>
+<div class="grid" id="g"></div>
+</div>
+<script>
+function dial(o){
+  var s='<svg viewBox="0 0 240 240"><defs><radialGradient id="b'+o.i+'" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#c52a35"/><stop offset="1" stop-color="#8d141d"/></radialGradient><radialGradient id="f'+o.i+'" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e6d7b6"/></radialGradient><linearGradient id="c'+o.i+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdfdfb"/><stop offset=".5" stop-color="#b9bbbd"/><stop offset="1" stop-color="#e6e6e2"/></linearGradient><path id="arc'+o.i+'" d="M 62 150 A 66 66 0 0 0 178 150"/></defs><rect width="240" height="240" fill="#a01a24"/><circle cx="120" cy="120" r="116" fill="#d6d8da"/><circle cx="120" cy="120" r="113" fill="#2a0509"/>';
+  for(var i=0;i<12;i++){var a=i*30*Math.PI/180,x=120+84*Math.sin(a),y=120-84*Math.cos(a);s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="17" fill="#fbf3de" stroke="#8d141d" stroke-width="2.2"/><circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="6" fill="#8d141d"/>'}
+  s+='<circle cx="120" cy="120" r="64" fill="#fbf3de"/><circle cx="120" cy="120" r="61" fill="url(#b'+o.i+')"/><circle cx="120" cy="120" r="44" fill="#d6d8da"/><circle cx="120" cy="120" r="42" fill="url(#f'+o.i+')"/>';
+  for(var k=0;k<12;k++){s+='<line x1="120" y1="83" x2="120" y2="'+(k%3===0?90:87)+'" stroke="#4a1a1d" stroke-width="'+(k%3===0?2.4:1.3)+'" stroke-linecap="round" transform="rotate('+(k*30)+' 120 120)"/>'}
+  s+='<line x1="120" y1="120" x2="120" y2="96" stroke="#3a0d12" stroke-width="3.6" stroke-linecap="round" transform="rotate(300 120 120)"/><line x1="120" y1="120" x2="120" y2="86" stroke="#3a0d12" stroke-width="2.4" stroke-linecap="round" transform="rotate(60 120 120)"/><circle cx="120" cy="120" r="3.6" fill="#d62b37"/>';
+  s+=o.draw(o.i)+'</svg>';return s}
+var O=[
+ {i:0,t:"Now",n:"A tan card across the face: it crosses the hands and looks stuck on.",draw:function(){return'<rect x="104" y="140" width="32" height="12" rx="2.5" fill="#fffaf0" stroke="#c9b890"/><text x="120" y="149.6" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.6" font-weight="700" fill="#3a0d12">10:42 PM</text>'}},
+ {i:1,t:"A. Coin-return window (my pick)",n:"A small chrome-framed window in the red ring below the clock, like a pay-phone's coin return flap, with the time in a bold typewriter-like face on cream. Clear of the hands.",draw:function(){return'<rect x="87" y="164" width="66" height="19" rx="4" fill="#d6d8da"/><rect x="89.5" y="166.5" width="61" height="14" rx="2.5" fill="#fffaf0" stroke="#8f9194"/><text x="120" y="177" text-anchor="middle" font-family="Libre Franklin,sans-serif" font-size="10.5" font-weight="700" fill="#3a0d12" letter-spacing=".5">10:42</text><text x="143" y="177" text-anchor="middle" font-family="Libre Franklin,sans-serif" font-size="5.2" font-weight="700" fill="#8d141d">PM</text>'}},
+ {i:2,t:"B. Flip-card tiles",n:"Three little split-flap tiles in the ring: 10 : 42, with a hairline across each like an old flip clock. Still, no flipping, so no battery cost.",draw:function(){function t(x,txt){return'<rect x="'+x+'" y="164" width="22" height="19" rx="3" fill="#2a0509" stroke="#d6d8da" stroke-width="1.2"/><text x="'+(x+11)+'" y="177.6" text-anchor="middle" font-family="Libre Franklin,sans-serif" font-size="11" font-weight="700" fill="#fbf3de">'+txt+'</text><line x1="'+(x+1)+'" y1="173.5" x2="'+(x+21)+'" y2="173.5" stroke="#000" stroke-opacity=".6" stroke-width=".9"/>'}return t(88,"10")+'<text x="120" y="176.4" text-anchor="middle" font-size="11" font-weight="700" fill="#fbf3de">:</text>'+t(131,"42")+'<text x="156" y="170" font-size="5.2" font-weight="700" fill="#fbf3de" font-family="Libre Franklin,sans-serif">PM</text>'}},
+ {i:3,t:"C. Curved lettering on the ring",n:"The time written in cream script along the bottom of the red ring, following the curve like text on a telephone dial. Prettiest, but small and the least instant to read.",draw:function(i){return'<text font-family="Oleo Script Swash Caps,cursive" font-size="17" fill="#fbf3de" text-anchor="middle"><textPath href="#arc'+i+'" startOffset="50%">10:42 PM</textPath></text>'}},
+ {i:4,t:"D. Enamel plate on the rim",n:"A small cream enamel plate half over the clock's chrome rim at six o'clock, like a maker's badge, with the time in script. Moves the card just below the face so it is off the hands.",draw:function(){return'<rect x="94" y="156" width="52" height="19" rx="9.5" fill="#d6d8da"/><rect x="96" y="158" width="48" height="15" rx="7.5" fill="#fffaf0" stroke="#c9b890"/><text x="120" y="170" text-anchor="middle" font-family="Oleo Script Swash Caps,cursive" font-size="12" fill="#8d141d">10:42 pm</text>'}}
+];
+var g=document.getElementById("g");
+O.forEach(function(o){var d=document.createElement("div");d.className="opt";d.innerHTML='<h3>'+o.t+'</h3>'+dial(o)+'<p>'+o.n+'</p>';g.appendChild(d)});
+</script>

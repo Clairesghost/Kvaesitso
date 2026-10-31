@@ -16,7 +16,7 @@ Setting "Day or night look": Auto, Day, Night (Auto follows the time of day for 
 |---|---|---|---|
 | Ground | phone body | cherry gradient `#c52a35` → `#a01a24` → `#6b0c15` | black gradient `#303034` → `#18181b` → `#0b0b0d` |
 | Dial plate | dark band the discs sit on | `#5a0f16` → `#2a0509` | `#3a1219` → `#1f0b10` (not dimmed) |
-| Centre band | round red area round the clock | `#c52a35` → `#8d141d` | `#c0222d` → `#7a1019`, shine capped |
+| Centre band and clock face | ring round the clock, and the clock face | ring `#c52a35` → `#8d141d`, ivory face | ring wine `#7a1019` → `#430910`, black face `#17171a`, ivory ticks and hands, amber pin `#ffb347` (D-163) |
 | Chrome | rims, housing, bezels | `#fdfdfb`, `#b9bbbd`, `#e6e6e2`; frames `#dcdedf` + `#7d7f82` | same, top housing about 22% darker (brightness .78) |
 | Disc | app discs | ivory `#fffaf0` → `#e6d7b6`, rim `#8d141d` | same |
 | Card (placard) | the three cards | tan `#f2edd2` → `#e4dcbb`, 3 px black frame, chrome bezel | near-black `#232226` → `#141416` with a faint top sheen, same chrome bezel |
@@ -38,7 +38,7 @@ Licence files must go in `docs/licenses/fonts` when the fonts are bundled (the a
 ## Motifs
 - Panel: black 3 px frame, 6 px corners, chrome bezel (2 px `#dcdedf` + 1.5 px `#7d7f82`), soft drop shadow.
 - Dial: outer chrome rim only 2 px (D-133); dark plate; thin ivory ring round the red centre band (D-132); 12 flat ivory discs with cherry rims and bold single-colour cherry pictograms about 25% larger than the first draft (D-128); static tick marks that do NOT turn with the ring (D-142); chrome finger stop at the bottom right with a soft cream lamp glow at night only (D-151).
-- Clock: ivory face, cherry hands, no date window (D-124), small tan number card showing the 12-hour time (D-119). Tap: quick timer pop-up (D-140). Hold: opens the Clock app (D-139).
+- Clock: ivory face, cherry hands, no date window (D-124), small cream enamel plate with a chrome rim, half under the clock at six o'clock, showing the 12-hour time in script, clear of the hands (D-165). Tap: quick timer pop-up (D-140). Hold: opens the Clock app (D-139).
 - Top housing: one chrome plate with the search slot on the left (placeholder "Dial, find, sum, jot…"), the camera button in the middle (a ring, no black outline) and three coin gauges on the right: connection, Bluetooth, battery (D-102 to D-104). Bluetooth icon grey when nothing is connected, no red dot (D-122). Battery ring plain dark (D-125). No camera status light (D-126).
 - Cards under the dial, top to bottom: Calendar (date tab with weather icon and temperature + event title + time + "Then…" line); Alerts (script title, latest 2 notifications, outlined action button, ✕, "+N more ›" opens the Today sheet); Tasks / Notes (title + "Notes ›" switch + dotted rows) (D-107, D-115). Rows are separated with dotted lines. No dotted underline under titles (D-152).
 - Dividers: dotted 1 px lines at 25–35% opacity.
@@ -65,20 +65,22 @@ Cannot: Android's pull-down quick panel and notification shade (stays Android's 
 | Screen | Status | Decision ids |
 |---|---|---|
 | Home portrait, Day and Night | preview approved in mock-up | D-72 to D-152 |
-| Home landscape | not started (ask) | |
-| Search results | text chips only in the mock-up; icon list not drawn | D-84 |
-| App list (A to Z, letter strip, Find an app) | preview | D-135 |
+| Home landscape (dial centre, Calendar + Alerts left, Next days forecast + Tasks right) | preview | D-166 |
+| Search results (answer card, apps, people, jot buttons, web) | preview | D-84, D-172 |
+| App list (icon grid in category sections, chips, letter strip with glow, Find an app, hold to move) | preview | D-135, D-168, D-171 |
 | Launcher settings (motion, alerts, dial, look, how to go back) | preview | D-138 |
 | Dial editor (drag discs on a mini dial) | preview | D-141 |
 | Today sheet (notifications + coming up) | preview | D-79, D-108 |
 | Quick timer pop-up | preview | D-140 |
 | First-run setup (4 steps) | preview | D-154 |
+| About and licences | preview | D-175 |
 | Pull-down quick panel | not ours (Android) | D-137 |
 | Wallpaper | not started (offer) | |
 | Lock screen picture | dropped | D-156 |
 | Icon | option A chosen, artwork to produce | D-157 |
 
 ## Open choices
-- Weather source for the real weather corner and "Rain in 20 min": a free service sending approximate location, or only open the Samsung Weather app. Needs the owner's answer (cost, privacy).
-- Swipe to clear on the Alerts block (not built in the mock-up).
+- Weather source: owner chose a free weather service (D-159); the exact service and what it sends still to check before wiring.
+- Swipe to clear on the Alerts block: built (D-160); real behaviour needs the phone.
 - Night colour tweaks the owner has not seen on a real phone.
+- Day clock centre: decided to keep as is (D-173).

@@ -342,14 +342,19 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 /* night review fixes (D-150) */
 .A.night .astrip i.off{opacity:1;color:#8a6f6a}
 .A.night [id^="gl"] stop:first-child{stop-opacity:.22}
-.A.night [id^="rd"] stop:first-child{stop-color:#c0222d}
-.A.night [id^="rd"] stop:last-child{stop-color:#7a1019}
 .A.night .wxt-moon{--c:#c9d3ff;--c2:#c9d3ff}
 .A.night .srow .nt span,.A.night .srow>em{color:#cfc6b4;opacity:1}
 .A.night .tl label.done i{opacity:.6}
 .A.night .nsheet,.A.night .tpop{box-shadow:0 8px 28px rgba(0,0,0,.6),inset 0 0 0 2px #7d7f82,inset 0 0 0 3.5px #1a1a1d}
 /* subtle tint on the three black cards so they do not merge with the phone body (D-148) */
 .A.night .nr[data-set] svg{stroke:#ff6a5f}
+/* night clock centre: black face, ivory ticks and hands, amber pin, wine ring (D-163) */
+.A.night [id^="rd"] stop:first-child{stop-color:#7a1019}
+.A.night [id^="rd"] stop:last-child{stop-color:#430910}
+.A.night .cface{fill:#17171a}
+.A.night [id^="ck"] line{stroke:#fbf3de}
+.A.night [id^="hh"],.A.night [id^="mm"]{stroke:#fbf3de}
+.A.night .cpin{fill:#ffb347}
 
 /* first-run screens (D-154) */
 .frs{top:54px;justify-content:space-between;padding:22px 22px 20px;text-align:center}
@@ -369,6 +374,132 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
 .A.night .frp{background:#a8222e;color:#fff4e6}
 .A.night .frs2{color:#cfc6b4}
 .A.night .frc svg{filter:none}
+
+/* landscape home 780 x 360 (D-166): dial in the middle, Calendar + Alerts left, Forecast + Tasks right */
+.card.fc,.A .card.fc{display:none}
+.col.wide{width:min(100%,780px)}
+.phone.land{width:780px;height:360px}
+.phone.land .tb{width:780px}
+/* housing: search left, coins right, no camera ring (the real hole is on a side edge in landscape) */
+.A.land .srch{left:150px;right:150px;top:8px;grid-template-columns:1fr auto}
+.A.land .camring,.A.land .camgap,.A.land .hole{display:none}
+.A.land .srch .coins{grid-column:2;margin-left:8px}
+.A.land .sres{left:150px;right:150px}
+.A.land .dial{left:240px;top:58px;width:300px;height:253px}
+.A.land .cal{left:12px;right:auto;width:224px;top:54px;height:104px}
+.A.land .nbk{left:12px;right:auto;width:224px;top:166px;height:108px}
+.A.land .card.fc{display:block;left:544px;right:auto;width:224px;top:54px;height:104px;padding:0 10px}
+.A.land .task{left:544px;right:auto;width:224px;top:166px;height:108px}
+.A.land .bot{left:340px;right:auto;width:100px;top:314px;height:40px}
+.A.land .bot button{height:40px;padding:0 30px}
+.A.land .hbar{left:340px}
+.A.land .nsheet{left:70px;right:70px}
+.A.land .tpop{left:260px;right:260px;top:96px}
+.A.land .nbr em{display:none}
+.A.land .nbt b{margin-right:4px}
+/* app list in two columns, letter strip shows only letters that have apps */
+.A.land .aps:not(.stg):not(.eds) .nbody{display:grid;grid-template-columns:1fr 1fr;column-gap:14px;align-content:start}
+.A.land .aps:not(.stg):not(.eds) .nbody .nsec,.A.land .aps:not(.stg):not(.eds) .nbody [data-set]{grid-column:1/-1}
+.A.land .astrip i.off{display:none}
+.A.land .astrip{font-size:11px}
+/* dial editor side by side: ring on the left, hint and list on the right */
+.A.land .eds .nbody{display:grid;grid-template-columns:240px 1fr;grid-template-rows:auto 1fr;column-gap:14px;align-content:start}
+.A.land .eds .edwrap{grid-column:1;grid-row:1/3}
+.A.land .eds .edwrap svg{width:236px;height:236px}
+.A.land .eds .edhint{grid-column:2;grid-row:1}
+.A.land .eds #edrep{grid-column:2;grid-row:2}
+/* thin brass edge on the dial in the Day look */
+.A.night .dayedge{display:none}
+.A.land .nbt b{margin-right:4px}
+.fcr{display:flex;justify-content:space-between;margin-top:2px}
+.fd{display:flex;flex-direction:column;align-items:center;gap:1px;font-family:"Libre Franklin",sans-serif;font-size:11px;line-height:1.15}
+.fd em{font-style:normal;opacity:.7;font-size:10.5px}
+.fd b{font-weight:600;font-size:12px}
+.fd span{opacity:.65;font-size:10.5px}
+.fcw{cursor:pointer}
+.A.night .fd span,.A.night .fd em{opacity:.8}
+
+/* app list: category chips, bigger letter strip with a bubble, move menu (D-168) */
+.acats{display:flex;gap:6px;overflow-x:auto;padding:2px 12px 6px;scrollbar-width:none}
+.acats::-webkit-scrollbar{display:none}
+.acats button{all:unset;cursor:pointer;flex:none;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px #8d141d;color:#8d141d;font:500 12px "Libre Franklin",sans-serif;display:flex;align-items:center;white-space:nowrap}
+.acats button.on{background:#8d141d;color:#fbf3de;box-shadow:none}
+.A.night .acats button{color:#ff6a5f;box-shadow:inset 0 0 0 1px #ff6a5f}
+.A.night .acats button.on{background:#a8222e;color:#fff4e6;box-shadow:none}
+.astrip{width:30px;right:0;top:134px;font-size:11.5px;touch-action:none}
+.astrip i{padding:0 8px 0 4px;flex:1;display:flex;align-items:center;justify-content:center}
+.abub{position:absolute;right:46px;top:100px;width:52px;height:52px;border-radius:26px;background:#8d141d;color:#fbf3de;font:700 30px/52px "Oleo Script Swash Caps",cursive;text-align:center;opacity:0;pointer-events:none;transition:opacity .12s;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.abub.on{opacity:1}
+.A.night .abub{background:#a8222e}
+.amove{position:absolute;left:30px;right:30px;top:90px;z-index:3;background:#fbf4e3;color:#3a0d12;border:3px solid #141010;border-radius:6px;box-shadow:0 0 0 2px #dcdedf,0 0 0 3.5px #7d7f82,0 10px 24px rgba(0,0,0,.5);padding:8px 10px;display:none;flex-direction:column;gap:4px}
+.amove.on{display:flex}
+.A.night .amove{background:#1c1c1f;color:#f1ece0}
+.amt{font:700 17px "Oleo Script Swash Caps",cursive;color:#8d141d;margin-bottom:2px}
+.A.night .amt{color:#ff6a5f}
+.amove button{all:unset;cursor:pointer;min-height:36px;padding:0 10px;border-radius:8px;box-shadow:inset 0 0 0 1px currentColor;font:500 13px "Libre Franklin",sans-serif;display:flex;align-items:center}
+.amove button.on{background:#8d141d;color:#fbf3de;box-shadow:none}
+.amove .amx{box-shadow:none;opacity:.7;justify-content:center}
+
+/* category grid (D-169) */
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:6px 2px 10px}
+.A.land .ggrid{grid-template-columns:repeat(4,1fr)}
+.gtile{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px 8px;border-radius:10px;background:#f6ecd0;box-shadow:inset 0 0 0 1.5px #c9b890,0 2px 0 #d9c9a0;text-align:center}
+.gpeek{display:grid;grid-template-columns:repeat(2,26px);gap:3px;justify-content:center;min-height:55px;align-content:center}
+.gtile b{font:700 15px "Oleo Script Swash Caps","Libre Franklin",cursive;color:#8d141d;line-height:1.15}
+.gtile i{font:500 11px "Libre Franklin",sans-serif;font-style:normal;opacity:.7}
+.A.night .gtile{background:linear-gradient(#2a292d,#1a191c);box-shadow:inset 0 0 0 1.5px #55565a,0 2px 0 #0a0a0b}
+.A.night .gtile b{color:#ff6a5f}
+.A.night .gset .gpeek svg{stroke:#ff6a5f}
+.nh .nb svg{display:block}
+
+/* app list layout A: icon grid in category sections (D-171) */
+.agrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px 4px;padding:2px 0 6px}
+.A.land .agrid{grid-template-columns:repeat(6,1fr)}
+.aic{all:unset;cursor:pointer;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;border-radius:10px;min-width:0}
+.aic span{font:500 11px/1.15 "Libre Franklin",sans-serif;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aic.hit{background:#ffe9a8;box-shadow:0 0 0 2px #c77d0a}
+.A.night .aic.hit{background:#4a3a14;box-shadow:0 0 0 2px #ffb347}
+.aps .nsec{display:flex;justify-content:space-between;align-items:baseline}
+.aps .nsec em{font:500 10px "Libre Franklin",sans-serif;font-style:normal;opacity:.65;margin-right:10px}
+
+/* search results: answer card, apps, people, jot, web (D-172) */
+.A .sres{display:none;flex-direction:column;flex-wrap:nowrap;gap:0;padding:8px 10px 6px;max-height:430px;overflow-y:auto;border-radius:6px;background:linear-gradient(#f2edd2,#e4dcbb);color:#15110f;border:3px solid #141010;box-shadow:0 0 0 2px #dcdedf,0 0 0 3.5px #7d7f82,0 10px 24px rgba(0,0,0,.5);font-family:"Libre Franklin",sans-serif;scrollbar-width:none}
+.A .sres.on{display:flex}
+.A.land .sres{max-height:250px}
+.A.night .sres{background:linear-gradient(#232226,#141416);color:#f1ece0;border-color:#000}
+.sra{display:flex;flex-direction:column;align-items:flex-start;padding:2px 0 8px;border-bottom:1px dotted rgba(20,16,16,.35);position:relative}
+.sra small{font-size:12px;opacity:.7}
+.sra b{font:700 34px/1.1 "Oleo Script Swash Caps",cursive;color:#8d141d}
+.sra em{font-style:normal;font-size:11px;opacity:.7}
+.sra button{position:absolute;right:0;top:8px}
+.A.night .sra b{color:#ff6a5f}
+.A .sres button{all:unset;cursor:pointer;box-sizing:border-box;min-height:30px;padding:0 12px;border-radius:15px;box-shadow:inset 0 0 0 1px currentColor;font:500 11.5px "Libre Franklin",sans-serif;display:inline-flex;align-items:center;justify-content:center}
+.srh{font:700 13px "Oleo Script Swash Caps",cursive;color:#8d141d;margin:7px 0 3px}
+.A.night .srh{color:#ff6a5f}
+.srapps{display:flex;gap:6px;flex-wrap:wrap}
+.A .sres .srapp{box-shadow:none;flex-direction:column;gap:1px;padding:2px 4px;min-height:0;width:56px;border-radius:8px}
+.srapp span{font-size:10.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srp{display:flex;align-items:center;gap:8px;min-height:40px;border-top:1px dotted rgba(20,16,16,.3)}
+.A.night .srp,.A.night .sra{border-color:rgba(241,236,224,.25)}
+.srp i{font-style:normal;width:28px;height:28px;border-radius:50%;background:#8d141d;color:#fbf3de;display:flex;align-items:center;justify-content:center;font:700 13px "Libre Franklin",sans-serif;flex:none}
+.srp b{flex:1;font-weight:500;font-size:13px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srj{display:flex;gap:8px;padding-bottom:4px}
+.A .sres .srj button{flex:1;min-height:36px}
+.srw{font-size:12.5px;padding:8px 0 4px;border-top:1px dotted rgba(20,16,16,.3);margin-top:6px;cursor:pointer}
+.A.night .srw{border-color:rgba(241,236,224,.25)}
+.A .sres span{background:none;padding:0;border-radius:0}
+
+/* empty Alerts shows the forecast (D-173); About page (D-175) */
+.nbf{display:flex;justify-content:space-between;align-items:center;height:52px;border-top:1px dotted rgba(20,16,16,.35);padding-top:2px}
+.A.night .nbf{border-top-color:rgba(241,236,224,.25)}
+.nbf .fd em{font-size:10px}
+.nbf .fd b{font-size:11.5px}
+.abt{display:flex;gap:12px;align-items:center;padding:8px 0}
+.abt b{display:block;font:700 20px "Oleo Script Swash Caps",cursive;color:#8d141d}
+.abt span{font-size:12px;opacity:.7}
+.A.night .abt b{color:#ff6a5f}
+.abs .nbody{padding-right:12px}
+.srow[data-lic]{cursor:pointer}
 /* ---------- B: retro-modern ---------- */
 .B{background-color:#e9e4d9;background-image:radial-gradient(#cbc4b4 1px,transparent 1.4px);background-size:14px 14px;color:#1f1f23;font-family:"Space Grotesk","DM Sans",sans-serif}
 .B .tb .l,.B .tb .r{color:#e9e4d9;font-family:"DM Mono",monospace;font-weight:500}
@@ -401,6 +532,7 @@ h1{font-family:Fraunces,serif;font-size:28px;margin:0 0 6px;text-wrap:balance}
   <div class="g" id="cCond"><b>Weather</b></div>
   <div class="g" id="cTod"><b>Time of day</b></div>
   <div class="g" id="cNet"><b>Connection</b></div>
+  <div class="g" id="cScr"><b>Screen</b></div>
   <div class="g" id="cLook"><b>Look</b></div>
   <div class="g" id="cMot"><b>Motion</b></div>
   <button type="button" id="cFirst" style="margin:4px 0;padding:6px 12px;border-radius:14px;border:1px solid currentColor;background:none;color:inherit;font:inherit;cursor:pointer">Show the first-run setup screens</button>
@@ -477,7 +609,7 @@ var GF=(function(){
   return o;
 })();
 var CX=180,CY=180,RING=112,SLOT=30;
-var state={look:"auto",cond:"clear",tod:"auto",motion:"Full",saver:false,note:true,ev:true,net:"wifi",bt:true};
+var state={haptic:"Light",sound:"Off",scr:"port",look:"auto",cond:"clear",tod:"auto",motion:"Full",saver:false,note:true,ev:true,net:"wifi",bt:true};
 var phones=[];
 function el(h){var d=document.createElement("div");d.innerHTML=h;return d.firstElementChild}
 function pad(n){return n<10?"0"+n:""+n}
@@ -513,9 +645,9 @@ function build(root,key){
    '<svg class="dial" id="dl'+p+'" viewBox="0 28 360 304" width="360" height="304"></svg>'+
    '<div class="card cal" id="ca'+p+'"></div>'+
    '<div class="card nbk" id="nb'+p+'"></div>'+
-   '<div class="card task" id="tk'+p+'"></div>'+
+   '<div class="card task" id="tk'+p+'"></div><div class="card fc" id="fc'+p+'"></div>'+
    '<div class="bot"><button id="al'+p+'" aria-label="All apps"><span class="chev"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></span></button></div>'+
-   '<div class="hbar"></div><div class="nscrim" id="nsc'+p+'"></div><div class="nsheet" id="ns'+p+'"></div><div class="nsheet aps" id="as'+p+'"></div><div class="nsheet aps stg" id="sg'+p+'"></div><div class="tpop" id="tp'+p+'"></div><div class="nsheet aps eds" id="ed'+p+'"></div><div class="nsheet frs" id="fr'+p+'"></div><div class="toast" id="to'+p+'"></div>';
+   '<div class="hbar"></div><div class="nscrim" id="nsc'+p+'"></div><div class="nsheet" id="ns'+p+'"></div><div class="nsheet aps" id="as'+p+'"></div><div class="nsheet aps stg" id="sg'+p+'"></div><div class="tpop" id="tp'+p+'"></div><div class="nsheet aps eds" id="ed'+p+'"></div><div class="nsheet frs" id="fr'+p+'"></div><div class="nsheet aps abs" id="au'+p+'"></div><div class="toast" id="to'+p+'"></div>';
   var S=function(id){return root.querySelector("#"+id+p)};
   var dial=S("dl");
 
@@ -531,6 +663,7 @@ function build(root,key){
    '</defs>';
   if(isA)h+='<defs><radialGradient id="sh'+p+'" cx=".5" cy=".5" r=".5"><stop offset=".9" stop-color="#000" stop-opacity=".32"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient><linearGradient id="rh'+p+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient><linearGradient id="rl'+p+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".6"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".4"/></linearGradient></defs><circle cx="180" cy="180" r="166" fill="url(#sh'+p+')"/>';
   h+='<circle cx="180" cy="180" r="146" fill="'+(isA?"url(#chd"+p+")":"#0f0f11")+'"/>';
+  if(isA)h+='<circle class="dayedge" cx="180" cy="180" r="146.6" fill="none" stroke="#f1e3b8" stroke-width="1.3"/>';
   h+='<circle cx="180" cy="180" r="144" fill="url(#pl'+p+')"/>';
   if(isA)h+='<circle cx="180" cy="180" r="145.2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.6"/><circle cx="180" cy="180" r="142.8" fill="none" stroke="#000" stroke-opacity=".28" stroke-width="2.5"/>';
   h+='<g id="tk2'+p+'"></g>';
@@ -541,7 +674,7 @@ function build(root,key){
   h+='<g clip-path="url(#cl'+p+')"><g id="pt'+p+'"></g><g id="sk'+p+'"></g></g>';
   h+='<circle cx="180" cy="180" r="86" fill="url(#gl'+p+')"/>';
   h+='<circle cx="180" cy="180" r="52" fill="'+(isA?"url(#chd"+p+")":"#3a3a3f")+'"/>';
-  h+='<circle cx="180" cy="180" r="49" fill="'+(isA?"url(#dg"+p+")":"#141416")+'"/>';
+  h+='<circle class="cface" cx="180" cy="180" r="49" fill="'+(isA?"url(#dg"+p+")":"#141416")+'"/>';
   h+='<g id="ck'+p+'"></g>';
   if(isA){
     /* thin ivory ring round the red centre; the dark plate is the wide band the discs sit on (mock-up D-132) */
@@ -572,8 +705,8 @@ function build(root,key){
   var ck=dial.querySelector("#ck"+p);
   if(isA){
     var c="";for(var k=0;k<12;k++){c+='<line x1="180" y1="'+(180-44)+'" x2="180" y2="'+(180-(k%3===0?37:40))+'" stroke="#4a1a1d" stroke-width="'+(k%3===0?2.2:1.2)+'" stroke-linecap="round" transform="rotate('+(k*30)+' 180 180)"/>'}
-    c+='<rect x="159" y="203" width="42" height="14" rx="2.5" fill="#fffaf0" stroke="#c9b890"/><text id="tm'+p+'" x="180" y="213" text-anchor="middle" font-size="8" font-weight="700" fill="#3a0d12" font-family="Libre Franklin,DM Sans,sans-serif">10:42 PM</text>';
-    c+='<line id="hh'+p+'" x1="180" y1="180" x2="180" y2="158" stroke="#3a0d12" stroke-width="3.4" stroke-linecap="round"/><line id="mm'+p+'" x1="180" y1="180" x2="180" y2="148" stroke="#3a0d12" stroke-width="2.2" stroke-linecap="round"/><circle cx="180" cy="180" r="3.4" fill="#d62b37"/>';
+    c+='<rect x="148" y="221" width="64" height="22" rx="11" fill="#d6d8da"/><rect x="150.4" y="223.4" width="59.2" height="17.2" rx="8.6" fill="#fffaf0" stroke="#c9b890"/><text id="tm'+p+'" x="180" y="236" text-anchor="middle" font-size="13" fill="#8d141d" font-family="Oleo Script Swash Caps,cursive">10:42 pm</text>';
+    c+='<line id="hh'+p+'" x1="180" y1="180" x2="180" y2="158" stroke="#3a0d12" stroke-width="3.4" stroke-linecap="round"/><line id="mm'+p+'" x1="180" y1="180" x2="180" y2="148" stroke="#3a0d12" stroke-width="2.2" stroke-linecap="round"/><circle class="cpin" cx="180" cy="180" r="3.4" fill="#d62b37"/>';
     ck.innerHTML=c;
   }else{
     var c2="";for(var m=0;m<12;m++){c2+='<circle cx="180" cy="'+(180-44)+'" r="'+(m%3===0?1.8:1)+'" fill="'+(m%3===0?"#ff5a1f":"#6b675f")+'" transform="rotate('+(m*30)+' 180 180)"/>'}
@@ -598,7 +731,7 @@ function build(root,key){
   phones.push(ph);
   wireDial(ph);
   wireSearch(ph);
-  ph.S("nsc").onclick=function(){if(ph.frOn)return;closeSheet(ph);closeApps(ph);closeSettings(ph);closeTimer(ph);closeEditor(ph)};
+  ph.S("nsc").onclick=function(){if(ph.frOn)return;closeSheet(ph);closeApps(ph);closeSettings(ph);closeTimer(ph);closeEditor(ph);closeAbout(ph)};
   drawCards(ph);
   S("al").addEventListener("click",function(){openApps(ph)});
   render(ph);
@@ -607,6 +740,7 @@ function build(root,key){
 
 /* ---------- dial interaction ---------- */
 function render(ph){
+  var sl=Math.round(ph.rot/SLOT);if(ph.lastSlot!==undefined&&sl!==ph.lastSlot)dialTick();ph.lastSlot=sl;
   var rot=ph.rot;
   ph.apps.forEach(function(g,i){
     var a=(i*SLOT+rot)*Math.PI/180;
@@ -689,30 +823,59 @@ function toast(ph,msg){
 }
 function wireSearch(ph){
   var inp=ph.S("in"),box=ph.S("sr");
-  function chips(list){box.innerHTML=list.map(function(x){return"<span>"+x+"</span>"}).join("");box.classList.toggle("on",list.length>0)}
-  inp.addEventListener("input",function(){
-    var v=inp.value.trim();
-    if(!v){chips([]);return}
-    if(/^[\d\s.+\-*/()%x×÷]+$/.test(v)&&/[+\-*/%x×÷]/.test(v)){
+  /* styled results (D-172): answer card on top, then apps, people, jot buttons, web */
+  var CONTACTS=[["Sam","Sam Rivera"],["Mum","Mum"],["Alex","Alex Chen"],["Dr Patel","Dr Patel's office"]];
+  var UN={mi:["km",1.609344],miles:["km",1.609344],mile:["km",1.609344],km:["mi",0.621371],lb:["kg",0.453592],lbs:["kg",0.453592],kg:["lb",2.204623],oz:["g",28.3495],g:["oz",0.035274],in:["cm",2.54],cm:["in",0.393701],ft:["m",0.3048],m:["ft",3.28084],gal:["L",3.78541],l:["gal",0.264172]};
+  function r2(n){return Math.round(n*100)/100}
+  function answer(v){
+    var m;
+    if(/^[\d\s.+\-*/()%x×÷]+$/.test(v)&&/[+\-*/x×÷]/.test(v)){
       var ex=v.replace(/[x×]/g,"*").replace(/÷/g,"/"),res="";
       try{res=Function('"use strict";return ('+ex+')')();if(typeof res!=="number"||!isFinite(res))res=""}catch(err){console.error("launcher","calc",err.message);res=""}
-      chips([res===""?"Keep typing…":v+" = <b>"+(Math.round(res*1e6)/1e6)+"</b>"]);return;
+      return res===""?{expr:v,ans:"…",hint:"Keep typing"}:{expr:v+" =",ans:String(Math.round(res*1e6)/1e6)};
     }
-    if(/^t\s+\S/i.test(v)){chips(["Add task: <b>"+v.slice(2)+"</b> (press Enter)"]);return}
-    if(/^n\s+\S/i.test(v)){chips(["Add note: <b>"+v.slice(2)+"</b> (press Enter)"]);return}
-    if(/^[\d\s+()-]{3,}$/.test(v)){chips(["Call <b>"+v+"</b>"]);return}
-    var m=APPS.filter(function(a){return a[0].toLowerCase().indexOf(v.toLowerCase())>=0||a[1].indexOf(v.toLowerCase())===0}).map(function(a){return a[0]});
-    chips(m.length?m.concat(["Search the web"]):["Search the web for “"+v.replace(/</g,"&lt;")+"”"]);
+    if((m=v.match(/^([\d.]+)\s*%\s*of\s*([\d.]+)$/i)))return{expr:m[1]+"% of "+m[2]+" =",ans:String(r2(m[1]*m[2]/100))};
+    if((m=v.match(/^(-?[\d.]+)\s*°?\s*([fc])$/i))){var n=+m[1];return/f/i.test(m[2])?{expr:n+" °F =",ans:r2((n-32)*5/9)+" °C"}:{expr:n+" °C =",ans:r2(n*9/5+32)+" °F"}}
+    if((m=v.match(/^(-?[\d.]+)\s*([a-z]+)$/i))&&UN[m[2].toLowerCase()]){var u=UN[m[2].toLowerCase()];return{expr:m[1]+" "+m[2].toLowerCase()+" =",ans:r2(m[1]*u[1])+" "+u[0]}}
+    return null;
+  }
+  function row(h){return h}
+  function render(v){
+    if(!v){box.innerHTML="";box.classList.remove("on");return}
+    var q=v.toLowerCase(),e=esc(v),a=answer(v),h="";
+    if(a)h+='<div class="sra"><small>'+esc(a.expr)+'</small><b>'+esc(a.ans)+'</b>'+(a.hint?'<em>'+a.hint+'</em>':'<button data-s="copy">Copy</button>')+'</div>';
+    var apps=ALL.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0}).slice(0,6);
+    if(apps.length&&!a)h+='<div class="srh">Apps</div><div class="srapps">'+apps.map(function(x){return'<button class="srapp" data-app="'+esc(x[0])+'"><svg width="40" height="40" viewBox="-16 -16 32 32"><circle r="15" fill="#fbf3de" stroke="#8d141d" stroke-width="1.6"/>'+(x[1]&&GF[x[1]]?'<g transform="translate(-9 -9) scale(.75)">'+GF[x[1]]+'</g>':'<text y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#8d141d" font-family="Libre Franklin,sans-serif">'+x[0].charAt(0)+'</text>')+'</svg><span>'+esc(x[0])+'</span></button>'}).join("")+'</div>';
+    var ppl=CONTACTS.filter(function(c){return c[1].toLowerCase().indexOf(q)>=0||c[0].toLowerCase().indexOf(q)>=0}).slice(0,3);
+    if(ppl.length&&!a)h+='<div class="srh">People</div>'+ppl.map(function(c){return'<div class="srp"><i>'+c[0].charAt(0)+'</i><b>'+esc(c[1])+'</b><button data-s="call" data-n="'+esc(c[1])+'">Call</button><button data-s="msg" data-n="'+esc(c[1])+'">Message</button></div>'}).join("");
+    if(/^[\d\s+()-]{3,}$/.test(v)&&!a)h+='<div class="srp"><i>☎</i><b>Call '+e+'</b><button data-s="call" data-n="'+e+'">Call</button></div>';
+    if(!a||a.hint)h+='<div class="srh">Jot it</div><div class="srj"><button data-s="task">Add as task</button><button data-s="note">Add as note</button></div>';
+    if(!a)h+='<div class="srw" data-s="web">Search the web for “<b>'+e+'</b>”</div>';
+    box.innerHTML=h;box.classList.add("on");
+  }
+  function finish(msg){inp.value="";render("");inp.blur();if(msg)toast(ph,msg)}
+  function addTask(v){ph.tasks.unshift([v,0]);ph.tab="Tasks";drawCards(ph);finish("Task added")}
+  function addNote(v){ph.note=v+"\n"+ph.note;ph.tab="Notes";drawCards(ph);finish("Note added")}
+  box.addEventListener("pointerdown",function(e){e.preventDefault()});
+  box.addEventListener("click",function(e){
+    var b=e.target.closest("[data-s],[data-app]");if(!b)return;var v=inp.value.trim();
+    if(b.hasAttribute("data-app")){finish("Opens "+b.getAttribute("data-app")+" — demo only");return}
+    var s=b.getAttribute("data-s");
+    if(s==="task")addTask(v);else if(s==="note")addNote(v);
+    else if(s==="copy")finish("Answer copied — demo only");
+    else if(s==="call")finish("Would call "+b.getAttribute("data-n")+" — demo only");
+    else if(s==="msg")finish("Would message "+b.getAttribute("data-n")+" — demo only");
+    else if(s==="web")finish("Would search the web — demo only");
   });
+  inp.addEventListener("input",function(){render(inp.value.trim())});
   inp.addEventListener("keydown",function(e){
     if(e.key!=="Enter")return;
     var v=inp.value.trim();
-    if(/^t\s+\S/i.test(v)){ph.tasks.unshift([v.slice(2),0]);ph.tab="Tasks";drawCards(ph);toast(ph,"Task added")}
-    else if(/^n\s+\S/i.test(v)){ph.note=v.slice(2)+"\n"+ph.note;ph.tab="Notes";drawCards(ph);toast(ph,"Note added")}
-    else if(v)toast(ph,"Would open the top result — demo only");
-    inp.value="";chips([]);inp.blur();
+    if(/^t\s+\S/i.test(v))addTask(v.slice(2));
+    else if(/^n\s+\S/i.test(v))addNote(v.slice(2));
+    else if(v)finish("Would open the top result — demo only");
   });
-  inp.addEventListener("blur",function(){setTimeout(function(){if(!inp.value)chips([])},150)});
+  inp.addEventListener("blur",function(){setTimeout(function(){if(!inp.value)render("")},150)});
 }
 
 /* ---------- cards ---------- */
@@ -737,7 +900,7 @@ function drawCards(ph){
   tk.querySelectorAll("[data-tab]").forEach(function(b){b.onclick=function(){ph.tab=b.getAttribute("data-tab");drawCards(ph)}});
   tk.querySelectorAll("[data-t]").forEach(function(l){l.onclick=function(ev){ev.preventDefault();var i=+l.getAttribute("data-t");ph.tasks[i][1]=ph.tasks[i][1]?0:1;drawCards(ph)}});
   var ta=tk.querySelector("textarea");if(ta)ta.oninput=function(){ph.note=ta.value};
-  drawChips(ph);drawTabWx(ph);
+  drawChips(ph);drawTabWx(ph);drawForecast(ph);
 }
 
 /* ---------- weather on the date tab ---------- */
@@ -767,7 +930,8 @@ function gi(n,sz){return'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24"
 function demoNotifs(){return[
   {app:"Messages",glyph:"msg",items:[["Sam","Running late, save me a seat",2],["Mum","Call when you can",15],["Alex","Sounds good",40]]},
   {app:"Mail",glyph:"mail",items:[["Library","Your book is ready to collect",35],["Dr Patel's office","Appointment confirmation",90]]},
-  {app:"Photos",glyph:"photo",items:[["Memories","A year ago today",120]]}]}
+  {app:"Photos",glyph:"photo",items:[["Memories","A year ago today",120]]},
+  {app:"Music",glyph:"music",ongoing:true,items:[["Now playing","Blue Moon",300]]}]}
 function ago(m){return m<60?m+" min":Math.round(m/60)+" h"}
 function syncNotifs(ph){
   ph.notifs=ph.notifs.filter(function(g){return g.items.length>0});
@@ -791,23 +955,43 @@ function drawChips(ph){
     else rows.push({g:g,who:g.app,txt:g.items.length+" new",t:g.items[0][2],item:false});
   });
   rows.sort(function(a,b){return a.t-b.t});
-  var shown=rows.slice(0,2),h;
-  if(!rows.length)h='<div class="nbh"><b>Alerts</b></div><div class="nbe">All clear</div>';
+  var N=state.scr==="land"?3:2,shown=rows.slice(0,N),h;
+  if(!rows.length)h='<div class="nbh"><b>Alerts</b><span>all clear</span></div><div class="nbf">'+FCD.map(function(d){return'<div class="fd wxt-'+d[1]+'"><em>'+d[0]+'</em><svg class="wxi" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+WI[d[1]]+'</svg><b>'+d[2]+'°</b></div>'}).join("")+'</div>';
   else{
-    h='<div class="nbh" data-sheet="1"><b>Alerts</b><span>'+(rows.length>2?"+"+(rows.length-2)+" more":"all")+' ›</span></div>';
-    shown.forEach(function(r,i){h+='<div class="nbr" data-i="'+i+'">'+gi(r.g.glyph,16)+'<div class="nbt"><b>'+esc(r.who)+'</b><span>'+esc(r.txt)+'</span></div><em>'+ago(r.t)+'</em><button class="nba" data-a="act">'+(r.item?ACTS[r.g.app]:"Open")+'</button><button class="nbx" data-a="x" aria-label="Dismiss">✕</button></div>'});
+    h='<div class="nbh" data-sheet="1"><b>Alerts</b><span>'+(rows.length>N?"+"+(rows.length-N)+" more":"all")+' ›</span></div>';
+    shown.forEach(function(r,i){h+='<div class="nbr" data-i="'+i+'">'+gi(r.g.glyph,16)+'<div class="nbt"><b>'+esc(r.who)+'</b><span>'+esc(r.txt)+'</span></div><em>'+ago(r.t)+'</em><button class="nba" data-a="act">'+(r.item?ACTS[r.g.app]:"Open")+'</button>'+(r.g.ongoing?'':'<button class="nbx" data-a="x" aria-label="Dismiss">✕</button>')+'</div>'});
   }
   box.innerHTML=h;
   var hd=box.querySelector("[data-sheet]");if(hd)hd.onclick=function(){openSheet(ph)};
   box.querySelectorAll(".nbr").forEach(function(row){
     var r=shown[+row.getAttribute("data-i")];
-    row.querySelector(".nbx").onclick=function(e){e.stopPropagation();if(r.item)r.g.items.splice(r.ii,1);else r.g.items=[];syncNotifs(ph)};
+    var xb=row.querySelector(".nbx");function dismissRow(){if(r.item)r.g.items.splice(r.ii,1);else r.g.items=[];syncNotifs(ph)}
+    if(xb)xb.onclick=function(e){e.stopPropagation();dismissRow()};
+    wireSwipe(ph,row,r.g.ongoing,dismissRow);
     row.querySelector(".nba").onclick=function(e){e.stopPropagation();
       if(r.item&&r.g.app==="Mail"){r.g.items.splice(r.ii,1);syncNotifs(ph);toast(ph,"Archived (demo)")}
       else if(r.item&&r.g.app==="Messages")toast(ph,"Quick reply would open here (demo)");
       else toast(ph,"Opens "+r.g.app+" — demo only")};
     row.onclick=function(){toast(ph,"Opens "+r.g.app+" — demo only")};
   });
+}
+
+/* swipe a row sideways to clear it; ongoing ones (music, calls, timers) refuse (D-160) */
+function wireSwipe(ph,row,ongoing,dismiss){
+  var sx=0,dx=0,on=false;
+  row.style.touchAction="pan-y";
+  row.addEventListener("pointerdown",function(e){if(e.target.closest("button"))return;sx=e.clientX;dx=0;on=true;row.style.transition="none"});
+  row.addEventListener("pointermove",function(e){if(!on)return;dx=e.clientX-sx;if(Math.abs(dx)>8){var m=ongoing?Math.max(-18,Math.min(18,dx*.25)):dx;row.style.transform="translateX("+m+"px)";row.style.opacity=ongoing?1:Math.max(.25,1-Math.abs(dx)/260);row.swiped=true}});
+  function up(){
+    if(!on)return;on=false;var d=dx;
+    if(!row.swiped){return}
+    var anim=state.motion==="Off"?"none":"transform .16s,opacity .16s";row.style.transition=anim;
+    if(!ongoing&&Math.abs(d)>90){row.style.transform="translateX("+(d>0?360:-360)+"px)";row.style.opacity=0;setTimeout(dismiss,state.motion==="Off"?0:160)}
+    else{row.style.transform="";row.style.opacity="";if(ongoing&&Math.abs(d)>40)toast(ph,"Ongoing: Android does not let it be cleared")}
+    setTimeout(function(){row.swiped=false},0);
+  }
+  row.addEventListener("pointerup",up);row.addEventListener("pointercancel",up);
+  row.addEventListener("click",function(e){if(row.swiped){e.stopImmediatePropagation();e.preventDefault()}},true);
 }
 /* status coins on the search housing: connection (Wi-Fi or signal), battery, Bluetooth */
 function drawStatusCoins(ph){
@@ -836,9 +1020,9 @@ function drawSheet(ph){
   if(!ph.notifs.length)h+='<div class="nr"><div class="nt"><span>Nothing waiting</span></div></div>';
   ph.notifs.forEach(function(g,gi2){
     if(ph.preview[g.app]){
-      g.items.forEach(function(it,ii){h+='<div class="nr" data-open="'+g.app+'">'+gi(g.glyph,20)+'<div class="nt"><b>'+esc(it[0])+'</b><span>'+esc(it[1])+'</span></div><em>'+ago(it[2])+'</em>'+(g.app==="Messages"?'<button class="act" data-a="read" data-g="'+gi2+'" data-i="'+ii+'">Mark read</button>':'')+'<button data-a="x" data-g="'+gi2+'" data-i="'+ii+'" aria-label="Dismiss">✕</button></div>'});
+      g.items.forEach(function(it,ii){h+='<div class="nr" data-open="'+g.app+'">'+gi(g.glyph,20)+'<div class="nt"><b>'+esc(it[0])+'</b><span>'+esc(it[1])+'</span></div><em>'+ago(it[2])+'</em>'+(g.app==="Messages"?'<button class="act" data-a="read" data-g="'+gi2+'" data-i="'+ii+'">Mark read</button>':'')+(g.ongoing?'':'<button data-a="x" data-g="'+gi2+'" data-i="'+ii+'" aria-label="Dismiss">✕</button>')+'</div>'});
     }else{
-      h+='<div class="nr" data-open="'+g.app+'">'+gi(g.glyph,20)+'<div class="nt"><b>'+g.app+'</b><span>'+g.items.length+' new</span></div><em>'+ago(g.items[0][2])+'</em><button data-a="xg" data-g="'+gi2+'" aria-label="Dismiss all from '+g.app+'">✕</button></div>';
+      h+='<div class="nr" data-open="'+g.app+'">'+gi(g.glyph,20)+'<div class="nt"><b>'+g.app+'</b><span>'+g.items.length+' new</span></div><em>'+ago(g.items[0][2])+'</em>'+(g.ongoing?'':'<button data-a="xg" data-g="'+gi2+'" aria-label="Dismiss all from '+g.app+'">✕</button>')+'</div>';
     }
   });
   h+='<div class="nsec">Coming up</div>';
@@ -847,7 +1031,7 @@ function drawSheet(ph){
   h+='</div><div class="nfoot"><span>Show previews:</span>'+["Messages","Mail","Photos"].map(function(a){return'<button class="tog'+(ph.preview[a]?" on":"")+'" data-p="'+a+'">'+a+' '+(ph.preview[a]?"on":"off")+'</button>'}).join("")+'</div>';
   sh.innerHTML=h;
   sh.querySelectorAll("[data-act]").forEach(function(b){b.onclick=function(){
-    if(b.getAttribute("data-act")==="close")closeSheet(ph);else{ph.notifs=[];syncNotifs(ph);toast(ph,"Cleared")}}});
+    if(b.getAttribute("data-act")==="close")closeSheet(ph);else{ph.notifs=ph.notifs.filter(function(g){return g.ongoing});syncNotifs(ph);toast(ph,"Cleared (ongoing ones stay)")}}});
   sh.querySelectorAll("[data-p]").forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-p");ph.preview[a]=!ph.preview[a];drawSheet(ph);drawChips(ph)}});
   sh.querySelectorAll("[data-open]").forEach(function(r){r.onclick=function(e){
     var b=e.target.closest&&e.target.closest("button");
@@ -861,29 +1045,104 @@ function closeSheet(ph){ph.sheetOn=false;ph.S("ns").classList.remove("on");ph.S(
 
 
 /* ---------- app list: A to Z with a letter strip (D-135) ---------- */
-var ALL=[["Calculator","set"],["Calendar","cal"],["Camera","cam"],["Browser","web"],["Clock","clock"],["Contacts","phone"],["Files","note"],["Mail","mail"],["Maps","map"],["Messages","msg"],["Music","music"],["Notes","note"],["Phone","phone"],["Photos","photo"],["Podcasts","music"],["Radio","music"],["Shopping",""],["Tasks","note"],["Voice Recorder",""],["Weather",""],["Wallpapers","photo"],["Yoga Timer","clock"],["Zoom",""]];
+var CATS=["Calls & messages","Photos & video","Music & audio","Games","Tools","Other"];
+var ALL=[["Calculator","set","Tools"],["Calendar","cal","Tools"],["Camera","cam","Photos & video"],["Browser","web","Tools"],["Chess","","Games"],["Clock","clock","Tools"],["Contacts","phone","Calls & messages"],["Crossword","","Games"],["Files","note","Tools"],["Mail","mail","Calls & messages"],["Maps","map","Tools"],["Messages","msg","Calls & messages"],["Music","music","Music & audio"],["Notes","note","Tools"],["Phone","phone","Calls & messages"],["Photos","photo","Photos & video"],["Podcasts","music","Music & audio"],["Radio","music","Music & audio"],["Shopping","","Other"],["Solitaire","","Games"],["Tasks","note","Tools"],["Voice Recorder","","Music & audio"],["Weather","","Tools"],["Wallpapers","photo","Photos & video"],["Yoga Timer","clock","Other"],["Zoom","","Calls & messages"]];
+var APCAT="All";
 function appDisc(n,k){
   return'<svg width="32" height="32" viewBox="-16 -16 32 32" class="adisc"><circle r="15" fill="#fbf3de" stroke="#8d141d" stroke-width="1.6"/>'+(k&&GF[k]?'<g transform="translate(-8.5 -8.5) scale(.71)">'+GF[k]+'</g>':'<text y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#8d141d" font-family="Libre Franklin,DM Sans,sans-serif">'+n.charAt(0)+'</text>')+'</svg>';
 }
+/* app list, layout A (D-171): icons in a grid under a script heading per category; letter strip jumps and glows */
+function appIcon(a){
+  var l=a[0].charAt(0).toUpperCase();
+  return'<button class="aic" data-app="'+esc(a[0])+'" data-l="'+l+'"><svg width="44" height="44" viewBox="-16 -16 32 32"><circle r="15" fill="#fbf3de" stroke="#8d141d" stroke-width="1.6"/>'+(a[1]&&GF[a[1]]?'<g transform="translate(-9.5 -9.5) scale(.8)">'+GF[a[1]]+'</g>':'<text y="5.5" text-anchor="middle" font-size="15" font-weight="800" fill="#8d141d" font-family="Libre Franklin,DM Sans,sans-serif">'+a[0].charAt(0)+'</text>')+'</svg><span>'+esc(a[0])+'</span></button>';
+}
 function drawApps(ph,q){
-  var sh=ph.S("as"),list=ALL.slice().sort(function(a,b){return a[0].localeCompare(b[0])}).filter(function(a){return !q||a[0].toLowerCase().indexOf(q.toLowerCase())>-1});
+  var sh=ph.S("as"),list=ALL.slice().sort(function(a,b){return a[0].localeCompare(b[0])}).filter(function(a){return(APCAT==="All"||a[2]===APCAT)&&(!q||a[0].toLowerCase().indexOf(q.toLowerCase())>-1)});
+  var chips='<div class="acats">'+["All"].concat(CATS).map(function(c){return'<button data-c="'+esc(c)+'" class="'+(c===APCAT?"on":"")+'">'+esc(c)+'</button>'}).join("")+'</div>';
   var h='<div class="nh"><b>Apps</b><button class="nb" data-act="close" aria-label="Close">✕</button></div>'+
-    '<div class="apsrch"><input type="text" placeholder="Find an app" value="'+esc(q||"")+'" spellcheck="false"></div>'+
-    '<div class="nbody" id="ab'+ph.key+'"><div class="nr" data-set="1"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8d141d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><div class="nt"><b>Launcher settings</b></div></div>',last="";
-  var letters={};
-  list.forEach(function(a){var L=a[0].charAt(0).toUpperCase();if(L!==last){h+='<div class="nsec" id="al'+ph.key+L+'">'+L+'</div>';last=L;letters[L]=1}h+='<div class="nr" data-app="'+esc(a[0])+'">'+appDisc(a[0],a[1])+'<div class="nt"><b>'+esc(a[0])+'</b></div></div>'});
-  if(!list.length)h+='<div class="nr"><div class="nt"><span>No app called that</span></div></div>';
-  h+='</div><div class="astrip">'+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function(L){return'<i data-l="'+L+'"'+(letters[L]?'':' class="off"')+'>'+L+'</i>'}).join("")+'</div>';
+    '<div class="apsrch"><input type="text" placeholder="Find an app" value="'+esc(q||"")+'" spellcheck="false"></div>'+chips+
+    '<div class="nbody" id="ab'+ph.key+'"><div class="nr" data-set="1"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8d141d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><div class="nt"><b>Launcher settings</b></div></div>';
+  var seen={};
+  CATS.forEach(function(c){
+    var m=list.filter(function(a){return a[2]===c});if(!m.length)return;
+    h+='<div class="nsec">'+esc(c)+'<em>'+m.length+'</em></div><div class="agrid">'+m.map(appIcon).join("")+'</div>';
+    m.forEach(function(a){seen[a[0].charAt(0).toUpperCase()]=1});
+  });
+  if(!list.length)h+='<div class="nr"><div class="nt"><span>No app here</span></div></div>';
+  var letters=Object.keys(seen).sort();
+  h+='</div><div class="astrip">'+letters.map(function(L){return'<i data-l="'+L+'">'+L+'</i>'}).join("")+'</div><div class="abub" id="abub'+ph.key+'"></div><div class="amove" id="amv'+ph.key+'"></div>';
   sh.innerHTML=h;
   sh.querySelector('[data-act="close"]').onclick=function(){closeApps(ph)};
   var inp=sh.querySelector("input");inp.oninput=function(){var v=inp.value,pos=inp.selectionStart;drawApps(ph,v);var n=ph.S("as").querySelector("input");n.focus();n.setSelectionRange(pos,pos)};
-  sh.querySelectorAll("[data-app]").forEach(function(r){r.onclick=function(){var n=r.getAttribute("data-app");closeApps(ph);toast(ph,"Opens "+n+" — demo only")}});
+  sh.querySelectorAll(".acats button").forEach(function(b){b.onclick=function(){APCAT=b.getAttribute("data-c");drawApps(ph,inp.value)}});
+  var on=sh.querySelector(".acats .on");if(on)on.parentNode.scrollLeft=Math.max(0,on.offsetLeft-20);
   sh.querySelector("[data-set]").onclick=function(){closeApps(ph);openSettings(ph)};
-  sh.querySelectorAll(".astrip i").forEach(function(i){i.onclick=function(){var t=sh.querySelector("#al"+ph.key+i.getAttribute("data-l"));if(t){var b=sh.querySelector(".nbody");b.scrollTop=t.offsetTop-b.offsetTop}}});
+  /* tap opens the app; hold half a second to move it to another category */
+  sh.querySelectorAll("[data-app]").forEach(function(r){
+    var t=0,held=false;
+    r.addEventListener("pointerdown",function(){held=false;clearTimeout(t);t=setTimeout(function(){held=true;moveMenu(ph,r.getAttribute("data-app"),inp.value)},500)});
+    ["pointerup","pointerleave","pointercancel"].forEach(function(ev){r.addEventListener(ev,function(){clearTimeout(t)})});
+    r.onclick=function(){if(held){held=false;return}var n=r.getAttribute("data-app");closeApps(ph);toast(ph,"Opens "+n+" — demo only")};
+  });
+  /* letter strip: tap or slide; jumps to the first app with that letter and glows every app with it */
+  var strip=sh.querySelector(".astrip"),bub=sh.querySelector(".abub"),body=sh.querySelector(".nbody"),glowT=0;
+  function jump(y){var els=strip.querySelectorAll("i"),best=null;els.forEach(function(i){var r=i.getBoundingClientRect();if(y>=r.top&&y<=r.bottom)best=i});
+    if(!best&&els.length){var r0=els[0].getBoundingClientRect();best=y<r0.top?els[0]:els[els.length-1]}
+    if(!best)return;var L=best.getAttribute("data-l");
+    sh.querySelectorAll(".aic.hit").forEach(function(x){x.classList.remove("hit")});
+    var hits=sh.querySelectorAll('.aic[data-l="'+L+'"]');hits.forEach(function(x){x.classList.add("hit")});
+    bub.textContent=L;var rr=best.getBoundingClientRect(),sr=sh.getBoundingClientRect(),k=sr.width/sh.offsetWidth;bub.style.top=((rr.top+rr.height/2-sr.top)/k-26)+"px";bub.classList.add("on");
+    if(hits[0]){var sec=hits[0].parentNode.previousSibling;body.scrollTop=(sec&&sec.offsetTop!==undefined?sec.offsetTop:hits[0].offsetTop)-body.offsetTop-4}}
+  var dr=false;
+  strip.addEventListener("pointerdown",function(e){dr=true;clearTimeout(glowT);try{strip.setPointerCapture(e.pointerId)}catch(x){console.error("launcher","strip capture",x)}jump(e.clientY)});
+  strip.addEventListener("pointermove",function(e){if(dr)jump(e.clientY)});
+  ["pointerup","pointercancel"].forEach(function(ev){strip.addEventListener(ev,function(){dr=false;glowT=setTimeout(function(){bub.classList.remove("on");sh.querySelectorAll(".aic.hit").forEach(function(x){x.classList.remove("hit")})},1600)})});
 }
-function openApps(ph){closeSheet(ph);ph.appsOn=true;drawApps(ph,"");ph.S("as").classList.add("on");ph.S("nsc").classList.add("on")}
+function moveMenu(ph,name,q){
+  var sh=ph.S("as"),m=sh.querySelector(".amove"),a=ALL.filter(function(x){return x[0]===name})[0];if(!a)return;
+  m.innerHTML='<div class="amt">Move '+esc(name)+' to</div>'+CATS.map(function(c){return'<button data-m="'+esc(c)+'" class="'+(c===a[2]?"on":"")+'">'+esc(c)+'</button>'}).join("")+'<button data-m="" class="amx">Cancel</button>';
+  m.classList.add("on");
+  m.querySelectorAll("button").forEach(function(b){b.onclick=function(){var c=b.getAttribute("data-m");m.classList.remove("on");if(c){a[2]=c;drawApps(ph,q);toast(ph,name+" moved to "+c)}}});
+}
+function openApps(ph){closeSheet(ph);ph.appsOn=true;APCAT="All";drawApps(ph,"");ph.S("as").classList.add("on");ph.S("nsc").classList.add("on")}
 function closeApps(ph){ph.appsOn=false;ph.S("as").classList.remove("on");if(!ph.sheetOn)ph.S("nsc").classList.remove("on")}
 
+
+/* ---------- dial click feel: haptic and optional sound per slot (D-174) ---------- */
+var AUD=null;
+function dialTick(){
+  var hp=state.haptic||"Light";
+  if(hp!=="Off"&&navigator.vibrate){try{navigator.vibrate(hp==="Firm"?18:8)}catch(e){console.error("launcher","vibrate",e)}}
+  if(state.sound==="On"){
+    try{
+      if(!AUD)AUD=new (window.AudioContext||window.webkitAudioContext)();
+      var t=AUD.currentTime,o=AUD.createOscillator(),g=AUD.createGain();
+      o.type="square";o.frequency.value=1500;g.gain.setValueAtTime(.04,t);g.gain.exponentialRampToValueAtTime(.0001,t+.025);
+      o.connect(g);g.connect(AUD.destination);o.start(t);o.stop(t+.03);
+    }catch(e){console.error("launcher","tick sound",e)}
+  }
+}
+
+/* ---------- About and licences (D-175) ---------- */
+function drawAbout(ph){
+  var sh=ph.S("au");
+  var h='<div class="nh"><b>About</b><button class="nb" data-act="close" aria-label="Close">✕</button></div><div class="nbody">'+
+   '<div class="abt"><svg width="56" height="56" viewBox="0 0 108 108"><rect width="108" height="108" rx="24" fill="#a01a24"/><circle cx="54" cy="54" r="50" fill="#2a0509" stroke="#d6d8da" stroke-width="2"/><circle cx="54" cy="54" r="25" fill="#c52a35" stroke="#d6d8da" stroke-width="1.6"/><circle cx="54" cy="54" r="18" fill="#fbf3de"/><path d="M54 54V40M54 54l9 3" stroke="#3a0d12" stroke-width="2.6" stroke-linecap="round"/></svg><div><b>Vintage Pocket Dial</b><span>Version (set when built)</span></div></div>'+
+   '<div class="nsec">Made from</div><div class="srow"><div class="nt"><b>Kvaesitso</b><span>An open-source Android launcher. This launcher is a modified copy, shared under the same licence, the GNU General Public License version 3 (GPL-3.0). You may use, study, change and share it under that licence.</span></div></div>'+
+   '<div class="srow" data-lic="gpl"><div class="nt"><b>Read the GPL-3.0 licence ›</b><span>The full text is in the LICENSE file that ships with the app.</span></div></div>'+
+   '<div class="srow" data-lic="src"><div class="nt"><b>Get the source code ›</b><span>Link to the project\'s source (added when the project is published).</span></div></div>'+
+   '<div class="nsec">Fonts</div><div class="srow" data-lic="oleo"><div class="nt"><b>Oleo Script Swash Caps</b><span>Headings. SIL Open Font Licence 1.1.</span></div></div>'+
+   '<div class="srow" data-lic="fra"><div class="nt"><b>Libre Franklin</b><span>Text and numbers. SIL Open Font Licence 1.1.</span></div></div>'+
+   '<div class="nsec">Pictures</div><div class="srow"><div class="nt"><b>Dial, icons and artwork</b><span>Drawn for this launcher. Not copied from any brand or product.</span></div></div>'+
+   '<div class="nsec">Weather</div><div class="srow"><div class="nt"><b>Weather service</b><span>Named here when one is chosen. Only your approximate location is sent, and only if you allow it.</span></div></div>'+
+   '<div class="nsec">Privacy</div><div class="srow"><div class="nt"><b>Your notifications and contacts stay on this phone.</b><span>Nothing from them is sent anywhere, and no notification text is ever written to a log.</span></div></div>'+
+   '</div>';
+  sh.innerHTML=h;
+  sh.querySelector('[data-act="close"]').onclick=function(){closeAbout(ph)};
+  sh.querySelectorAll("[data-lic]").forEach(function(r){r.onclick=function(){toast(ph,"Opens the licence text — demo only")}});
+}
+function openAbout(ph){closeSheet(ph);closeApps(ph);closeSettings(ph);ph.auOn=true;drawAbout(ph);ph.S("au").classList.add("on");ph.S("nsc").classList.add("on")}
+function closeAbout(ph){ph.auOn=false;ph.S("au").classList.remove("on");if(!ph.sheetOn&&!ph.appsOn&&!ph.setOn&&!ph.edOn)ph.S("nsc").classList.remove("on")}
 /* ---------- launcher settings (D-138) ---------- */
 function drawSettings(ph){
   var sh=ph.S("sg");
@@ -894,8 +1153,11 @@ function drawSettings(ph){
   h+='<div class="srow"><div class="nt"><b>Notification access</b><span>Needed to show alerts. Android asks you once; you can turn it off there.</span></div><em>Granted (demo)</em></div>';
   h+='<div class="nsec">Dial</div><div class="srow" data-dial="1"><div class="nt"><b>Choose the 12 apps ›</b><span>Pick and order the apps on the ring.</span></div></div>';
   h+='<div class="srow"><div class="nt"><b>Ring returns home</b><span>After 5 seconds the ring turns back so your apps stay where you expect.</span></div></div>'+seg("home",state.home===false?"Off":"On",["On","Off"]);
+  h+='<div class="srow"><div class="nt"><b>Click feel</b><span>A small tap in your hand for each notch the ring turns. Light or Firm; Off turns it off.</span></div></div>'+seg("haptic",state.haptic,["Off","Light","Firm"]);
+  h+='<div class="srow"><div class="nt"><b>Click sound</b><span>A soft ratchet click per notch, like a real rotary dial. Follows the phone volume.</span></div></div>'+seg("sound",state.sound,["Off","On"]);
   h+='<div class="nsec">Look</div><div class="srow"><div class="nt"><b>Text size</b><span>Follows the phone\'s own font size setting.</span></div><em>Auto</em></div>';
   h+='<div class="srow"><div class="nt"><b>Day or night look</b><span>Auto follows the time of day; later it will follow the dark mode setting of the phone.</span></div></div>'+seg("look",{auto:"Auto",day:"Day",night:"Night"}[state.look],["Auto","Day","Night"]);
+  h+='<div class="srow" data-about="1" style="cursor:pointer"><div class="nt"><b>About and licences ›</b><span>Who made this, fonts and open-source licences.</span></div></div>';
   h+='<div class="nsec">Go back to your old launcher</div><div class="srow steps"><div class="nt"><b>Your Samsung home screen is still on the phone.</b><span>1. Open the phone\'s Settings app.<br>2. Tap Apps, then Choose default apps, then Home app.<br>3. Tap One UI Home. Your old screen is back. To return here, repeat and tap this launcher.<br><i>Menu names may differ a little; check this on your phone.</i></span></div></div>';
   h+='</div>';
   sh.innerHTML=h;
@@ -904,10 +1166,13 @@ function drawSettings(ph){
     var k=b.getAttribute("data-k"),v=b.getAttribute("data-v");
     if(k==="motion"){[].slice.call(document.querySelectorAll("#cMot button")).forEach(function(x){if(x.textContent===v)x.click()})}
     if(k==="home")state.home=(v==="On");
+    if(k==="haptic"){state.haptic=v;dialTick()}
+    if(k==="sound"){state.sound=v;dialTick()}
     if(k==="look"){state.look=v.toLowerCase();applyLook();[].slice.call(document.querySelectorAll("#cLook button")).forEach(function(x){x.className=(x.textContent===v?"on":"")})}
     drawSettings(ph)}});
   sh.querySelectorAll("[data-p]").forEach(function(b){b.onclick=function(){var a=b.getAttribute("data-p");ph.preview[a]=!ph.preview[a];drawSettings(ph);drawChips(ph)}});
   sh.querySelector("[data-dial]").onclick=function(){openEditor(ph)};
+  sh.querySelector("[data-about]").onclick=function(){openAbout(ph)};
 }
 function openSettings(ph){closeSheet(ph);closeApps(ph);ph.setOn=true;drawSettings(ph);ph.S("sg").classList.add("on");ph.S("nsc").classList.add("on")}
 function closeSettings(ph){ph.setOn=false;ph.S("sg").classList.remove("on");if(!ph.sheetOn&&!ph.appsOn)ph.S("nsc").classList.remove("on")}
@@ -989,7 +1254,7 @@ function setClock(ph){
     var hr=(d.getHours()%12)*30+d.getMinutes()/2,mn=d.getMinutes()*6;
     ph.dial.querySelector("#hh"+k).setAttribute("transform","rotate("+hr+" 180 180)");
     ph.dial.querySelector("#mm"+k).setAttribute("transform","rotate("+mn+" 180 180)");
-    ph.dial.querySelector("#tm"+k).textContent=hour12(d)+":"+pad(d.getMinutes())+" "+(d.getHours()<12?"AM":"PM");
+    ph.dial.querySelector("#tm"+k).textContent=hour12(d)+":"+pad(d.getMinutes())+" "+(d.getHours()<12?"am":"pm");
   }else{
     ph.dial.querySelector("#tx"+k).textContent=hour12(d)+":"+pad(d.getMinutes());
     ph.dial.querySelector("#ty"+k).textContent=days[d.getDay()];
@@ -1014,6 +1279,20 @@ function ambient(){
   return state.motion==="Full"&&!state.saver&&document.visibilityState==="visible";
 }
 function applyAmb(){phones.forEach(function(ph){ph.root.classList.toggle("amb",ambient())})}
+
+/* ---------- landscape home (D-166): dial in the middle, cards either side, 5-day forecast card ---------- */
+var FCD=[["Sat","sun",66,49],["Sun","cloud",61,47],["Mon","rain",55,44],["Tue","rain",52,41],["Wed","wind",58,43]];
+function drawForecast(ph){
+  var b=ph.S("fc");if(!b)return;
+  b.innerHTML='<div class="nbh tkh"><b>Next days</b><span class="fcw">Weather ›</span></div><div class="fcr">'+FCD.map(function(d){return'<div class="fd wxt-'+d[1]+'"><em>'+d[0]+'</em><svg class="wxi" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+WI[d[1]]+'</svg><b>'+d[2]+'°</b><span>'+d[3]+'°</span></div>'}).join("")+'</div>';
+  b.querySelector(".fcw").onclick=function(){toast(ph,"Opens your Weather app — demo only")};
+}
+function applyScr(){
+  var land=state.scr==="land";
+  phones.forEach(function(ph){ph.root.classList.toggle("land",land);drawChips(ph)});
+  var c=document.getElementById("phA").closest(".col");if(c)c.classList.toggle("wide",land);
+  fit();
+}
 function applyLook(){
   var h=todHour(),nightNow=h<6||h>=18,on=state.look==="night"||(state.look==="auto"&&nightNow);
   phones.forEach(function(ph){ph.root.classList.toggle("night",on)});
@@ -1032,8 +1311,9 @@ function seg(id,opts,key,after){
 }
 function fit(){
   [["fitA","phA"]].forEach(function(p){
-    var f=document.getElementById(p[0]),ph=document.getElementById(p[1]),k=Math.min(1,f.clientWidth/360);
-    ph.style.transform="scale("+k+")";f.style.height=(780*k)+"px";
+    var land=state.scr==="land",W=land?780:360,H=land?360:780;
+    var f=document.getElementById(p[0]),ph=document.getElementById(p[1]),k=Math.min(1,f.clientWidth/W);
+    ph.style.transform="scale("+k+")";f.style.height=(H*k)+"px";
   });
 }
 
@@ -1041,6 +1321,7 @@ build(document.getElementById("phA"),"A");
 seg("cCond",[["clear","Clear"],["cloud","Cloud"],["rain","Rain"],["snow","Snow"],["fog","Fog"],["hot","Hot"],["storm","Storm"],["wind","Windy"]],"cond",refreshAll);
 seg("cTod",[["auto","Now"],["dawn","Dawn"],["day","Day"],["dusk","Dusk"],["night","Night"]],"tod",refreshAll);
 seg("cNet",[["wifi","Wi-Fi"],["mobile","Mobile"]],"net",function(){phones.forEach(setStatus)});
+seg("cScr",[["port","Portrait"],["land","Landscape"]],"scr",applyScr);
 seg("cLook",[["auto","Auto"],["day","Day"],["night","Night"]],"look",applyLook);
 seg("cMot",[["Full","Full"],["Minimal","Minimal"],["Off","Off"]],"motion",applyAmb);
 document.getElementById("cSaver").onchange=function(){state.saver=this.checked;applyAmb()};
